@@ -6,7 +6,10 @@
 */
 
 // set the base url
-config_url::set_url_dir("/td-cms");
+config_url::set_url_dir("/build-cms-dev");
+config_url::setTrustedDomain("localhost");
+config_url::useHttps(true);
+config_url::displayUntrustedDomain(true);
 
 // connect to the database
 database::connect(
