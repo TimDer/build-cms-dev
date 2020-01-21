@@ -1,0 +1,48 @@
+<div class="content">
+    <h1>Genaral</h1>
+
+    <form action="/admin_submit/settings/general" method="POST" class="td-ajax">
+        <table>
+            <!-- Site title -->
+            <tr class="row-setting">
+                <th class="label">Site title</th>
+                <td class="option">
+                    <input type="text" name="site-title" value="<?php echo general::$form_data["sidetitle"]; ?>">
+                </td>
+            </tr>
+            <!-- /Site title -->
+            <!-- Site slogan -->
+            <tr class="row-setting">
+                <th class="label">Site slogan</th>
+                <td class="option">
+                    <input type="text" name="site-slogan" value="<?php echo general::$form_data["sideslogan"]; ?>">
+                </td>
+            </tr>
+            <!-- /Site slogan -->
+            <!-- Membership -->
+            <tr class="row-setting">
+                <th class="label">Membership</th>
+                <td class="option text-checkbox">
+                    <input type="checkbox" name="membership" value="1" <?php echo general::membership(); ?>>
+                    Anyone can register
+                </td>
+            </tr>
+            <!-- /Membership -->
+            <!-- new user default role -->
+            <tr class="row-setting">
+                <th class="label">New user default role</th>
+                <td class="option">
+                    <!--<input type="text" name="new-user-default-role" value="<?php echo general::$form_data["new_user_default_role"]; ?>">-->
+                    <select name="new-user-default-role">
+                        <option value="user" <?php echo general::new_user_default_role_user(); ?>>user</option>
+                        <option value="author"<?php echo general::new_user_default_role_author(); ?>>author</option>
+                        <option value="admin" <?php echo general::new_user_default_role_admin(); ?>>admin</option>
+                    </select>
+                </td>
+            </tr>
+            <!-- /new user default role -->
+        </table>
+
+        <input type="submit" value="submit" class="submit">
+    </form>
+</div>

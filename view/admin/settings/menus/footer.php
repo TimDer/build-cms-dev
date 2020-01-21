@@ -1,0 +1,1 @@
+<script src="<?php echo config_url::VIEW("/admin/settings/menus/js/tab.js"); ?>"></script>

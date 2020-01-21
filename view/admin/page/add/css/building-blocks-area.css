@@ -1,0 +1,13 @@
+#building-blocks-area, .sortable-building-blocks {
+    box-sizing: border-box;
+    padding: 10px;
+    min-height: 600px;
+    background-color: #B2B2B2;
+    border-radius: 5px;
+}
+.sortable-building-blocks > * {
+    margin-top: 10px;
+}
+.sortable-building-blocks > *:first-child {
+    margin-top: 0;
+}

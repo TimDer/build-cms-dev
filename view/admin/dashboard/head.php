@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="<?php echo config_url::VIEW("/admin/dashboard/css/dashboard.css"); ?>">

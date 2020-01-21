@@ -1,0 +1,137 @@
+.modal {
+    z-index: 99999999999999;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    left: 30px;
+    bottom: 30px;
+    background-color: white;
+    border: 1px solid black;
+    display: none;
+}
+
+/* ============================== header ============================== */
+
+    .modal > .header {
+        height: 60px;
+        border-bottom: 1px solid black;
+        display: flex;
+        background-color: #AFAFAF;
+    }
+
+    .modal > .header > .modal-close {
+        font-size: 37px;
+        padding: 10px;
+        padding-top: 0;
+    }
+    .modal > .header > .modal-close:hover {
+        background-color: gray;
+        cursor: pointer;
+    }
+
+    .modal > .header > .modal-title {
+        flex: 1;
+        padding: 11px;
+    }
+
+/* ============================== header ============================== */
+
+
+/* ============================== body ============================== */
+
+    .modal > .body {
+        height: calc(100vh - 120px);
+        display: flex;
+    }
+
+    .modal > .body > * {
+        box-sizing: border-box;
+    }
+    .modal > .body > .content {
+        overflow-y: scroll;
+        padding: 10px;
+        height: calc(100vh - 123px);
+        flex: 1;
+    }
+    .modal > .body > .sidebar {
+        padding: 10px;
+        height: calc(100vh - 123px);
+        border-left: 1px solid black;
+        background-color: #AFAFAF;
+        width: 300px;
+    }
+    .modal > .body > .sidebar > * {
+        margin-bottom: 10px;
+    }
+
+/* ============================== /body ============================== */
+
+
+
+
+/* content / sidebar */
+/* ============================== image selector btn ============================== */
+
+    .img_btn_container {
+        height: 121px;
+        width: 121px;
+        overflow: auto;
+        margin-right: 5px;
+        padding-right: 0;
+        float: left;
+        padding: 5px;
+    }
+
+    .img_btn_container_select {
+        padding: 2px;
+        border: 3px solid blue;
+    }
+
+    .img_btn_container > .img_btn {
+        background-size: cover;
+        background-position: center;
+        display: block;
+        height: 120px;
+        width: 120px;
+    }
+
+    .img_btn_container input[type="radio"] {
+        margin-top: 97px;
+        margin-left: 97px;
+        height: 20px;
+        width: 20px;
+    }
+
+/* ============================== /image selector btn ============================== */
+
+
+/* ============================== sidebar ============================== */
+
+    /* selected_image */
+        .selected_image {
+            height: 140px;
+        }
+
+        .selected_image > img {
+            max-height: 100%;
+            max-width: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    /* /selected_image */
+
+    /* form_group_img */
+        .form_group_img {
+            display: flex;
+        }
+        .form_group_img > input {
+            flex: 1;
+        }
+        .form_group_img > p {
+            width: 20px;
+            text-align: center;
+        }
+    /* /form_group_img */
+
+/* ============================== /sidebar ============================== */
