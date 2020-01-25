@@ -17,6 +17,6 @@ database::connect(
         "servername" => "localhost",
         "username"   => "root",
         "password"   => "root",
-        "dbname"     => "td-cms"
+        "dbname"     => "build-cms"
     )
 );
