@@ -1,4 +1,4 @@
--- table dump with TD_dbExport by Tim Derksen https://www.github.com/TimDer/TD_dbExport
+-- table dump with TD_dbExport by Tim Derksen
 -- Download url: https://www.github.com/TimDer/TD_dbExport
 
 -- media
