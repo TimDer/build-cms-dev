@@ -109,7 +109,7 @@ class TD_dbExport {
         // open the sql file
         $sql_file_path = $this->database_dir . "/" . $dbName . ".sql";
         $open_sql_file = fopen($sql_file_path, "w");
-        fwrite($open_sql_file, "-- table dump with TD_dbExport by Tim Derksen https://www.github.com/TimDer/TD_dbExport\n");
+        fwrite($open_sql_file, "-- table dump with TD_dbExport by Tim Derksen\n");
         fwrite($open_sql_file, "-- Download url: https://www.github.com/TimDer/TD_dbExport");
 
         // create sql file
