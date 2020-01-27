@@ -4,14 +4,17 @@ class user_url {
     public static $new_uri      = array();
     public static $routes_uri   = array();
     public static $get_var      = array();
+    public static $post_var     = array();
 
     private static function GET_VAR_ESCAPE() {
         if (!empty($_GET)) {
             database::reset();
-            database::escape($_GET);
-
-            self::$get_var = database::$escape;
-
+            self::$get_var = database::escape($_GET);
+            database::reset();
+        }
+        if (!empty($_POST)) {
+            database::reset();
+            self::$post_var = database::escape($_POST);
             database::reset();
         }
     }    

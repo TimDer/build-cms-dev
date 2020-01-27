@@ -6,8 +6,7 @@ class save_page {
             user_session::check_session_permission("author", function () {
                 database::reset();
         
-                database::escape($_POST);
-                $NEW_POST = database::$escape;
+                $NEW_POST = database::escape($_POST);
 
                 // Save the basics and get the page id
                 $page_id = self::basics($NEW_POST);
@@ -588,10 +587,7 @@ class save_page {
     /* ============================== del page ============================== */
     public static function delete_page() {
         database::reset();
-        database::escape(
-            user_url::$new_uri
-        );
-        $page_id = database::$escape[0];
+        $page_id = database::escape( user_url::$new_uri );
         database::query("DELETE FROM `page` WHERE id='$page_id'");
         database::query("DELETE FROM `page_blocks` WHERE page_id='$page_id'");
         database::query("DELETE FROM `page_cc_block` WHERE page_id='$page_id'");

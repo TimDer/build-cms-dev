@@ -7,10 +7,9 @@ class load_page {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {
                 header("Content-type: text/javascript");
-
-                database::reset();
-                database::escape( user_url::$new_uri );
-                $id = database::$escape[0];
+                
+                $escape = database::escape( user_url::$new_uri );
+                $id = $escape[0];
                 database::select(self::load_sql_query($id), function ($data) {
                         $new_data = array();
                         foreach ($data["fetch_all"] AS $key => $value) {
@@ -42,7 +41,7 @@ class load_page {
                         self::loop_blocks($new_data);
                     }
                 );
-
+                
                 echo json_encode( self::$load_json, JSON_FORCE_OBJECT );
             });
         });
