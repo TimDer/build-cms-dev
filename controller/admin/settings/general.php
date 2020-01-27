@@ -7,19 +7,17 @@ class general extends controller {
         public static function submit_general() {
             user_session::check_session("user_id", function () {
                 user_session::check_session_permission("admin", function () {
-                    database::escape($_POST);
-
-                    if (isset(database::$escape["membership"])) {
-                        $membership = database::$escape["membership"];
+                    if (isset(user_url::$post_var["membership"])) {
+                        $membership = user_url::$post_var["membership"];
                     }
                     else {
                         $membership = 0;
                     }
 
-                    database::query('UPDATE settings SET sidetitle="' . database::$escape["site-title"] . '",
-                                                            sideslogan="' . database::$escape["site-slogan"] . '",
+                    database::query('UPDATE settings SET sidetitle="' . user_url::$post_var["site-title"] . '",
+                                                            sideslogan="' . user_url::$post_var["site-slogan"] . '",
                                                             membership="' . $membership . '",
-                                                            new_user_default_role="' . database::$escape["new-user-default-role"] . '"');
+                                                            new_user_default_role="' . user_url::$post_var["new-user-default-role"] . '"');
                 });
             });
         }
