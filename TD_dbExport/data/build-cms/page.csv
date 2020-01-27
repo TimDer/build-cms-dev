@@ -7,3 +7,6 @@ id,pagename,status,home_page,url,pagetitle,author,keywords,description,post_page
 10,typen,not-published,,typen,,,,,,American-Flag.jpg,"<p>dit is de text van de categorie</p>","2019-10-21 21:04:46"
 11,"test het cms",not-published,,test-het-cms,"pets page","Tim Derksen","test,page,td-cms","Dit is een test pagina",8,American-Flag.jpg,"<p>hier komt de text voor een cat</p>","2019-10-21 19:28:59"
 12,pagina,not-published,false,pagina,,,,,11,American-Flag.jpg,"<p>hier komt sub cat info</p>","2019-10-22 12:06:42"
+13,pagegbh,not-published,false,pagegbh,,,,,,"<br />
+<b>Notice</b>:  Undefined index: category_image in <b>C:\xampp\htdocs\build-cms-dev\controller\admin\pages\add_page.php</b> on line <b>326</b><br />
+",,"2020-01-27 16:07:00"

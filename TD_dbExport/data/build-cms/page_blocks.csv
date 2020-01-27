@@ -20,3 +20,7 @@ id,page_id,block_type,block_id,building_blocks_area,the_order
 65,12,plain_text,3,2-1,1
 66,12,image,4,left_sidebar,1
 67,12,subcategories,5,right_sidebar,1
+68,13,wysiwyg,1,content,1
+69,13,plain_text,4,content,2
+70,13,subcategories,3,left_sidebar,1
+71,13,image,2,right_sidebar,1
