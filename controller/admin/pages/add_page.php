@@ -29,8 +29,7 @@ class add_page extends controller {
             user_session::check_session_permission("author", function () {
                 if (!empty(user_url::$new_uri)) {
                     database::reset();
-                    database::escape(user_url::$new_uri);
-                    $url_data   = database::$escape;
+                    $url_data   = database::escape(user_url::$new_uri);
                     $id         = $url_data[0];
     
                     database::select("SELECT * FROM `page` WHERE id = '$id'", function ($data) {
@@ -47,9 +46,8 @@ class add_page extends controller {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {
                 database::reset();
-                database::escape(user_url::$new_uri);
-                $url_data = database::$escape;
-
+                $url_data = database::escape(user_url::$new_uri);
+                
                 if (isset($url_data[0])) {
                     self::$get_page_id_return = $url_data[0];
                 }
@@ -69,8 +67,8 @@ class add_page extends controller {
             user_session::check_session_permission("author", function () {
                 if (isset(user_url::$new_uri[0])) {
                     database::reset();
-                    database::escape( user_url::$new_uri );
-                    $id = database::$escape[0];
+                    $escape = database::escape( user_url::$new_uri );
+                    $id = $escape[0];
                     database::select("SELECT max(block_id) FROM `page_blocks` WHERE `page_id`='$id'", function ($data) {
                         self::$get_highest_block_id_return = $data["fetch_all"][0]["max(block_id)"] + 1;
                     });
