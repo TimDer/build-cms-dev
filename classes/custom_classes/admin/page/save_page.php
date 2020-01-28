@@ -587,7 +587,7 @@ class save_page {
     /* ============================== del page ============================== */
     public static function delete_page() {
         database::reset();
-        $page_id = database::escape( user_url::$new_uri );
+        $page_id = database::escape( user_url::$new_uri )[0];
         database::query("DELETE FROM `page` WHERE id='$page_id'");
         database::query("DELETE FROM `page_blocks` WHERE page_id='$page_id'");
         database::query("DELETE FROM `page_cc_block` WHERE page_id='$page_id'");
