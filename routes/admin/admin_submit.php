@@ -2,7 +2,7 @@
 
 /* ============================== login - logout ============================== */
     routes::set("/admin_submit/login", "admin_submit_login", function() {
-        login_submit::submit_login();
+        loginController::submit_login();
     });
 
     routes::set("/admin_submit/logout", "admin_submit_logout", function() {
