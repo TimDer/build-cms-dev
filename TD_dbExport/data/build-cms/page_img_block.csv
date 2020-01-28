@@ -1,9 +1,0 @@
-id,page_blocks_id,page_id,block_id,image,img_size_mode,img_width,img_height,image_align
-5,37,10,2,American-Flag.jpg,auto,600,600,center
-6,39,10,4,Berlin.jpg,auto,0,0,left
-9,56,11,4,Berlin.jpg,auto,0,0,left
-10,57,11,5,Berlin.jpg,auto,0,0,left
-11,58,11,6,Berlin.jpg,auto,0,0,left
-13,60,11,7,Berlin.jpg,custom,300,188,left
-14,66,12,4,Berlin.jpg,custom,300,300,center
-15,71,13,2,Berlin.jpg,auto,0,0,left
