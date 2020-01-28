@@ -13,7 +13,7 @@
         </div>
         
         <form action="<?php echo config_url::BASE("/admin_submit/login"); ?>" method="post">
-            <input type="text" name="username" placeholder="Username..." required <?php login::user_error_display_username(); ?>>
+            <input type="text" name="username" placeholder="Username..." required value="<?php echo loginModal::$user_error_display_username; ?>">
             <input type="password" name="password" placeholder="Password..." required>
             <input type="submit" name="submit" value="Login">
         </form>
@@ -21,7 +21,7 @@
         <a href="<?php echo config_url::BASE(); ?>" class="go-back">
             Go back to the home page
         </a>
-        <?php login::user_error(); ?>
+        <?php echo loginModal::$user_error; ?>
     </div>
 </body>
 </html>

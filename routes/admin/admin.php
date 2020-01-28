@@ -10,7 +10,7 @@
 
 /* ============================== login dir ============================== */
     routes::set("/admin/login", "admin_login", function() {
-        controller::getView("/admin/login/login.php");
+        loginController::get_login_view();
     });
 /* ============================== /login dir ============================== */
 
