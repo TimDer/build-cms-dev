@@ -19,18 +19,8 @@ function auto_select_a_dir($dir, $file, $return = false) {
     }
 
     foreach (scandir($dir) as $item) {
-        // skip everything if file has bin found
-        if ($return) {
-            continue;
-        }
-
-        // skip '.' and '..'
-        if ($item == '.' || $item == '..') {
-            continue;
-        }
-
-        // skip view
-        if ($item === "view" AND check_for_view_folder($dir, $item)) {
+        // (skip the '.', '..' or the 'view' folder) or (skip everything if the file has bin found)
+        if ($return || $item == '.' || $item == '..' || ($item === "view" AND check_for_view_folder($dir, $item)) ) {
             continue;
         }
 
