@@ -11,7 +11,6 @@ $(document).ready(function () {
             $("#image_modal").css("display", "block");
 
             if (image_block_modal().attr("category_image") === undefined) {
-                console.log("dit is een test");
                 // set height and width (img_width="434" img_height="353")
                 $('.form_group_img > input[name="img_width"]').val( image_block_modal().attr("img_width") );
                 $('.form_group_img > input[name="img_height"]').val( image_block_modal().attr("img_height") );
