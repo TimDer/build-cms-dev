@@ -33,7 +33,7 @@
 /* ============================== settings dir ============================== */
     // settings general
     routes::set("/admin/settings/general", "settings general", function () {
-        general::get_general();
+        generalController::get_general();
     });
 
     // menus

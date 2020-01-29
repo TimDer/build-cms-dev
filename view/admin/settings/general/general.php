@@ -7,7 +7,7 @@
             <tr class="row-setting">
                 <th class="label">Site title</th>
                 <td class="option">
-                    <input type="text" name="site-title" value="<?php echo general::$form_data["sidetitle"]; ?>">
+                    <input type="text" name="site-title" value="<?php echo generalModal::$sidetitle; ?>">
                 </td>
             </tr>
             <!-- /Site title -->
@@ -15,7 +15,7 @@
             <tr class="row-setting">
                 <th class="label">Site slogan</th>
                 <td class="option">
-                    <input type="text" name="site-slogan" value="<?php echo general::$form_data["sideslogan"]; ?>">
+                    <input type="text" name="site-slogan" value="<?php echo generalModal::$sideslogan; ?>">
                 </td>
             </tr>
             <!-- /Site slogan -->
@@ -23,7 +23,7 @@
             <tr class="row-setting">
                 <th class="label">Membership</th>
                 <td class="option text-checkbox">
-                    <input type="checkbox" name="membership" value="1" <?php echo general::membership(); ?>>
+                    <input type="checkbox" name="membership" value="1" <?php echo generalModal::$membership; ?>>
                     Anyone can register
                 </td>
             </tr>
@@ -32,11 +32,10 @@
             <tr class="row-setting">
                 <th class="label">New user default role</th>
                 <td class="option">
-                    <!--<input type="text" name="new-user-default-role" value="<?php echo general::$form_data["new_user_default_role"]; ?>">-->
                     <select name="new-user-default-role">
-                        <option value="user" <?php echo general::new_user_default_role_user(); ?>>user</option>
-                        <option value="author"<?php echo general::new_user_default_role_author(); ?>>author</option>
-                        <option value="admin" <?php echo general::new_user_default_role_admin(); ?>>admin</option>
+                        <option value="user" <?php echo generalModal::$new_user_default_role_user; ?>>user</option>
+                        <option value="author"<?php echo generalModal::$new_user_default_role_author; ?>>author</option>
+                        <option value="admin" <?php echo generalModal::$new_user_default_role_admin; ?>>admin</option>
                     </select>
                 </td>
             </tr>
