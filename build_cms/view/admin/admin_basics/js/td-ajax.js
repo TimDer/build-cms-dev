@@ -11,7 +11,7 @@ Other required files:
 var successMessage  = "Success";
 var errorMessage    = "Error";
 var allowResponse   = false;
-var BASE_URL        = $("#td_cms_base_url").attr("base_url");
+var BASE_URL        = $("#build_cms_base_url").attr("base_url");
 
 // toggle checked on checkboxes
 $("form.td-ajax, body").find("[type='checkbox']").each(function () {

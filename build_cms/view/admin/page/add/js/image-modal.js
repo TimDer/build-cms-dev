@@ -29,7 +29,7 @@ $(document).ready(function () {
             // select selected image
             $('#image_modal .content input[img_url="' + image_block_modal().attr("img_filename") + '"]').prop('checked', true);
             $('#image_modal .content input[img_url="' + image_block_modal().attr("img_filename") + '"]').parent().parent().addClass("img_btn_container_select");
-            $(".selected_image > img").attr("src", $("#td_cms_base_url").attr("base_url") + "/view/images/" + image_block_modal().attr("img_filename") );
+            $(".selected_image > img").attr("src", $("#build_cms_base_url").attr("base_url") + "/view/images/" + image_block_modal().attr("img_filename") );
 
             // set align image to preferred setting
             $(".align_image_modal").val(function () {
@@ -80,7 +80,7 @@ $(document).ready(function () {
 
         $(".img_btn_radio").click(function () {
             var image       = $(this).attr("img_url");
-            var image_url   = $("#td_cms_base_url").attr("base_url") + "/images/" + image;
+            var image_url   = $("#build_cms_base_url").attr("base_url") + "/images/" + image;
 
             $(".selected_image > img").attr("src", image_url);
 

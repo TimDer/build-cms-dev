@@ -3,7 +3,7 @@
 </div>
 
 <!-- hidden base_url for js -->
-<div id="td_cms_base_url" base_url="<?php echo config_url::BASE(); ?>"></div>
+<div id="build_cms_base_url" base_url="<?php echo config_url::BASE(); ?>"></div>
 <!-- /hidden base_url for js -->
 
 <!-- jquery -->
