@@ -38,6 +38,6 @@
 
     // menus
     routes::set("/admin/settings/menus", "menus", function () {
-        menus::get_menus();
+        menusController::get_menus();
     });
 /* ============================== /settings dir ============================== */

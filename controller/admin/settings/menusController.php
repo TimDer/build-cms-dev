@@ -1,6 +1,6 @@
 <?php
 
-class menus extends controller {
+class menusController extends controller {
     public static function get_menus() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("admin", function () {
