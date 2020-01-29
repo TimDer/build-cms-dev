@@ -1,6 +1,6 @@
 function text_editer() {
 	tinymce.init({
-		document_base_url: $("#td_cms_base_url").attr("base_url"),
+		document_base_url: $("#build_cms_base_url").attr("base_url"),
 
 		/* replace textarea having class .tinymce with tinymce editor */
 		selector: "textarea.wysiwyg-text-editer",

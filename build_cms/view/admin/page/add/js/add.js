@@ -347,7 +347,7 @@ $(document).ready(function () {
             $.ajax({
                 enctype: 'application/x-www-form-urlencoded',
                 type: "POST",
-                url: $("#td_cms_base_url").attr("base_url") + "/admin_submit/page",
+                url: $("#build_cms_base_url").attr("base_url") + "/admin_submit/page",
                 dataType: "json",
                 data: data_array,
                 success: function (massage) {

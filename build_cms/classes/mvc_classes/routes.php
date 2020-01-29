@@ -5,7 +5,7 @@ class routes {
 
     public static function set($routes_source, $name, $function) {
         if (!$routes_source) {
-            $routes_source = "TD-CMS-templates";
+            $routes_source = "build-cms-templates";
         }
 
         self::$routes[$routes_source]["name"] = $name;
@@ -20,7 +20,7 @@ class routes {
             self::$routes[user_url::uri_string()]["function"]->__invoke();
         }
         elseif (user_url::uri_string() === "/") {
-            self::$routes["TD-CMS-templates"]["function"]->__invoke();
+            self::$routes["build-cms-templates"]["function"]->__invoke();
         }
         else {
             foreach (self::$routes AS $routes_source_array_key => $routes_source_array) {
@@ -34,7 +34,7 @@ class routes {
             }
             else {
                 user_url::$new_uri = user_url::uri();
-                self::$routes["TD-CMS-templates"]["function"]->__invoke();
+                self::$routes["build-cms-templates"]["function"]->__invoke();
             }
         }
     }

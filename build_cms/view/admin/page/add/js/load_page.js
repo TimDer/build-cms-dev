@@ -107,7 +107,7 @@ $(document).ready(function () {
 
             load_image (block_object) {
                 if (block_object.data !== "") {
-                    var img_src = $("#td_cms_base_url").attr("base_url") + "/images/" + block_object.data;
+                    var img_src = $("#build_cms_base_url").attr("base_url") + "/images/" + block_object.data;
                 }
                 else {
                     var img_src = "";
@@ -253,7 +253,7 @@ $(document).ready(function () {
 
     // ajax
     $.ajax({
-        url: $("#td_cms_base_url").attr("base_url") + "/admin_submit/page/load-page/" + $('input[name="page_id"]').attr("value"),
+        url: $("#build_cms_base_url").attr("base_url") + "/admin_submit/page/load-page/" + $('input[name="page_id"]').attr("value"),
         type: "POST",
         dataType: "json",
         success: function (massage) {

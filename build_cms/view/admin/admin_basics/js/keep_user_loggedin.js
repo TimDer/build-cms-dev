@@ -4,7 +4,7 @@ function keep_user_loggedin() {
     setTimeout(function () {
         $.ajax({
             type: "POST",
-            url: $("#td_cms_base_url").attr("base_url") + "/admin/keep-user-loggedin",
+            url: $("#build_cms_base_url").attr("base_url") + "/admin/keep-user-loggedin",
             cache: false,
             success: function () {
                 keep_user_loggedin();
