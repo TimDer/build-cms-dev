@@ -82,10 +82,10 @@ class config_url {
 
     /* ============================== view ============================== */
         public static function VIEW_TEMP($url = "") {
-            return self::BASE("/view/template" . $url);
+            return self::BASE("/build_cms/view/template" . $url);
         }
         public static function VIEW($url = "") {
-            return self::BASE("/view" . $url);
+            return self::BASE("/build_cms/view" . $url);
         }
     /* ============================== /view ============================== */
 }
