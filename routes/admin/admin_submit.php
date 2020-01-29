@@ -12,7 +12,7 @@
 
 /* ============================== settings/general ============================== */
     routes::set("/admin_submit/settings/general", "settings general submit", function () {
-        general::submit_general();
+        generalController::submit_general();
     });
 /* ============================== /settings/general ============================== */
 
