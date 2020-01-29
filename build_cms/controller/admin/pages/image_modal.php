@@ -10,7 +10,7 @@ class image_modal extends controller {
                         $image_id   = $value["id"];
                         $image_url  = $value["the_file_name"];
 
-                        require config_dir::BASE("/view/admin/page/image-modal.php");
+                        require config_dir::VIEW("/admin/page/image-modal.php");
                     }
                 });
             });
