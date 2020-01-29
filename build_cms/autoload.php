@@ -39,6 +39,6 @@ spl_autoload_register(function ($classname) {
     $file = "";
 
     // loop through the root and skip the view dir
-    $file = auto_select_a_dir(__DIR__, $filename);
+    $file = auto_select_a_dir(__DIR__ . "/..", $filename);
     require $file;
 });
