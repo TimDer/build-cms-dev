@@ -8,6 +8,11 @@ class add_page extends controller {
                 self::set_head("/admin/page/add/head.php");
                 self::set_footer("/admin/page/add/footer.php");
 
+                // page id
+                if (isset(user_url::$new_uri[0])) {
+                    add_pageModal::$page_id = user_url::$new_uri[0];
+                }
+
                 // setup page array
                 self::get_page_array();
 
@@ -38,26 +43,6 @@ class add_page extends controller {
                 }
             });
         });
-    }
-
-    // return page id
-    private static $get_page_id_return = null;
-    public static function get_page_id() {
-        user_session::check_session("user_id", function () {
-            user_session::check_session_permission("author", function () {
-                database::reset();
-                $url_data = database::escape(user_url::$new_uri);
-                
-                if (isset($url_data[0])) {
-                    self::$get_page_id_return = $url_data[0];
-                }
-                else {
-                    self::$get_page_id_return = "new";
-                }
-            });
-        });
-
-        return self::$get_page_id_return;
     }
 
     // get highest block id

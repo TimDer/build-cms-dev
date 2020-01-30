@@ -51,7 +51,7 @@
 
             <input type="submit" value="Save" id="add_btn">
 
-            <input type="hidden" name="page_id" value="<?php echo add_page::get_page_id(); ?>">
+            <input type="hidden" name="page_id" value="<?php echo add_pageModal::$page_id; ?>">
         </div>
         <!-- ============================== /general ============================== -->
 
