@@ -16,7 +16,7 @@ class routes {
 
     public static function get() {
         if (array_key_exists(user_url::uri_string(), self::$routes)) {
-            user_url::$routes_uri = user_url::uri();
+            user_url::$routes_uri = database::escape(user_url::uri());
             self::$routes[user_url::uri_string()]["function"]->__invoke();
         }
         elseif (user_url::uri_string() === "/") {
@@ -33,7 +33,7 @@ class routes {
                 self::$routes[$function_invoke]["function"]->__invoke();
             }
             else {
-                user_url::$new_uri = user_url::uri();
+                user_url::$new_uri = database::escape(user_url::uri());
                 self::$routes["build-cms-templates"]["function"]->__invoke();
             }
         }
@@ -71,7 +71,7 @@ class routes {
             unset($uri[$key]);
         }
 
-        user_url::$new_uri      = array_values($uri);
-        user_url::$routes_uri   = $validate;
+        user_url::$new_uri      = database::escape(array_values($uri));
+        user_url::$routes_uri   = database::escape($validate);
     }
 }
