@@ -21,7 +21,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php echo edit_page::get_pages_table(); ?>
+            <?php echo edit_pageSubController::get_pages_table(); ?>
         </tbody>
     </table>
 
