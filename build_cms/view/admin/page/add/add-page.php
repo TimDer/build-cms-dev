@@ -3,10 +3,10 @@
 </div>
 
 <div class="title">
-    <h1 id="td_cms-page_title"><?php echo add_page::get_page_name(); ?></h1>
+    <h1 id="td_cms-page_title"><?php echo add_pageModal::$edit_page_name; ?></h1>
 </div>
 
-<input type="hidden" value="<?php echo add_page::get_highest_block_id(); ?>" id="block_id_start">
+<input type="hidden" value="<?php echo add_pageModal::$highest_block_id; ?>" id="block_id_start">
 
 <div class="page-content">
     <div class="build">
@@ -39,15 +39,15 @@
         <div class="general">
             <h2>General:</h2>
             <p>Pagename:</p>
-            <input type="text" name="pagename" value="<?php echo add_page::get_page_name_imput(); ?>">
+            <input type="text" name="pagename" value="<?php echo add_pageModal::$page_name_imput; ?>">
             <p>URL name</p>
-            <input type="text" name="url" value="<?php echo add_page::get_page_url_imput(); ?>">
+            <input type="text" name="url" value="<?php echo add_pageModal::$page_url_imput; ?>">
             <p>Status</p>
             <select name="status">
-                <option value="not-published"<?php echo add_page::$get_page_status_not_published; ?>>Not published</option>
-                <option value="published"<?php echo add_page::$get_page_status_published; ?>>Published</option>
+                <option value="not-published"<?php echo add_pageModal::$status_not_published; ?>>Not published</option>
+                <option value="published"<?php echo add_pageModal::$status_published; ?>>Published</option>
             </select>
-            <p>Homepage: <input type="checkbox" name="homepage" <?php echo add_page::get_page_home(); ?>></p>
+            <p>Homepage: <input type="checkbox" name="homepage" <?php echo add_pageModal::$page_home; ?>></p>
 
             <input type="submit" value="Save" id="add_btn">
 
@@ -139,13 +139,13 @@
             </div>
             <div class="content">
                 <p>Page title</p>
-                <input type="text" name="pagetitle" value="<?php echo add_page::get_seo_pagetitle(); ?>">
+                <input type="text" name="pagetitle" value="<?php echo add_pageModal::$seo_pagetitle; ?>">
                 <p>Author</p>
-                <input type="text" name="author" value="<?php echo add_page::get_seo_author(); ?>">
+                <input type="text" name="author" value="<?php echo add_pageModal::$seo_author; ?>">
                 <p>Keywords</p>
-                <input type="text" name="keywords" value="<?php echo add_page::get_seo_keywords(); ?>">
+                <input type="text" name="keywords" value="<?php echo add_pageModal::$seo_keywords; ?>">
                 <p>Description</p>
-                <input type="text" name="description" value="<?php echo add_page::get_seo_description(); ?>">
+                <input type="text" name="description" value="<?php echo add_pageModal::$seo_description; ?>">
             </div>
         </div>
         <!-- ============================== /SEO ============================== -->
@@ -157,8 +157,8 @@
             </div>
             <div class="content">
                 <button class="image-open-modal-btn">Select an image</button>
-                <img src="<?php echo add_page::get_category_image_src(); ?>" alt="Select an image" class="img_data" id="category_image" img_filename="<?php echo add_page::get_category_image(); ?>" category_image>
-                <textarea id="category_text" class="wysiwyg-text-editer" rows="10"><?php echo add_page::get_category_text(); ?></textarea>
+                <img src="<?php echo add_pageSubController::get_category_image_src(); ?>" alt="Select an image" class="img_data" id="category_image" img_filename="<?php echo add_pageSubController::get_category_image(); ?>" category_image>
+                <textarea id="category_text" class="wysiwyg-text-editer" rows="10"><?php echo add_pageSubController::get_category_text(); ?></textarea>
             </div>
         </div>
         <!-- ============================== /category_image ============================== -->
@@ -170,10 +170,10 @@
             </div>
             <div class="content" id="page-category">
                 <div class="category_container">
-                    <input type="radio" name="page_category" id="root" value="" <?php echo add_page::select_root_category(); ?>><label for="root">Root</label>
+                    <input type="radio" name="page_category" id="root" value="" <?php echo add_pageSubController::select_root_category(); ?>><label for="root">Root</label>
                 </div>
                 <hr>
-                <?php echo add_page::get_category(); ?>
+                <?php echo add_pageSubController::get_category(); ?>
             </div>
         </div>
         <!-- ============================== /category ============================== -->
@@ -199,7 +199,7 @@
         </div>
         <div class="body">
             <div class="content">
-                <?php echo image_modal::get_images_modal(); ?>
+                <?php echo image_modalSubController::get_images_modal(); ?>
             </div>
             <div class="sidebar">
                 <div class="selected_image">
