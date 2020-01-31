@@ -11,15 +11,15 @@ class load_filesController extends controller {
                 }
             }
     
-            $file_path = $dir . implode("/", $uri);
-            if (file_exists( config_dir::BASE($file_path) )) {
+            $file_path = $dir . "/" . implode("/", $uri);
+            if (file_exists( config_dir::BUILD_CMS_DIR($file_path) )) {
                 $file = file_get_contents(
-                    config_dir::BASE(
+                    config_dir::BUILD_CMS_DIR(
                         $file_path
                     )
                 );
-        
-                header("Content-Type: " . self::get_content_type($file));
+
+                header("Content-Type: " . self::get_content_type(config_dir::BUILD_CMS_DIR($file_path)));
         
                 echo $file;
             }
@@ -33,7 +33,20 @@ class load_filesController extends controller {
     }
 
     private static function get_content_type($file) {
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        return $finfo->buffer($file);;
+        $file_to_array = explode("/", $file);
+        $the_file_name = end($file_to_array);
+        $file_array = explode(".", $the_file_name);
+        $file_extension = end($file_array);
+        
+        if ($file_extension === "css") {
+            return "text/css";
+        }
+        if ($file_extension === "js") {
+            return "application/javascript";
+        }
+        else {
+            $finfo = new finfo();
+            return $finfo->file($file, FILEINFO_MIME_TYPE);
+        }
     }
 }

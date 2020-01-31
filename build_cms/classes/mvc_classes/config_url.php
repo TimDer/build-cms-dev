@@ -85,7 +85,7 @@ class config_url {
             return self::BASE("/build_cms/view/template" . $url);
         }
         public static function VIEW($url = "") {
-            return self::BASE("/build_cms/view" . $url);
+            return self::BASE("/get_data" . $url);
         }
     /* ============================== /view ============================== */
 }

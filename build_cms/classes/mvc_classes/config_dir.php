@@ -8,6 +8,9 @@ class config_dir {
     public static function ROUTES($dir = "") {
         return self::BASE("/build_cms/routes") . $dir;
     }
+    public static function BUILD_CMS_DIR($dir = "") {
+        return __DIR__ . "/../.." . $dir;
+    }
 
     /* ============================== view ============================== */
         public static function VIEW_TEMP($dir = "") {
