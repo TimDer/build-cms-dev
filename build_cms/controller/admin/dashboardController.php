@@ -1,6 +1,6 @@
 <?php
 
-class dashboard extends controller {
+class dashboardController extends controller {
     public static function get_dashboard() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("user", function () {

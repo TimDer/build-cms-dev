@@ -1,6 +1,6 @@
 <?php
 
-class image_modal extends controller {
+class image_modalSubController extends controller {
     public static function get_images_modal() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {

@@ -1,6 +1,6 @@
 <?php
 
-class load_files extends controller {
+class load_filesController extends controller {
     public static function load_file($dir, $message_404) {
         $uri = user_url::$new_uri;
         

@@ -1,46 +1,38 @@
 <?php
 
-class save_page {
+class save_pageController extends controller {
     public static function save_pages() {
-        user_session::check_session("user_id", function () {
-            user_session::check_session_permission("author", function () {
-                database::reset();
+        // Save the basics and get the page id
+        $page_id = self::basics(user_url::$post_var);
         
-                $NEW_POST = database::escape($_POST);
+        // Content
+        if (isset(user_url::$post_var["content"])) {
+            self::save_blocks(user_url::$post_var["content"], "content", $page_id);
+        }
 
-                // Save the basics and get the page id
-                $page_id = self::basics($NEW_POST);
-                
-                // Content
-                if (isset($NEW_POST["content"])) {
-                    self::save_blocks($NEW_POST["content"], "content", $page_id);
-                }
+        // Left sidebar
+        if (isset(user_url::$post_var["left_sidebar_array"])) {
+            self::save_blocks(user_url::$post_var["left_sidebar_array"], "left_sidebar", $page_id);
+        }
 
-                // Left sidebar
-                if (isset($NEW_POST["left_sidebar_array"])) {
-                    self::save_blocks($NEW_POST["left_sidebar_array"], "left_sidebar", $page_id);
-                }
+        // Right sidebar
+        if (isset(user_url::$post_var["right_sidebar_array"])) {
+            self::save_blocks(user_url::$post_var["right_sidebar_array"], "right_sidebar", $page_id);
+        }
 
-                // Right sidebar
-                if (isset($NEW_POST["right_sidebar_array"])) {
-                    self::save_blocks($NEW_POST["right_sidebar_array"], "right_sidebar", $page_id);
-                }
+        // Delete blocks
+        if (isset(user_url::$post_var["del_blocks_array"])) {
+            self::delete_blocks(user_url::$post_var["del_blocks_array"], $page_id);
+        }
 
-                // Delete blocks
-                if (isset($NEW_POST["del_blocks_array"])) {
-                    self::delete_blocks($NEW_POST["del_blocks_array"], $page_id);
-                }
+        header("Content-type: text/javascript");
 
-                header("Content-type: text/javascript");
+        $return_json = array(
+            "page_id"   => $page_id,
+            "status"    => "success"
+        );
 
-                $return_json = array(
-                    "page_id"   => $page_id,
-                    "status"    => "success"
-                );
-
-                echo json_encode( $return_json );
-            });
-        });
+        echo json_encode( $return_json );
     }
 
     // save / add blocks
