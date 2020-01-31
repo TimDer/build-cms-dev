@@ -18,10 +18,6 @@ class admin_basics {
         user_session::check_session_permission("author-only", function () {
             echo self::private_main_menu_load_css("main-menu-author") . PHP_EOL;
         });
-        // load user
-        /*user_session::check_session_permission("user", function () {
-            echo self::private_main_menu_load_css("main-menu-user") . PHP_EOL;
-        });*/
     }
 
     public static function main_menu_load_js() {
