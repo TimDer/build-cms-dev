@@ -8,7 +8,7 @@ routes::set("/admin/keep-user-loggedin", "keep_user_loggedin", function () {
     user_session::keep_user_loggedin();
 });
 
-routes::set(false, false, function () {
+routes::set(false, function () {
     echo "hallo else";
 });
 
