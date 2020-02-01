@@ -28,8 +28,9 @@ class save_pageController extends controller {
         header("Content-type: text/javascript");
 
         $return_json = array(
-            "page_id"   => $page_id,
-            "status"    => "success"
+            "page_id"       => $page_id,
+            "status"        => "success",
+            "time_stamp"    => date("Y-m-d G:i:s")
         );
 
         echo json_encode( $return_json );
@@ -353,6 +354,9 @@ class save_pageController extends controller {
         $info_image         = $data_array["category_info"]["image"];
         $info_text          = $data_array["category_info"]["text"];
 
+        // time_stamp
+        $time_stamp         = $data_array["general_time_stamp"];
+
         database::query("UPDATE `page` SET `pagename`='$general_pagename',
                                             `status`='$general_status',
                                             `home_page`='$general_homepage',
@@ -363,7 +367,8 @@ class save_pageController extends controller {
                                             `description`='$seo_description',
                                             `post_page`='$page_category',
                                             `category_image`='$info_image',
-                                            `category_text`='$info_text'
+                                            `category_text`='$info_text',
+                                            `time_stamp`='$time_stamp'
                                             WHERE id = '$id'");
 
         return $id;
