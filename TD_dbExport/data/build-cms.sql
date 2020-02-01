@@ -46,7 +46,7 @@ CREATE TABLE `page` (
   `category_text` varchar(6000) NOT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 ALTER TABLE `page` ADD PRIMARY KEY (`id`);
 
 -- page_blocks
@@ -58,7 +58,7 @@ CREATE TABLE `page_blocks` (
   `building_blocks_area` varchar(6000) NOT NULL,
   `the_order` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `page_blocks` ADD PRIMARY KEY (`id`);
 
 -- page_cc_block
@@ -119,7 +119,7 @@ CREATE TABLE `page_wysiwyg` (
   `block_id` bigint(20) NOT NULL,
   `data` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_wysiwyg` ADD PRIMARY KEY (`id`);
 
 -- settings
