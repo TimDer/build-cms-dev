@@ -17,7 +17,7 @@
                 <th>Title</th>
                 <th>Status</th>
                 <th>Edit / Delete</th>
-                <th class="table-data">Date (American format)</th>
+                <th class="table-data">Date (International format)</th>
             </tr>
         </thead>
         <tbody>
