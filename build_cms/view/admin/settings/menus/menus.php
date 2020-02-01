@@ -16,15 +16,10 @@
 
     <div class="tab_container">
         <div class="edit_container menu_container active" id="edit_menu">
-            edit
+            <?php controller::getView("/admin/settings/menus/edit.php"); ?>
         </div>
         <div class="add_container menu_container" id="add_menu">
-            <input type="text" name="">
+            <?php controller::getView("/admin/settings/menus/add.php"); ?>
         </div>
     </div>
-
-
 </div>
-
-
-
