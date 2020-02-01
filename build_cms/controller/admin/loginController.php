@@ -2,11 +2,15 @@
 
 class loginController extends controller {
     public static function get_login_view() {
-        // get login error
-        loginModal::$user_error = self::user_error();
-        loginModal::$user_error_display_username = self::user_error_display_username();
+        user_session::check_session("user_id", function () {
+            header("Location: " . config_url::BASE("/admin"));
+        }, function () {
+            // get login error
+            loginModal::$user_error = self::user_error();
+            loginModal::$user_error_display_username = self::user_error_display_username();
 
-        self::getView("/admin/login/login.php");
+            self::getView("/admin/login/login.php");
+        });
     }
 
     public static function user_error() {
