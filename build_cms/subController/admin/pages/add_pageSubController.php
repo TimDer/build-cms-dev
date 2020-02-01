@@ -100,7 +100,9 @@ class add_pageSubController extends controller {
     public static function get_category_image_src() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {
-                self::$get_category_image_src_return = config_url::VIEW("/images/" . add_pageController::$get_page_array_array['category_image']);
+                if (isset(add_pageController::$get_page_array_array['category_image'])) {
+                    self::$get_category_image_src_return = config_url::VIEW("/images/" . add_pageController::$get_page_array_array['category_image']);
+                }
             });
         });
 
@@ -111,7 +113,9 @@ class add_pageSubController extends controller {
     public static function get_category_image() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {
-                self::$get_category_image_return = add_pageController::$get_page_array_array['category_image'];
+                if ( isset(add_pageController::$get_page_array_array['category_image']) ) {
+                    self::$get_category_image_return = add_pageController::$get_page_array_array['category_image'];
+                }
             });
         });
 
