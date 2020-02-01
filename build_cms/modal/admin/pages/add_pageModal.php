@@ -18,6 +18,8 @@ class add_pageModal {
     public static $status_published     = "";
     // if (page home)
     public static $page_home            = "";
+    // time stamp
+    public static $time_stamp           = "";
     /* ==================== /General ==================== */
 
     /* ==================== SEO ==================== */

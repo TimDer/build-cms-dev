@@ -167,6 +167,11 @@
 /* ============================== ajax functions ============================== */
 
     function ajax_success(this_massage) {
+        // set time_stamp
+        if ($('input[name="time_stamp"]').attr("value") === "") {
+            $('input[name="time_stamp"]').attr("value", this_massage.time_stamp);
+        }
+
         // delete del blocks
         $("#del_area_blocks > .block").each(function () {
             $(this).remove();
@@ -250,6 +255,7 @@ $(document).ready(function () {
             var general_status      = $('select[name="status"]').val();
             var general_homepage    = $('input[name="homepage"]').attr("checked");
             var general_page_id     = $('input[name="page_id"]').attr("value");
+            var general_time_stamp  = $('input[name="time_stamp"]').attr("value");
         /* ============================== /General ============================== */
 
         /* ============================== SEO ============================== */
@@ -315,6 +321,7 @@ $(document).ready(function () {
             data_array["general_status"]        = general_status;
             data_array["general_homepage"]      = general_homepage;
             data_array["general_page_id"]       = general_page_id;
+            data_array["general_time_stamp"]    = general_time_stamp;
 
             // SEO
             data_array["seo_pagetitle"]         = seo_pagetitle;
