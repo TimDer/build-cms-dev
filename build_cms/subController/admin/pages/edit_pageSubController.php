@@ -29,7 +29,7 @@ class edit_pageSubController extends controller {
         $return = "";
 
         foreach ($array as $key => $value) {
-            $date = date("l, m/d/Y", strtotime($value['time_stamp']));
+            $date = date("l, ( Y-m-d G:i )", strtotime($value['time_stamp']));
 
             $return .=  '<tr>';
 
