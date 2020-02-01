@@ -12,16 +12,21 @@ class load_filesController extends controller {
             }
     
             $file_path = $dir . "/" . implode("/", $uri);
-            if (file_exists( config_dir::BUILD_CMS_DIR($file_path) )) {
-                $file = file_get_contents(
-                    config_dir::BUILD_CMS_DIR(
-                        $file_path
-                    )
-                );
+            if ( !is_dir( config_dir::BASE($file_path) ) && file_exists( config_dir::BASE($file_path) ) ) {
+                // get file extention
+                $file_to_array = explode("/", $file_path);
+                $the_file_name = end($file_to_array);
+                $file_array = explode(".", $the_file_name);
+                $file_extension = end($file_array);
 
-                header("Content-Type: " . self::get_content_type(config_dir::BUILD_CMS_DIR($file_path)));
-        
-                echo $file;
+                if ($file_extension === "php") {
+                    echo "php files are blocked";
+                }
+                else {
+                    $file = file_get_contents( config_dir::BASE($file_path) );
+                    header("Content-Type: " . self::get_content_type( config_dir::BASE($file_path), $file_extension) );
+                    echo $file;
+                }
             }
             else {
                 echo $message_404;
@@ -32,16 +37,11 @@ class load_filesController extends controller {
         }
     }
 
-    private static function get_content_type($file) {
-        $file_to_array = explode("/", $file);
-        $the_file_name = end($file_to_array);
-        $file_array = explode(".", $the_file_name);
-        $file_extension = end($file_array);
-        
+    private static function get_content_type($file, $file_extension) {
         if ($file_extension === "css") {
             return "text/css";
         }
-        if ($file_extension === "js") {
+        elseif ($file_extension === "js") {
             return "application/javascript";
         }
         else {
