@@ -17,15 +17,46 @@
         .edit_grid > .main_edit_container {
             flex: 4;
         }
-    /* ========== basics ========== */
+        .edit_grid > .main_edit_container > * {
+            margin-bottom: 20px;
+        }
 
-    /* ========== main_edit_container ========== */
+        .edit_sidebar > div {
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid black;
+        }
+        input {
+            box-sizing: border-box;
+        }
+        input[type="text"] {
+            background-color: #CECECE;
+        }
+    /* ========== /basics ========== */
+
+    /* ========== main menu area ========== */
         .edit_menu_area {
             background-color: gray;
             min-height: 300px;
             width: 100%;
         }
-    /* ========== /main_edit_container ========== */
+    /* ========== /main menu area ========== */
+
+    /* ========== box sidebar ========== */
+        .edit_sidebar > .box {
+            border: 1px solid black;
+        }
+        .edit_sidebar > .box > .header, .add_page_area > .main {
+            border-bottom: 1px solid black;
+        }
+        .edit_sidebar > .box > .footer, .add_page_area > .header, .add_page_area > .main {
+            padding: 10px;
+        }
+    /* ========== /box sidebar ========== */
 
 
 /* ======================================== /edit ======================================== */
