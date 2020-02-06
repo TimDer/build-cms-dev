@@ -20,9 +20,9 @@ else {
     $files = array("error" => "No databasses in this directory");
 }
 
+require __DIR__ . "/config.inc.php";
 if (isset($_GET["db"]) AND isset($_GET["dir"]) AND isset($_GET["old_dir"]) AND !isset($files["error"]) AND ( $_GET["dir"] === $_GET["old_dir"] )) {
     require __DIR__ . "/TD_dbImport.php";
-    require __DIR__ . "/config.inc.php";
     $import_database = new TD_dbImport($TD_dbExport_DB);
     $import_database->import_to_database($_GET);
 }
@@ -49,6 +49,13 @@ if (isset($_GET["db"]) AND isset($_GET["dir"]) AND isset($_GET["old_dir"]) AND !
             <?php } ?>
         </select>
         <input type="submit" value="Submit">
+        <h2 class="database_credentials_heading">Your database credentials are:</h2>
+        <div class="database_credentials">
+            <p>Server:   "<?php echo $TD_dbExport_DB["servername"]; ?>"</p>
+            <p>User:     "<?php echo $TD_dbExport_DB["username"]; ?>"</p>
+            <p>Password: "<?php echo $TD_dbExport_DB["password"]; ?>"</p>
+            <p>Database: "<?php echo $TD_dbExport_DB["dbname"]; ?>"</p>
+        </div>
     </form>
 </body>
 </html>

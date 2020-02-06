@@ -36,3 +36,17 @@ form.container * {
     font-size: 50px;
     color: red;
 }
+
+.database_credentials {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.database_credentials > p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.database_credentials_heading {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 20px !important;
+}
