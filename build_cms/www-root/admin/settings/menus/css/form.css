@@ -1,5 +1,18 @@
 /* ======================================== edit ======================================== */
 
+    /* ========== saved container ========== */
+
+        .edit_saved_container {
+            padding: 15px;
+            color: white;
+            font-size: 20px;
+            box-sizing: border-box;
+            background-color: green;
+            border-radius: 5px;
+        }
+
+    /* ========== /saved container ========== */
+
     /* ========== basics ========== */
         .edit_grid {
             display: flex;
@@ -10,6 +23,12 @@
 
         .edit_grid > div {
             padding: 10px;
+        }
+        .edit_grid > div:first-child {
+            padding-left: 0px;
+        }
+        .edit_grid > div:last-child {
+            padding-right: 0px;
         }
         .edit_grid > .edit_sidebar {
             flex: 1.5;
