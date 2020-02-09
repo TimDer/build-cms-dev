@@ -1,3 +1,7 @@
+<div class="edit_saved_container">
+    Saved
+</div>
+
 <div class="edit_grid">
     <div class="edit_sidebar">
         <!-- ============================== add page area ============================== -->
