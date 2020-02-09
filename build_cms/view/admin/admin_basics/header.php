@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo config_url::VIEW("/admin/admin_basics/css/main.css"); ?>">
-    <?php admin_basics::main_menu_load_css(); ?>
     <?php controller::get_head(); ?>
     <title>Build-CMS Admin</title>
 </head>
@@ -35,28 +34,6 @@
             <li class="parent main-menu-parent" id="main_menu_dashboard">
                 <a href="<?php echo config_url::BASE("/admin/dashboard"); ?>">Dashboard</a>
             </li>
-            <li class="parent main-menu-parent main-menu-click-event" id="main_menu_pages">
-                Pages
-                <ul class="parent-menu">
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/pages"); ?>">Add page</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/pages/edit-pages"); ?>">Edit pages</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="parent main-menu-parent main-menu-click-event" id="main_menu_media">
-                Media
-                <ul class="parent-menu">
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/media/images"); ?>">Images</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/media/downloads"); ?>">Downloads</a>
-                    </li>
-                </ul>
-            </li>
             <li class="parent main-menu-parent main-menu-click-event" id="main_menu_plugins">
                 Plugins
                 <ul class="parent-menu">
@@ -76,15 +53,6 @@
                 <ul class="parent-menu">
                     <li class="child">
                         <a href="<?php echo config_url::BASE("/admin/settings/general"); ?>">General</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/settings/menus"); ?>">Menus</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/settings/custom-css"); ?>">Custom css</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/settings/templates"); ?>">Templates</a>
                     </li>
                     <li class="child">
                         <a href="<?php echo config_url::BASE("/admin/settings/users"); ?>">Users</a>

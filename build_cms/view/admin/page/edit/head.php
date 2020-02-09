@@ -1,1 +1,0 @@
-<link rel="stylesheet" href="<?php echo config_url::VIEW("/admin/page/edit/css/main.css"); ?>">
