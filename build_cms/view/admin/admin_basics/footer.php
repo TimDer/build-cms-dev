@@ -15,7 +15,6 @@
 <script src="<?php echo config_url::VIEW("/admin/admin_basics/js/user_dropdown_menu.js"); ?>"></script>
 <script src="<?php echo config_url::VIEW("/admin/admin_basics/js/td-ajax.js"); ?>"></script>
 <script src="<?php echo config_url::VIEW("/admin/admin_basics/js/keep_user_loggedin.js"); ?>"></script>
-<?php admin_basics::main_menu_load_js(); ?>
 <?php controller::get_footer(); ?>
 
 

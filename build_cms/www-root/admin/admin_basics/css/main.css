@@ -131,12 +131,6 @@ body {
         display: none;
     }
 
-    /* main manu hide */
-        aside #main_menu_pages, aside #main_menu_media, aside #main_menu_plugins, aside #main_menu_settings {
-            display: none;
-        }
-    /* main manu hide */
-
 /* ============================== /sidebar ============================== */
 
 

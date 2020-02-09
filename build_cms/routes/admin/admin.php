@@ -18,24 +18,9 @@
     }, "user_id", "user");
 /* ============================== /dashboard dir ============================== */
 
-/* ============================== pages dir ============================== */
-    routes::set("/admin/pages", function() {
-        add_pageController::get_add_page();
-    }, "user_id", "author");
-
-    routes::set("/admin/pages/edit-pages", function() {
-        edit_pageController::get_select_page();
-    }, "user_id", "author");
-/* ============================== /pages dir ============================== */
-
 /* ============================== settings dir ============================== */
     // settings general
     routes::set("/admin/settings/general", function () {
         generalController::get_general();
-    }, "user_id", "admin");
-
-    // menus
-    routes::set("/admin/settings/menus", function () {
-        menusController::get_menus();
     }, "user_id", "admin");
 /* ============================== /settings dir ============================== */

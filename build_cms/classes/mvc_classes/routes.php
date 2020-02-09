@@ -15,16 +15,22 @@ class routes {
         self::$routes[$routes_source]["function"]       = $function;
     }
 
-    public static function get() {
+    public static function get($user_redirect = "") {
         if (array_key_exists(user_url::uri_string(), self::$routes)) {
             if (self::run_rout_check_login(self::$routes[user_url::uri_string()]["user_session"], self::$routes[user_url::uri_string()]["user_type"])) {
                 user_url::$routes_uri = database::escape(user_url::uri());
                 self::$routes[user_url::uri_string()]["function"]->__invoke();
             }
+            else {
+                header("Location: " . config_url::BASE($user_redirect));
+            }
         }
         elseif (user_url::uri_string() === "/") {
             if (self::run_rout_check_login(self::$routes["build-cms-templates"]["user_session"], self::$routes["build-cms-templates"]["user_type"])) {
                 self::$routes["build-cms-templates"]["function"]->__invoke();
+            }
+            else {
+                header("Location: " . config_url::BASE($user_redirect));
             }
         }
         else {
@@ -38,11 +44,17 @@ class routes {
                 if (self::run_rout_check_login(self::$routes[$function_invoke]["user_session"], self::$routes[$function_invoke]["user_type"])) {
                     self::$routes[$function_invoke]["function"]->__invoke();
                 }
+                else {
+                    header("Location: " . config_url::BASE($user_redirect));
+                }
             }
             else {
                 if (self::run_rout_check_login(self::$routes["build-cms-templates"]["user_session"], self::$routes["build-cms-templates"]["user_type"])) {
                     user_url::$new_uri = database::escape(user_url::uri());
                     self::$routes["build-cms-templates"]["function"]->__invoke();
+                }
+                else {
+                    header("Location: " . config_url::BASE($user_redirect));
                 }
             }
         }
