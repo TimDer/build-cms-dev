@@ -10,6 +10,21 @@ class controller {
         }
     }
 
+    // get view with template
+    public static function getAdminTemplateView($file = "") {
+        self::getAdminHeader();
+        self::getView($file);
+        self::getAdminFooter();
+    }
+    // get the header
+    public static function getAdminHeader() {
+        require config_dir::VIEW("/admin/admin_basics/header.php");
+    }
+    // get the footer
+    public static function getAdminFooter() {
+        require config_dir::VIEW("/admin/admin_basics/footer.php");
+    }
+
     // set functions
     public static function set_head($view_head) {
         self::$head = config_dir::VIEW("/" . $view_head);
