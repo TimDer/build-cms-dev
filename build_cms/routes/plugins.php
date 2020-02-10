@@ -2,21 +2,19 @@
 
 // install a plugin
 routes::set("/admin/plugins/install", function () {
-    controller::getView("/admin/admin_basics/header.php");
+    controller::getAdminHeader();
     echo "install";
-    controller::getView("/admin/admin_basics/footer.php");
+    controller::getAdminFooter();
 }, "user_id", "admin");
 
 // create a plugin
 routes::set("/admin/plugins/create", function () {
-    controller::getView("/admin/admin_basics/header.php");
+    controller::getAdminHeader();
     echo "create";
-    controller::getView("/admin/admin_basics/footer.php");
+    controller::getAdminFooter();
 }, "user_id", "admin");
 
 // edit plugins
 routes::set("/admin/plugins", function () {
-    controller::getView("/admin/admin_basics/header.php");
-    echo "plugins";
-    controller::getView("/admin/admin_basics/footer.php");
+    pluginsController::get_plugins_view();
 }, "user_id", "admin");
