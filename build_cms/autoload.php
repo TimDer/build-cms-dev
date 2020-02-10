@@ -1,17 +1,5 @@
 <?php
 
-// skip the view folder
-function check_for_view_folder($path, $dir) {
-    $path_dir = $path . "/" . $dir;
-    $check = __DIR__ . "/view";
-    if ($path_dir === $check) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
 // select a file to require
 function auto_select_a_dir($dir, $file, $return = false) {
     if (file_exists($dir . "/" . $file)) {
@@ -20,7 +8,7 @@ function auto_select_a_dir($dir, $file, $return = false) {
 
     foreach (scandir($dir) as $item) {
         // (skip the '.', '..' or the 'view' folder) or (skip everything if the file has bin found)
-        if ($return || $item == '.' || $item == '..' || ($item === "view" AND check_for_view_folder($dir, $item)) ) {
+        if ($return || $item == '.' || $item == '..' || $item === "view" || $item === "www-root") {
             continue;
         }
 
