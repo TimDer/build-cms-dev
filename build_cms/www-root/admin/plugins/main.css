@@ -1,3 +1,39 @@
-.test {
-    margin: auto;
-}
+/* ============================== basics ============================== */
+    h1 {
+        padding: 21px 0;
+        margin: 0;
+    }
+
+    .plugins_main_container {
+        padding: 10px;
+    }
+
+    .plugins_header {
+        background-color: #BABABA;
+    }
+
+    
+/* ============================== /basics ============================== */
+
+/* ============================== table ============================== */
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: left;
+    }
+
+    .table th {
+        font-size: 20px;
+    }
+
+    .table td {
+        font-size: 17px;
+    }
+
+    .table, .table td, .table th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
+/* ============================== /table ============================== */
