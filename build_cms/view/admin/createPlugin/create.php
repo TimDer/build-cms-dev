@@ -6,11 +6,11 @@
 <div class="plugins_main_container">
     <form action="/admin_submit/plugins/create" method="post" class="td-ajax form_container">
         <p>Plugin name:</p>
-        <input type="text" name="plugin_name">
+        <input type="text" name="plugin_name" required>
         <p>Plugin directory name:</p>
-        <input type="text" name="directory_name">
+        <input type="text" name="directory_name" required>
         <p>Plugin description:</p>
-        <input type="text" name="description">
+        <input type="text" name="description" required>
 
         <input type="submit" value="Add plugin">
     </form>
