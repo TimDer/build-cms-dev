@@ -8,7 +8,7 @@
         <p>Plugin name:</p>
         <input type="text" name="plugin_name" required>
         <p>Plugin directory name:</p>
-        <input type="text" name="directory_name" required>
+        <input type="text" name="directory_name" id="no_space_allowed" required>
         <p>Plugin description:</p>
         <input type="text" name="description" required>
 

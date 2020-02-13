@@ -9,12 +9,12 @@ routes::set("/admin/plugins/install", function () {
 
 // ============================== create a plugin ==============================
     routes::set("/admin/plugins/create", function () {
-        createPluginController::get_create_plugins_view();
+        createPluginController::get_view();
     }, "user_id", "admin");
 
     routes::set("/admin_submit/plugins/create", function () {
-        echo "done";
-    });
+        createPluginController::submit();
+    }, "user_id", "admin");
 // ============================== /create a plugin ==============================
 
 // edit plugins
