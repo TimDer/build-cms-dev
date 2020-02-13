@@ -8,9 +8,9 @@ Other required files:
 */
 
 // configs
-var successMessage  = "Success";
-var errorMessage    = "Error";
-var allowResponse   = false;
+var successMessage  = "";
+var errorMessage    = "";
+var allowResponse   = true;
 var BASE_URL        = $("#build_cms_base_url").attr("base_url");
 
 // toggle checked on checkboxes
