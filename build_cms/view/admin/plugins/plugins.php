@@ -16,7 +16,11 @@
                 <tr>
                     <td><?php echo $plugins["name"] ?></td>
                     <td><?php echo $plugins["description"] ?></td>
-                    <td>Delete</td>
+                    <td>
+                        <button delete_id="<?php echo $plugins["pluginID"]; ?>" class="delete_btn plugin_btn">Delete</button>
+                         / 
+                        <button create_installer_id="<?php echo $plugins["pluginID"]; ?>" class="create_installer_btn plugin_btn">Create-installer</button>
+                    </td>
                 </tr>
             <?php } ?>
         </tbody>
