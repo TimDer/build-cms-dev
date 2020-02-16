@@ -34,9 +34,14 @@ class routes {
             }
         }
         else {
+            $old_rout = array();
             foreach (self::$routes AS $routes_source_array_key => $routes_source_array) {
                 if (self::validate_uri(user_url::uri(), $routes_source_array["routes_array"])) {
-                    $function_invoke = $routes_source_array_key;
+                    if (count($old_rout) < count( explode("/", $routes_source_array_key) )) {
+                        $function_invoke = $routes_source_array_key;
+                        $old_rout = explode("/", trim($routes_source_array_key, "/") );
+                        self::set_new_uri(user_url::uri(), $routes_source_array["routes_array"]);
+                    }
                 }
             }
 
@@ -73,11 +78,6 @@ class routes {
                 }
                 else {
                     $return = false;
-                }
-
-                if ($uri_amount > $validate_amount AND $start === $validate_amount AND $return === true) {
-                    //set a new uri
-                    self::set_new_uri($uri, $validate);
                 }
             }
         }
