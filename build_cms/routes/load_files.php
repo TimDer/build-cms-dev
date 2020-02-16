@@ -6,4 +6,4 @@ routes::set("/admin_files/plugins", function () {
 
 routes::set("/view", function () {
     load_filesController::load_file("/www-root", "select a file (404)");
-}, "user_id", "user");
+});
