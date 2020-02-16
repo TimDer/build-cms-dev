@@ -39,7 +39,9 @@ class plugins {
             self::create_file($plugin_base_dir . "/modal/" . $plugin_dir . "_pluginModal.php");
 
             // create view/admin/menu.php
-            self::create_file($plugin_base_dir . "/view/admin/menu.php");
+            self::create_file($plugin_base_dir . "/menu.php");
+            // create view/admin/.dirPlaceholder
+            self::create_file($plugin_base_dir . "/view/admin/.dirPlaceholder");
             // create www-root/admin/main.css
             self::create_file($plugin_base_dir . "/www-root/admin/main.css");
 
