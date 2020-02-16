@@ -1,2 +1,3 @@
 pluginID,name,directory_name,description
 1,"Template loader",Template_loader,"This is the default template loader for Build-CMS"
+2,"Page builder",build_cms_page_builder,"This is the default page builder. Built by the Build_CMC foundation."
