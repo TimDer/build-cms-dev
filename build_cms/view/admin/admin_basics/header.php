@@ -19,7 +19,7 @@
                 HI,<?php echo user_session::return_user_name("user_id"); ?>
                 <ul class="main_user_menu" id="main_user_menu">
                     <li><a href="<?php echo config_url::BASE("/admin_submit/logout"); ?>">Logout</a></li>
-                    <li>Profile</li>
+                    <li><a href="<?php echo config_url::BASE("/admin/dashboard"); ?>">Profile</a></li>
                     <li><a href="<?php echo config_url::BASE(); ?>" target="_blank">Homepage</a></li>
                 </ul>
             </li>
