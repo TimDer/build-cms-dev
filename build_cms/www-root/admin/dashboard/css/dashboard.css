@@ -1,0 +1,42 @@
+/* ============================== basics ============================== */
+
+    img {
+        width: 100%;
+    }
+
+/* ============================== /basics ============================== */
+
+
+/* ============================== the main header ============================== */
+    .main_header {
+        background-color: #BABABA;
+    }
+    .main_header > h1 {
+        margin: 0;
+        padding: 21px 10px;
+    }
+/* ============================== /the main header ============================== */
+
+
+/* ============================== the main content ============================== */
+
+    .main_container {
+        display: flex;
+    }
+
+    .main_container > div {
+        padding: 10px;
+    }
+
+    .main_container > .sidebar {
+        flex: 1;
+    }
+    .main_container > .sidebar > img{
+        border-radius: 50%;
+    }
+
+    .main_container > .main_content {
+        flex: 3;
+    }
+
+/* ============================== /the main content ============================== */
