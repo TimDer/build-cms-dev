@@ -1,0 +1,1 @@
+<iframe src="<?php echo config_url::BASE("/admin_iframes/root"); ?>"></iframe>
