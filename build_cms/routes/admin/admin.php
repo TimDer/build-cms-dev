@@ -2,7 +2,7 @@
 
 /* ============================== basic admin dir ============================== */
     routes::set("/admin", function() {
-        header("Location: " . config_url::BASE("/admin/dashboard"));
+        header("Location: " . config_url::BASE());
     }, "user_id");
 /* ============================== /basic admin dir ============================== */
 
