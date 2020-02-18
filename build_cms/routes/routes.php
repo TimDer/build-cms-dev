@@ -10,7 +10,10 @@ routes::set("/admin/keep-user-loggedin", function () {
 });
 
 routes::set(false, function () {
-    echo "hallo else";
+    template_loaderController::get_template_loader_view();
 });
+routes::set("/admin_iframes/root", function () {
+    template_loaderController::get_template_view();
+}, "user_id", "user");
 
 routes::get("/admin/login");
