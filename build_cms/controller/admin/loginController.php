@@ -43,8 +43,8 @@ class loginController extends controller {
                 header("Location: " . config_url::BASE("/admin"));
             }
             else {
-                header("Location: " . config_url::BASE("/admin/login/password_is_incorrect/" . htmlentities($_POST['username'])));
+                header("Location: " . config_url::BASE("/admin/login/password_is_incorrect/" . htmlentities(user_url::$post_var['username'])));
             }
-        }, "/admin/login/user_does_not_exist/" . htmlentities($_POST['username']));
+        }, "/admin/login/user_does_not_exist/" . htmlentities(user_url::$post_var['username']));
     }
 }
