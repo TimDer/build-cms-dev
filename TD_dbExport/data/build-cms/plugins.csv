@@ -7,3 +7,4 @@ pluginID,name,directory_name,description
 6,"Simple pages",simple_pages,"This is the default simple pages plugin built by the Build_CMC foundation"
 7,"Contact Form",build_cms_contact_form,"This is the default contact form plugin built by the Build_CMC foundation"
 8,"Image slideshow",build_cms_image_slideshow,"This is the default image slideshow plugin built by the Build_CMC foundation"
+9,"TD-CMS template loader",TD-CMS_template_loader,"This template loader is meant to load templates that are compatible with TD-CMS"
