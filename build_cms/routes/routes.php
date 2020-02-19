@@ -13,7 +13,7 @@ routes::set(false, function () {
     template_loaderController::get_template_view();
 });
 routes::set("/admin/iframes/root", function () {
-    template_loaderController::get_template_loader_view();
+    template_loaderController::get_login_view();
 }, "user_id", "user");
 
 routes::get("/admin/login");
