@@ -20,7 +20,7 @@
                 <ul class="main_user_menu" id="main_user_menu">
                     <li><a href="<?php echo config_url::BASE("/admin_submit/logout"); ?>">Logout</a></li>
                     <li><a href="<?php echo config_url::BASE("/admin/dashboard"); ?>">Profile</a></li>
-                    <li><a href="<?php echo config_url::BASE(); ?>">Homepage</a></li>
+                    <li><a href="<?php echo config_url::BASE("/admin/iframes/root"); ?>">Homepage</a></li>
                 </ul>
             </li>
         </ul>

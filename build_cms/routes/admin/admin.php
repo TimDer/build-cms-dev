@@ -2,7 +2,7 @@
 
 /* ============================== basic admin dir ============================== */
     routes::set("/admin", function() {
-        header("Location: " . config_url::BASE());
+        header("Location: " . config_url::BASE("/admin/iframes/root"));
     }, "user_id");
 /* ============================== /basic admin dir ============================== */
 
