@@ -29,7 +29,9 @@ CREATE TABLE `users` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `user` varchar(6000) NOT NULL,
   `password` varchar(150) NOT NULL,
+  `password_salt` varchar(10000) NOT NULL,
   `user_type` varchar(30) NOT NULL,
+  `user_icon` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 ALTER TABLE `users` ADD PRIMARY KEY (`id`);
