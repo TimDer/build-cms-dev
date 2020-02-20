@@ -10,6 +10,12 @@
     }, "user_id");
 /* ============================== /login - logout ============================== */
 
+/* ============================== dashboard dir ============================== */
+    routes::set("/admin_submit/dashboard/user_profile", function() {
+        dashboardController::submit_user_profile_dashboard();
+    }, "user_id", "user");
+/* ============================== /dashboard dir ============================== */
+
 /* ============================== settings/general ============================== */
     routes::set("/admin_submit/settings/general", function () {
         generalController::submit_general();
