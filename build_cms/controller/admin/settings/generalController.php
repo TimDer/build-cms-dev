@@ -28,7 +28,14 @@ class generalController extends controller {
             generalModal::$sideslogan   = $form_data["sideslogan"];
 
             // membership
-            generalModal::$membership = $form_data["membership"];
+            if ( (int)$form_data["membership"] === 0 ) {
+                // false
+                generalModal::$membership = "";
+            }
+            elseif ( (int)$form_data["membership"] === 1 ) {
+                // true
+                generalModal::$membership = "checked";
+            }
 
             // user role
             if ($form_data['new_user_default_role'] === "admin") {
