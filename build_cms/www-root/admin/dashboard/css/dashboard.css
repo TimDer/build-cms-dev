@@ -48,7 +48,7 @@
         flex: 1;
     }
     .main_container > .sidebar > img{
-        border-radius: 50%;
+        border-radius: 20px;
     }
 
     .main_container > .main_content {
