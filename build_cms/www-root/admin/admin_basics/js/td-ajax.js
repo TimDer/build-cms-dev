@@ -33,7 +33,7 @@ $("form.td-ajax").on("submit", function (e) {
     var formTag = $(this);
     var action  = formTag.attr("action");
     var method  = formTag.attr("method");
-    var data    = new FormData();
+    var data    = new FormData(formTag[0]);
     
     // get the data from the input fields
     formTag.find("[name]").each(function () {
