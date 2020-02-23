@@ -32,12 +32,21 @@ class dashboardController extends controller {
 
     public static function add_edit_user_icon_submit() {
         $user_id = user_session::return_session_value("user_id");
-        $fileResult = files::upload_to_dir( config_dir::BASE("/www-root/admin/dashboard/user_icons/" . $user_id . "_"), $_FILES['add_icon'], array('jpg', 'jpeg', 'png', 'gif') );
+        $fileResult = files::upload_to_dir(
+            config_dir::BASE("/www-root/admin/dashboard/user_icons"),
+            $_FILES['add_icon'],
+            array('jpg', 'jpeg', 'png', 'gif'),
+            $user_id . "_user_icon"
+        );
 
         if (is_string($fileResult)) {
             // database
-            $fileName = mysqli_real_escape_string(database::$conn, $user_id . "_" . $_FILES['add_icon']['name']);
+            $fileName = mysqli_real_escape_string(database::$conn, $fileResult);
+            $currentFileName = database::select("SELECT `user_icon` FROM `users` WHERE `id`='$user_id'")[0]["user_icon"];
             database::query("UPDATE `users` SET `user_icon`='$fileName' WHERE `id`='$user_id'");
+            if ( $currentFileName !== "" && file_exists(config_dir::BASE("/www-root/admin/dashboard/user_icons/" . $currentFileName)) ) {
+                unlink( config_dir::BASE("/www-root/admin/dashboard/user_icons/" . $currentFileName) );
+            }
             echo "Success";
         }
         elseif (isset($fileResult["name"])) {
@@ -49,5 +58,14 @@ class dashboardController extends controller {
             $result = "The only file types that are allowed are: " . implode("/", $fileResult);
             echo $result;
         }
+    }
+
+    public static function delete_user_icon_submit() {
+        $user_id = user_session::return_session_value("user_id");
+        $data = database::select("SELECT `user_icon` FROM `users` WHERE `id`='$user_id'")[0];
+        unlink( config_dir::BASE("/www-root/admin/dashboard/user_icons/" . $data["user_icon"]) );
+        database::query("UPDATE `users` SET `user_icon`='' WHERE `id`='$user_id'");
+
+        echo "Success";
     }
 }

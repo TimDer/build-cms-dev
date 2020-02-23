@@ -13,6 +13,7 @@
 
 /* ============================== submit icon (Add/Edit/Delete) ============================== */
 
+    // ==================== Edit/Add ====================
     // select a new icon
     $("#add_icon_btn").click(function () {
         $("#add_icon_input").click();
@@ -20,19 +21,29 @@
 
     // submit Edit/Add form
     $("#add_icon_input").change(function (e) {
-        var file = $("#build_cms_base_url").attr("base_url") + "/admin_files/dashboard/user_icons/" + $("#user_id").val() + "_" + e.target.files[0].name;
+        var file = $("#build_cms_base_url").attr("base_url") + "/admin_files/dashboard/user_icons/" + $("#user_id").val() + "_user_icon." + e.target.files[0].name.split(".").pop();
 
         $("#add_icon_form").submit();
 
         setTimeout(function () {
             $("#image_user_icon").attr( "src", file );
+            $("#add_icon_input").val("");
         }, 200 );
         
     });
 
-    // submit Delete form
+    // ==================== Delete ====================
     $("#delete_icon_btn").click(function () {
-        $("#delete_icon_input").click();
+        if ( $("#image_user_icon").attr("src") !== $("#build_cms_base_url").attr("base_url") + "/admin_files/dashboard/default_user_icon.png" ) {
+            var file = $("#build_cms_base_url").attr("base_url") + "/admin_files/dashboard/default_user_icon.png";
+            $("#delete_icon_input").click();
+            setTimeout(function () {
+                $("#image_user_icon").attr( "src", file );
+            }, 200 );
+        }
+        else {
+            alert("You can not delete the default user icon");
+        }
     });
 
 /* ============================== /submit icon (Add/Edit/Delete) ============================== */

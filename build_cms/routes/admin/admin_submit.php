@@ -19,6 +19,11 @@
     routes::set("/admin_submit/dashboard/add_icon", function() {
         dashboardController::add_edit_user_icon_submit();
     }, "user_id", "user");
+
+    // delete user icon
+    routes::set("/admin_submit/dashboard/delete_icon", function() {
+        dashboardController::delete_user_icon_submit();
+    }, "user_id", "user");
 /* ============================== /dashboard dir ============================== */
 
 /* ============================== settings/general ============================== */
