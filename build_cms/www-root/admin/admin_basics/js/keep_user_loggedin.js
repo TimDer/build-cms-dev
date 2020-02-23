@@ -1,5 +1,5 @@
 function keep_user_loggedin() {
-    var time = 5 * 60 * 1000;
+    var time = 10 * 60 * 1000;
 
     setTimeout(function () {
         $.ajax({
