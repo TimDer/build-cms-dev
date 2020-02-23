@@ -16,7 +16,7 @@ class dashboardController extends controller {
     public static function submit_user_profile_dashboard() {
         $post = user_url::$post_var;
         
-        $salt = users::create_password_salt();
+        $salt = users::create_password_salt(1000, 10000);
         $password_salt = hash("sha512", $post["password"] . $salt);
         $user = $post["username"];
 
@@ -27,6 +27,27 @@ class dashboardController extends controller {
         }
         else {
             echo "Success";
+        }
+    }
+
+    public static function add_edit_user_icon_submit() {
+        $user_id = user_session::return_session_value("user_id");
+        $fileResult = files::upload_to_dir( config_dir::BASE("/www-root/admin/dashboard/user_icons/" . $user_id . "_"), $_FILES['add_icon'], array('jpg', 'jpeg', 'png', 'gif') );
+
+        if (is_string($fileResult)) {
+            // database
+            $fileName = mysqli_real_escape_string(database::$conn, $user_id . "_" . $_FILES['add_icon']['name']);
+            database::query("UPDATE `users` SET `user_icon`='$fileName' WHERE `id`='$user_id'");
+            echo "Success";
+        }
+        elseif (isset($fileResult["name"])) {
+            // error
+            echo "Error: " . $fileResult['error'];
+        }
+        else {
+            // files allowed
+            $result = "The only file types that are allowed are: " . implode("/", $fileResult);
+            echo $result;
         }
     }
 }

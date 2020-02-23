@@ -14,6 +14,11 @@
     routes::set("/admin_submit/dashboard/user_profile", function() {
         dashboardController::submit_user_profile_dashboard();
     }, "user_id", "user");
+
+    // add/edit user icon
+    routes::set("/admin_submit/dashboard/add_icon", function() {
+        dashboardController::add_edit_user_icon_submit();
+    }, "user_id", "user");
 /* ============================== /dashboard dir ============================== */
 
 /* ============================== settings/general ============================== */
