@@ -23,4 +23,9 @@
     routes::set("/admin/settings/general", function () {
         generalController::get_general();
     }, "user_id", "admin");
+
+    // 
+    routes::set("/admin/settings/users", function () {
+        usersController::get_all_users();
+    }, "user_id", "admin");
 /* ============================== /settings dir ============================== */
