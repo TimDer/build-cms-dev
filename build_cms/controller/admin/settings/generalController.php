@@ -14,6 +14,8 @@ class generalController extends controller {
                                                     sideslogan="' . user_url::$post_var["site-slogan"] . '",
                                                     membership="' . $membership . '",
                                                     new_user_default_role="' . user_url::$post_var["new-user-default-role"] . '"');
+            
+            echo "Success";
         }
     /* ============================== /submit ============================== */
 

@@ -129,14 +129,14 @@ class user_session {
 
             $new_array = array();
     
-            function loop($value) {
+            function keep_user_loggedin_user_session_loop($value) {
                 if (!is_array($value)) {
                     return $value;
                 }
     
                 foreach ($value as $item_key => $item) {
                     if (is_array($item)) {
-                        $return[$item_key] = loop($item);
+                        $return[$item_key] = keep_user_loggedin_user_session_loop($item);
                     }
                     else {
                         $return[$item_key] = $item;
@@ -147,7 +147,7 @@ class user_session {
             }
     
             // run
-            $new_array = loop($_SESSION);
+            $new_array = keep_user_loggedin_user_session_loop($_SESSION);
             $_SESSION = array();
             $_SESSION = $new_array;
         });
