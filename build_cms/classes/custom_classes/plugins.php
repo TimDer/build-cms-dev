@@ -1,11 +1,6 @@
 <?php
 
 class plugins {
-    private static function create_file($dir_file) {
-        $create = fopen($dir_file, "w");
-        fclose($create);
-    }
-
     public static function create_plugin_folder($plugin_dir) {
         if ( !is_dir( config_dir::BASE("/plugins/" . $plugin_dir) ) ) {
             $plugin_base_dir = config_dir::BASE("/plugins/" . $plugin_dir);
@@ -32,21 +27,21 @@ class plugins {
 
             /* ============================== create files ============================== */
             // create classes/pluginClass_{plugin_dir}.php
-            self::create_file($plugin_base_dir . "/classes/pluginClass_" . $plugin_dir . ".php");
+            files::create_file($plugin_base_dir . "/classes/pluginClass_" . $plugin_dir . ".php");
             // create controller/{plugin_dir}_pluginController.php
-            self::create_file($plugin_base_dir . "/controller/" . $plugin_dir . "_pluginController.php");
+            files::create_file($plugin_base_dir . "/controller/" . $plugin_dir . "_pluginController.php");
             // create modal/{plugin_dir}_pluginModal.php
-            self::create_file($plugin_base_dir . "/modal/" . $plugin_dir . "_pluginModal.php");
+            files::create_file($plugin_base_dir . "/modal/" . $plugin_dir . "_pluginModal.php");
 
             // create view/admin/menu.php
-            self::create_file($plugin_base_dir . "/menu.php");
+            files::create_file($plugin_base_dir . "/menu.php");
             // create view/admin/.dirPlaceholder
-            self::create_file($plugin_base_dir . "/view/admin/.dirPlaceholder");
+            files::create_file($plugin_base_dir . "/view/admin/.dirPlaceholder");
             // create www-root/admin/main.css
-            self::create_file($plugin_base_dir . "/www-root/admin/main.css");
+            files::create_file($plugin_base_dir . "/www-root/admin/main.css");
 
             // create routes.php
-            self::create_file($plugin_base_dir . "/routes.php");
+            files::create_file($plugin_base_dir . "/routes.php");
             /* ============================== /create files ============================== */
         }
     }
