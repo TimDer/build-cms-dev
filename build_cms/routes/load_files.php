@@ -18,6 +18,12 @@ routes::set("/admin_files/root", function () {
 }, "user_id", "user");
 // ============================== /template_loader login files ==============================
 
+// ============================== Users www-root dir ==============================
+routes::set("/admin_files/settings/users", function () {
+    load_filesController::load_file("/www-root/admin/settings/users", "select a file (404)");
+}, "user_id", "admin");
+// ============================== Users www-root dir ==============================
+
 routes::set("/view", function () {
     load_filesController::load_file("/www-root", "select a file (404)");
 });
