@@ -1,0 +1,42 @@
+/* ============================== the main header ============================== */
+    .main_header {
+        background-color: #BABABA;
+    }
+    .main_header > h1 {
+        margin: 0;
+        padding: 21px 5px;
+    }
+/* ============================== /the main header ============================== */
+
+/* ============================== the main content area ============================== */
+
+    .main_content_area {
+        padding: 10px;
+    }
+
+/* ============================== /the main content area ============================== */
+
+/* ============================== table ============================== */
+
+    .table {
+        border-collapse: collapse;
+        width: 100%;
+        text-align: left;
+    }
+
+    .table th {
+        font-size: 20px;
+    }
+
+    .table td {
+        font-size: 17px;
+    }
+
+    .table, .table td, .table th {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        border-top: 1px solid;
+        border-bottom: 1px solid;
+    }
+
+/* ============================== /table ============================== */
