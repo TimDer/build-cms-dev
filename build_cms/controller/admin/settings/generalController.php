@@ -49,10 +49,7 @@ class generalController extends controller {
             }
 
             self::set_head("/admin/settings/general/head.php");
-
-            self::getView("/admin/admin_basics/header.php");
-            self::getView("/admin/settings/general/general.php");
-            self::getView("/admin/admin_basics/footer.php");
+            self::getAdminTemplateView("/admin/settings/general/general.php");
         }
     /* ============================== /view ============================== */
 }

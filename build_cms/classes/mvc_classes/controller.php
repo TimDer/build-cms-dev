@@ -18,6 +18,7 @@ class controller {
     }
     // get the header
     public static function getAdminHeader() {
+        admin_basicsModal::$version = database::select("SELECT `cms_version` FROM `settings`")[0]["cms_version"];
         require config_dir::VIEW("/admin/admin_basics/header.php");
     }
     // get the footer

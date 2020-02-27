@@ -11,7 +11,7 @@
     
 <header>
     <div>
-        <p>Build-CMS 1.0 beta 1</p>
+        <p>Build-CMS <?php echo admin_basicsModal::$version; ?></p>
     </div>
     <div>
         <ul id="dropdown_user_menu">
