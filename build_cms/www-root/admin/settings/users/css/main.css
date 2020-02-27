@@ -16,6 +16,38 @@
 
 /* ============================== /the main content area ============================== */
 
+/* ============================== buttons ============================== */
+
+    .btn {
+        margin-bottom: 10px;
+        padding: 15px;
+        border: none;
+        color: white;
+        border-radius: 5px;
+    }
+
+    .btn-green {
+        background-color: green;
+    }
+
+    .btn-green-affect:hover {
+        background-color: #009900;
+    }
+
+    .btn-green-affect:active {
+        background-color: green;
+    }
+
+    .btn-block {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    label.btn-block {
+        display: inline-block;
+    }
+
+/* ============================== /buttons ============================== */
+
 /* ============================== table ============================== */
 
     .table {
@@ -40,3 +72,50 @@
     }
 
 /* ============================== /table ============================== */
+
+
+/* ============================== form ============================== */
+
+    .form-control input, .form-control select {
+        padding: 10px;
+        background-color: #969696;
+        border: 0;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .form-control input[type="file"] {
+        display: none;
+    }
+
+    .form-control p {
+        font-weight: 600;
+        margin-bottom: 0;
+    }
+
+    .form-control label {
+        margin: 0;
+    }
+
+    .form-control .btn {
+        padding: 10px !important;
+    }
+
+    .form-control input[type="submit"] {
+        margin-top: 22px;
+        background-color: green;
+        color: white;
+    }
+
+    .form-control input[type="submit"]:hover {
+        margin-top: 22px;
+        background-color: #009900;
+    }
+
+    .form-control input[type="submit"]:active {
+        margin-top: 22px;
+        background-color: green;
+    }
+
+/* ============================== /form ============================== */
