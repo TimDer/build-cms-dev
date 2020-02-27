@@ -31,3 +31,15 @@
         generalController::submit_general();
     }, "user_id", "admin");
 /* ============================== /settings/general ============================== */
+
+/* ============================== settings/users ============================== */
+    // add of edit a user
+    routes::set("/admin_submit/settings/users", function () {
+        usersController::submit_user_edit();
+    }, "user_id", "admin");
+
+    // delete a user
+    routes::set("/admin_submit/settings/users/delete", function () {
+        usersController::submit_delete_a_user();
+    }, "user_id", "admin");
+/* ============================== /settings/users ============================== */

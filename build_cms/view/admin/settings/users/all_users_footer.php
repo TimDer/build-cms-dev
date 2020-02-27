@@ -1,0 +1,1 @@
+<script src="<?php echo config_url::BASE("/admin_files/settings/users/js/main.js"); ?>"></script>
