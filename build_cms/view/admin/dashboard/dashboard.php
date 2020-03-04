@@ -39,5 +39,13 @@
             </form>
             <button class="save-btn" id="login_credentials_save_btn">Reset</button>
         </div>
+
+        <?php // ======================================== widgets area ======================================== ?>
+            <?php foreach (plugins::$dashboard_widgets AS $widgets) { ?>
+                <div id="<?php echo $widgets["id"] ?>" class="main_plugin_widget">
+                    <?php echo $widgets["function"]->__invoke(); ?>
+                </div>
+            <?php } ?>
+        <?php // ======================================== /widgets area ======================================== ?>
     </div>
 </div>
