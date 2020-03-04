@@ -115,7 +115,7 @@ class user_session {
                 header("Location: " . config_url::BASE($else));
             }
         }
-        else {
+        elseif (is_callable($else)) {
             $else->__invoke();
         }
     }

@@ -113,4 +113,14 @@
         }
     /* ========== /form ========== */
 
+    /* ========== plugin area ========== */
+        .main_container > .main_content > .main_plugin_widget {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+    /* ========== /plugin area ========== */
+
 /* ============================== /the main content ============================== */

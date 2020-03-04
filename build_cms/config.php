@@ -20,3 +20,7 @@ database::connect(
         "dbname"     => "build-cms"
     )
 );
+
+// plugins
+plugins::call_plugin_definer(true);
+plugins::call_plugin_routes(true);
