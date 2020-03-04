@@ -33,5 +33,5 @@ CREATE TABLE `users` (
   `user_type` varchar(30) NOT NULL,
   `user_icon` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 ALTER TABLE `users` ADD PRIMARY KEY (`id`);
