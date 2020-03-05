@@ -13,7 +13,8 @@ class generalController extends controller {
             database::query('UPDATE settings SET sidetitle="' . user_url::$post_var["site-title"] . '",
                                                     sideslogan="' . user_url::$post_var["site-slogan"] . '",
                                                     membership="' . $membership . '",
-                                                    new_user_default_role="' . user_url::$post_var["new-user-default-role"] . '"');
+                                                    new_user_default_role="' . user_url::$post_var["new-user-default-role"] . '",
+                                                    tamplateLoaderID="' . user_url::$post_var["set-a-template-loader"] . '"');
             
             echo "Success";
         }
@@ -24,10 +25,13 @@ class generalController extends controller {
             $pluginsDir = scandir( config_dir::BASE("/plugins") );
             foreach ($pluginsDir AS $plugin) {
                 if (file_exists( config_dir::BASE("/plugins/" . $plugin . "/index.php") )) {
+                    $sqlDataPlugins = database::select("SELECT `pluginID` AS `id`, `name` FROM `plugins` WHERE `directory_name`='$plugin'")[0];
                     generalModal::$templateLoader[] = array(
-                        "dir_name" => $plugin,
-                        "displayName" => database::select("SELECT `name` FROM `plugins` WHERE `directory_name`='$plugin'")[0]["name"]
+                        "id" => $sqlDataPlugins["id"],
+                        "displayName" => $sqlDataPlugins["name"]
                     );
+                    $sqlDataSettings = database::select("SELECT `tamplateLoaderID` AS `id` FROM settings")[0];
+                    generalModal::$templateLoaderSelectedID = (int)$sqlDataSettings["id"];
                 }
             }
 

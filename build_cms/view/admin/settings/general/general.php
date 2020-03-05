@@ -44,9 +44,13 @@
             <tr class="row-setting">
                 <th class="label">Set a template loader</th>
                 <td class="option">
-                    <select name="Set-a-template-loader">
+                    <select name="set-a-template-loader">
                         <?php foreach (generalModal::$templateLoader AS $templateLoader) { ?>
-                            <option value="<?php echo $templateLoader["dir_name"] ?>"><?php echo $templateLoader["displayName"] ?></option>
+                            <?php if (generalModal::$templateLoaderSelectedID === (int)$templateLoader["id"]) { ?>
+                                <option value="<?php echo $templateLoader["id"] ?>" selected><?php echo $templateLoader["displayName"] ?></option>
+                            <?php } else { ?>
+                                <option value="<?php echo $templateLoader["id"] ?>"><?php echo $templateLoader["displayName"] ?></option>
+                            <?php } ?>
                         <?php } ?>
                     </select>
                 </td>
