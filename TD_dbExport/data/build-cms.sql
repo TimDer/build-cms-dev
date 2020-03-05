@@ -18,7 +18,7 @@ CREATE TABLE `settings` (
   `sideslogan` varchar(6000) NOT NULL,
   `membership` int(1) NOT NULL,
   `new_user_default_role` varchar(20) NOT NULL,
-  `customcss` longtext NOT NULL,
+  `tamplateLoaderID` bigint(20) NOT NULL,
   `cms_version` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
