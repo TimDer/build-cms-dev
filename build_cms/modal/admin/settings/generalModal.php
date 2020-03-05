@@ -12,4 +12,12 @@ class generalModal {
 
     // membership
     public static $membership = "";
+
+    // template loader
+    public static $templateLoader = array(
+        array(
+            "dir_name" => "none",
+            "displayName" => "Do not load a templateLoader"
+        )
+    );
 }
