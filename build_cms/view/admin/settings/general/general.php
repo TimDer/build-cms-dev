@@ -40,8 +40,20 @@
                 </td>
             </tr>
             <!-- /new user default role -->
+            <!-- Set a template loader -->
+            <tr class="row-setting">
+                <th class="label">Set a template loader</th>
+                <td class="option">
+                    <select name="Set-a-template-loader">
+                        <?php foreach (generalModal::$templateLoader AS $templateLoader) { ?>
+                            <option value="<?php echo $templateLoader["dir_name"] ?>"><?php echo $templateLoader["displayName"] ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+            </tr>
+            <!-- /Set a template loader -->
         </table>
-
+        
         <input type="submit" value="submit" class="submit">
     </form>
 </div>

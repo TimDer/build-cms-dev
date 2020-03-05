@@ -21,6 +21,16 @@ class generalController extends controller {
 
     /* ============================== view ============================== */
         public static function get_general() {
+            $pluginsDir = scandir( config_dir::BASE("/plugins") );
+            foreach ($pluginsDir AS $plugin) {
+                if (file_exists( config_dir::BASE("/plugins/" . $plugin . "/index.php") )) {
+                    generalModal::$templateLoader[] = array(
+                        "dir_name" => $plugin,
+                        "displayName" => database::select("SELECT `name` FROM `plugins` WHERE `directory_name`='$plugin'")[0]["name"]
+                    );
+                }
+            }
+
             //self::form_data();
             $form_data = database::select("SELECT `sidetitle`, `sideslogan`, `membership`, `new_user_default_role` FROM `settings`")[0];
             // form data
