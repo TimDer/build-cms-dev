@@ -8,7 +8,7 @@ CREATE TABLE `plugins` (
   `directory_name` varchar(1000) NOT NULL,
   `description` varchar(8000) NOT NULL,
   PRIMARY KEY (`pluginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 ALTER TABLE `plugins` ADD PRIMARY KEY (`pluginID`);
 
 -- settings
