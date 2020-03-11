@@ -1,1 +1,1 @@
-<?php require templateLoaderFiles::base_template_dir("/demo/demo.html"); ?>
+<?php require config_dir::BASE("/../../demo/demo.html"); ?>
