@@ -33,10 +33,25 @@ class config_dir {
 
     // directories
     public static function BASE($dir = "") {
-        return __DIR__ . "/../.." . $dir;
+        return realpath(__DIR__ . "/../..") . $dir;
+        //return __DIR__ . "/../.." . $dir;
     }
     public static function ROUTES($dir = "") {
         return self::BASE("/routes") . $dir;
+    }
+
+    public static function PLUGINDIR($location, $dir = "") {
+        $location_array = explode(DIRECTORY_SEPARATOR, $location);
+        $plugins_dir = count( explode(DIRECTORY_SEPARATOR, self::BASE(DIRECTORY_SEPARATOR . "plugins")) );
+        
+        $return = "";
+        foreach ($location_array AS $key => $value) {
+            if ((int)$key === $plugins_dir) {
+                $return = $value;
+            }
+        }
+
+        return self::BASE(DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR . $return . $dir);
     }
 
     /* ============================== view ============================== */
