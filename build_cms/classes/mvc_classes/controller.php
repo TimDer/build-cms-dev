@@ -4,9 +4,14 @@ class controller {
     private static $head    = NULL;
     private static $footer  = NULL;
 
-    public static function getView($file = "") {
+    public static function getView($file = "", $location = false) {
         if (!empty($file)) {
-            require config_dir::VIEW($file);
+            if ($location === false) {
+                require config_dir::VIEW($file);
+            }
+            else {
+                require config_dir::PLUGINDIR($location, DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . $file);
+            }
         }
     }
 
