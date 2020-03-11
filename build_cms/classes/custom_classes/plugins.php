@@ -45,12 +45,8 @@ class plugins {
             mkdir($plugin_base_dir . "/modal");
             // create view folder
             mkdir($plugin_base_dir . "/view");
-            // create view/admin folder
-            mkdir($plugin_base_dir . "/view/admin");
             // create www-root folder
             mkdir($plugin_base_dir . "/www-root");
-            // create www-root/admin folder
-            mkdir($plugin_base_dir . "/www-root/admin");
             /* ============================== /create folders ============================== */
 
             /* ============================== create files ============================== */
@@ -64,9 +60,9 @@ class plugins {
             // create view/admin/menu.php
             files::create_file($plugin_base_dir . "/menu.php");
             // create view/admin/.dirPlaceholder
-            files::create_file($plugin_base_dir . "/view/admin/.dirPlaceholder");
+            files::create_file($plugin_base_dir . "/view/.dirPlaceholder");
             // create www-root/admin/main.css
-            files::create_file($plugin_base_dir . "/www-root/admin/main.css");
+            files::create_file($plugin_base_dir . "/www-root/main.css");
 
             // create routes.php
             files::create_file($plugin_base_dir . "/routes.php");
