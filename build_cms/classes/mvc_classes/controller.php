@@ -16,9 +16,9 @@ class controller {
     }
 
     // get view with template
-    public static function getAdminTemplateView($file = "") {
+    public static function getAdminTemplateView($file = "", $location = false) {
         self::getAdminHeader();
-        self::getView($file);
+        self::getView($file, $location);
         self::getAdminFooter();
     }
     // get the header
@@ -32,12 +32,12 @@ class controller {
     }
 
     // set functions
-    public static function set_head($view_head) {
-        self::$head = config_dir::VIEW("/" . $view_head);
+    public static function set_head($view_head, $location = false) {
+        self::$head = config_dir::VIEW($view_head, $location);
     }
 
-    public static function set_footer($view_footer) {
-        self::$footer = config_dir::VIEW("/" . $view_footer);
+    public static function set_footer($view_footer, $location = false) {
+        self::$footer = config_dir::VIEW($view_footer, $location);
     }
 
     // get functions
