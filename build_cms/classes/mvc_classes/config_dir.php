@@ -40,7 +40,7 @@ class config_dir {
         return self::BASE("/routes") . $dir;
     }
 
-    public static function PLUGINDIR($location, $dir = "") {
+    public static function PLUGINDIR($location, $dir = "", $type = "fullPath") {
         $location_array = explode(DIRECTORY_SEPARATOR, $location);
         $plugins_dir = count( explode(DIRECTORY_SEPARATOR, self::BASE(DIRECTORY_SEPARATOR . "plugins")) );
         
@@ -51,15 +51,22 @@ class config_dir {
             }
         }
 
-        return self::BASE(DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR . $return . $dir);
+        if ($type === "fullPath") {
+            return self::BASE(DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR . $return . $dir);
+        }
+        elseif ($type === "ltrim") {
+            return DIRECTORY_SEPARATOR . "plugins" . DIRECTORY_SEPARATOR . $return . $dir;
+        }
     }
 
     /* ============================== view ============================== */
-        public static function VIEW_TEMP($dir = "") {
-            return self::BASE("/view/template") . $dir;
-        }
-        public static function VIEW($dir = "") {
-            return self::BASE("/view") . $dir;
+        public static function VIEW($dir = "", $location = false) {
+            if ($location === false) {
+                return self::BASE("/view") . $dir;
+            }
+            else {
+                return self::PLUGINDIR($location, "/view" . $dir);
+            }
         }
     /* ============================== /view ============================== */
 }
