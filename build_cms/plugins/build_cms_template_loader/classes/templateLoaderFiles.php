@@ -12,7 +12,13 @@ class templateLoaderFiles {
 
     public static function set_template_base_dir() {
         if (empty(self::$template_dir)) {
-            self::$template_dir = database::select("SELECT `folder_name` FROM `templates` WHERE `active_or_inactive`='active'")[0]["folder_name"];
+            $result = database::select("SELECT `active_template` FROM `templates`")[0]["active_template"];
+            if (empty($result)) {
+                self::$template_dir = users::create_password_salt(300, 400);
+            }
+            else {
+                self::$template_dir = $result;
+            }
         }
     }
 

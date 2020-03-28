@@ -1,0 +1,37 @@
+// Flexbox
+.row {
+    display: flex;
+    > * {
+        padding: 0 5px;
+        flex: 1;
+    }
+    > *:first-child {
+        padding-left: 0;
+    }
+    > *:last-child {
+        padding-right: 0;
+    }
+
+    @for $col from 0 through 5 {
+        > .col-#{$col} {
+            flex: #{$col} !important;
+        }
+    }
+}
+
+// CSS grid
+.grid {
+    display: grid;
+}
+
+@for $col from 0 through 20 {
+    .grid-gap-#{$col} {
+        grid-gap: #{$col}px;
+    }
+}
+
+@for $col from 1 through 5 {
+    .grid-#{$col} {
+        grid-template-columns: repeat(#{$col}, 1fr);
+    }
+}
