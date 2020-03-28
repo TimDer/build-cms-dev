@@ -1,8 +1,8 @@
 <?php
 
 class controller {
-    private static $head    = NULL;
-    private static $footer  = NULL;
+    private static $head    = array();
+    private static $footer  = array();
 
     public static function getView($file = "", $location = false) {
         if (!empty($file)) {
@@ -33,23 +33,23 @@ class controller {
 
     // set functions
     public static function set_head($view_head, $location = false) {
-        self::$head = config_dir::VIEW($view_head, $location);
+        self::$head[] = config_dir::VIEW($view_head, $location);
     }
 
     public static function set_footer($view_footer, $location = false) {
-        self::$footer = config_dir::VIEW($view_footer, $location);
+        self::$footer[] = config_dir::VIEW($view_footer, $location);
     }
 
     // get functions
     public static function get_head() {
-        if (self::$head !== NULL) {
-            require self::$head;
+        foreach (self::$head AS $file) {
+            require $file;
         }
     }
 
     public static function get_footer() {
-        if (self::$footer !== NULL) {
-            require self::$footer;
+        foreach (self::$footer AS $file) {
+            require $file;
         }
     }
 }

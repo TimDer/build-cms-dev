@@ -8,7 +8,10 @@ function auto_select_a_dir($dir, $file, $return = false) {
 
     foreach (scandir($dir) as $item) {
         // (skip the '.', '..', 'view' or the www-root folder) or (skip everything if the file has bin found)
-        if ($return || $item == '.' || $item == '..' || ( $item === "view" && is_dir($dir . "/" . $item) ) || ( $item === "www-root" && is_dir($dir . "/" . $item) )) {
+        $view_folder    = ( $item === "view" && is_dir($dir . "/" . $item) );
+        $wwwRoot_folder = ( $item === "www-root" && is_dir($dir . "/" . $item) );
+        $data_folder    = ( $item === "data" && is_dir($dir . "/" . $item) );
+        if ( $return || $item == '.' || $item == '..' || $view_folder || $wwwRoot_folder || $data_folder ) {
             continue;
         }
 
