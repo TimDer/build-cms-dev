@@ -20,7 +20,7 @@ class load_filesController extends controller {
                 $file_extension = end($file_array);
 
                 if ($file_extension === "php") {
-                    echo "php files are blocked";
+                    require config_dir::BASE($file_path);
                 }
                 else {
                     $file = file_get_contents( config_dir::BASE($file_path) );

@@ -21,6 +21,8 @@ database::connect(
     )
 );
 
-// plugins
+// plugins definer
 plugins::call_plugin_definer(true);
+
+// plugins routes
 plugins::call_plugin_routes(true);
