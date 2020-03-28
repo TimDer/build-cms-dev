@@ -27,9 +27,7 @@ ALTER TABLE `settings` ADD PRIMARY KEY (`id`);
 -- templates
 CREATE TABLE `templates` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `tem_name` text NOT NULL,
-  `folder_name` text NOT NULL,
-  `active_or_inactive` text NOT NULL,
+  `active_template` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 ALTER TABLE `templates` ADD PRIMARY KEY (`id`);
