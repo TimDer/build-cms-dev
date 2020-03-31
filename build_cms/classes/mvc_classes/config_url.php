@@ -3,17 +3,13 @@
 class config_url {
     // url variables
     private static $uri_dir;
-    private static $trusted_domains = array();
     private static $trusted_protocol = "";
 
     // set url variables
-    public static function set_url_dir($dir = "") {
+    private static function set_url_dir($dir = "") {
         self::$uri_dir = $dir;
     }
-    public static function setTrustedDomain($domain = "") {
-        self::$trusted_domains[] = $domain;
-    }
-    public static function useHttps($protocol = false) {
+    private static function useHttps($protocol = false) {
         //"https://"
         if ($protocol) {
             self::$trusted_protocol = "https://";
@@ -22,11 +18,13 @@ class config_url {
             self::$trusted_protocol = "http://";
         }
     }
-    public static function displayUntrustedDomain($display = false) {
-        if ($display) {
+    public static function displayUntrustedDomain() {
+        self::set_url_dir(config::$domainDir);
+        self::useHttps(config::$useHttps);
+        if (config::$displayUntrustedDomain) {
             $result = false;
             $trusted = false;
-            foreach (self::$trusted_domains AS $value_domain) {
+            foreach (config::$TrustedDomains AS $value_domain) {
                 if ( (self::$trusted_protocol !== self::protocol() OR $value_domain !== self::domain()) AND self::$trusted_protocol === "https://" ) {
                     if (!$trusted) {
                         $result = true;
@@ -39,8 +37,8 @@ class config_url {
             }
 
             if ($result) {
-                if (count(self::$trusted_domains) === 1) {
-                    header("Location: " . self::$trusted_protocol . self::$trusted_domains[0] . $_SERVER["REQUEST_URI"]);
+                if (count(config::$TrustedDomains) === 1) {
+                    header("Location: " . self::$trusted_protocol . config::$TrustedDomains[0] . $_SERVER["REQUEST_URI"]);
                 }
 
                 echo "Your URL: " . self::protocol() . self::domain() . $_SERVER["REQUEST_URI"] . "<br><br>";
@@ -48,7 +46,7 @@ class config_url {
                 echo "This domain or protocol is not trusted please use the following links<br><br>";
 
                 $url = "";
-                foreach (self::$trusted_domains AS $value) {
+                foreach (config::$TrustedDomains AS $value) {
                     $url = self::$trusted_protocol . $value . $_SERVER["REQUEST_URI"];
                     echo '<a href="' . $url . '">' . $url . '</a>' . '<br>';
                 }
