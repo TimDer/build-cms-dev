@@ -3,12 +3,19 @@
 require __DIR__ . "/build_cms/start.php";
 
 // Export database but not on AJAX request
-if  (
+/*if  (
         !isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
         implode("/", user_url::$routes_uri) !== "images" &&
         implode("/", user_url::$routes_uri) !== "view" &&
         implode("/", user_url::$routes_uri) !== "admin_files/plugins"
     )
+{*/
+if  (
+    !isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+    implode("/", user_url::$routes_uri) !== "images" &&
+    implode("/", user_url::$routes_uri) !== "view" &&
+    (isset(user_url::$routes_uri[0]) && user_url::$routes_uri[0] !== "admin_files")
+)
 {
     require __DIR__ . "/TD_dbExport/TD_dbExport.php";
     $export_database = new TD_dbExport(database::$conn);

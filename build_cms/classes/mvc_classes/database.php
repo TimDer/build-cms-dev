@@ -7,13 +7,13 @@ class database {
     public static $fetch = array();
 
     // connect to the database
-    public static function connect($DB = array("servername" => "", "username" => "", "password" => "", "dbname" => "",)) {
+    public static function connect() {
         // connect to the sql server
         self::$conn = mysqli_connect(
-            $DB["servername"],
-            $DB["username"],
-            $DB["password"],
-            $DB["dbname"]
+            config::$servername,
+            config::$username,
+            config::$password,
+            config::$dbname
         );
 
         // check connection

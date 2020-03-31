@@ -83,19 +83,24 @@ class plugins {
         }
     }
 
-    public static function call_plugin_routes($true_or_false) {
+    private static function call_plugin_routes($true_or_false) {
         if ($true_or_false) {
             self::loop_for_files("routes.php");
         }
     }
 
-    public static function call_plugin_definer($true_or_false) {
+    private static function call_plugin_definer($true_or_false) {
         self::$main_menu_items = array();
         self::$main_settings_items = array();
         self::$dashboard_widgets = array();
         if ($true_or_false) {
             self::loop_for_files("define.php");
         }
+    }
+
+    public static function call_plugins() {
+        self::call_plugin_definer(config::$call_plugin_definer);
+        self::call_plugin_routes(config::$call_plugin_routes);
     }
 
     private static $set_menu_item_loginCheck = false;
