@@ -1,0 +1,29 @@
+.building-blocks-area-sidebars {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.building-blocks-area-sidebars > .header {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+.building-blocks-area-sidebars > .content {
+    padding: 10px;
+    display: flex;
+}
+.building-blocks-area-sidebars > .content > div {
+    flex: 1;
+}
+
+/* ============================== left-and-right-sidebar ============================== */
+
+    .left-and-right-sidebar > div:first-child {
+        margin-right: 5px;
+    }
+    .left-and-right-sidebar > div:last-child {
+        margin-left: 5px;
+    }
+
+/* ============================== left-and-right-sidebar ============================== */
