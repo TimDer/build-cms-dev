@@ -1,0 +1,1 @@
+<script src="<?php echo config_url::BASE("/admin_files/page_builder/edit/js/delete_page.js"); ?>"></script>

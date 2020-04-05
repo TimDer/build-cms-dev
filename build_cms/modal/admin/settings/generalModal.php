@@ -17,7 +17,7 @@ class generalModal {
     public static $templateLoader = array(
         array(
             "id" => 0,
-            "displayName" => "Do not load a templateLoader"
+            "displayName" => "Load built in templateloader"
         )
     );
     public static $templateLoaderSelectedID = 0;

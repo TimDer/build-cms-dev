@@ -31,10 +31,6 @@
 
     <aside>
         <ul class="main-menu">
-            <li class="parent main-menu-parent" id="main_menu_dashboard">
-                <a href="<?php echo config_url::BASE("/admin/dashboard"); ?>">Dashboard</a>
-            </li>
-
             <?php foreach (plugins::$main_menu_items AS $value) { ?>
                 <li class="parent main-menu-parent<?php echo $value["class_event"]; ?>" id="<?php echo $value["id"]; ?>">
                     <?php if ($value["url"] === "") { ?>
@@ -53,37 +49,6 @@
                     <?php } ?>
                 </li>
             <?php } ?>
-
-            <li class="parent main-menu-parent main-menu-click-event" id="main_menu_plugins">
-                Plugins
-                <ul class="parent-menu">
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/plugins/install"); ?>">Install a plugin</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/plugins/create"); ?>">Create a new plugin</a>
-                    </li>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/plugins"); ?>">Plugins</a>
-                    </li>
-                </ul>
-            </li>
-            <li class="parent main-menu-parent main-menu-click-event" id="main_menu_settings">
-                Settings
-                <ul class="parent-menu">
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/settings/general"); ?>">General</a>
-                    </li>
-                    <?php foreach (plugins::$main_settings_items AS $value) { ?>
-                        <li class="child">
-                            <a href="<?php echo config_url::BASE($value["url"]); ?>"><?php echo $value["name"] ?></a>
-                        </li>
-                    <?php } ?>
-                    <li class="child">
-                        <a href="<?php echo config_url::BASE("/admin/settings/users"); ?>">Users</a>
-                    </li>
-                </ul>
-            </li>
         </ul>
     </aside>
 

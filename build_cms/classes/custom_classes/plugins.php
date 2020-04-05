@@ -2,8 +2,11 @@
 
 class plugins {
     // arrays
-    public static $main_menu_items = array(
-        array(
+    public static $main_menu_items = array();
+    /*
+    Example: main_menu_items
+    array(
+        "id" => array(
             "url"           => "",
             "name"          => "",
             "id"            => "",
@@ -16,17 +19,16 @@ class plugins {
             )
         )
     );
-    public static $main_settings_items  = array(
+    */
+    public static $dashboard_widgets = array();
+    /*
+    Example: dashboard_widgets
+    array(
         array(
-            "url" => "",
-            "name" => ""
+            "function" => function() {}
         )
     );
-    public static $dashboard_widgets = array(
-        array(
-            "function" => "A_FUNCTION"
-        )
-    );
+    */
 
 
     public static function create_plugin_folder($plugin_dir) {
@@ -57,8 +59,6 @@ class plugins {
             // create modal/{plugin_dir}_pluginModal.php
             files::create_file($plugin_base_dir . "/modal/" . $plugin_dir . "_pluginModal.php");
 
-            // create view/admin/menu.php
-            files::create_file($plugin_base_dir . "/menu.php");
             // create view/admin/.dirPlaceholder
             files::create_file($plugin_base_dir . "/view/.dirPlaceholder");
             // create www-root/admin/main.css
@@ -90,9 +90,6 @@ class plugins {
     }
 
     private static function call_plugin_definer($true_or_false) {
-        self::$main_menu_items = array();
-        self::$main_settings_items = array();
-        self::$dashboard_widgets = array();
         if ($true_or_false) {
             self::loop_for_files("define.php");
         }
@@ -105,7 +102,7 @@ class plugins {
 
     private static $set_menu_item_loginCheck = false;
     private static $set_menu_item_user_type;
-    public static function set_menu_item($id, $name, $url, $user_type = "user") {
+    public static function set_menu_item($id, $display_name, $url, $user_type = "user") {
         self::$set_menu_item_user_type = $user_type;
         user_session::check_session("user_id", function () {
             user_session::check_session_permission(self::$set_menu_item_user_type, function () {
@@ -115,7 +112,7 @@ class plugins {
         if (self::$set_menu_item_loginCheck) {
             self::$main_menu_items[$id] = array(
                 "url"           => $url,
-                "name"          => $name,
+                "name"          => $display_name,
                 "id"            => $id,
                 "class_event"   => "",
             );
@@ -125,7 +122,7 @@ class plugins {
 
     private static $set_submenu_item_loginCheck = false;
     private static $set_submenu_item_user_type = false;
-    public static function set_submenu_item($id, $name, $url, $user_type = "user") {
+    public static function set_submenu_item($id, $display_name, $url, $user_type = "user") {
         self::$set_submenu_item_user_type = $user_type;
         user_session::check_session("user_id", function () {
             user_session::check_session_permission(self::$set_submenu_item_user_type, function () {
@@ -135,30 +132,12 @@ class plugins {
         if ( isset( self::$main_menu_items[$id] ) && self::$set_submenu_item_loginCheck ) {
             self::$main_menu_items[$id]["sub_menu_items"][] = array(
                 "url"       => $url,
-                "name"      => $name
+                "name"      => $display_name
             );
             self::$main_menu_items[$id]["url"] = "";
             self::$main_menu_items[$id]["class_event"] = " main-menu-click-event";
         }
         self::$set_submenu_item_loginCheck = false;
-    }
-
-    private static $set_settings_item_loginCheck = false;
-    private static $set_settings_item_user_type;
-    public static function set_settings_item($url, $name, $user_type = "user") {
-        self::$set_settings_item_user_type = $user_type;
-        user_session::check_session("user_id", function () {
-            user_session::check_session_permission(self::$set_settings_item_user_type, function () {
-                self::$set_settings_item_loginCheck = true;
-            });
-        }, false);
-        if (self::$set_settings_item_loginCheck) {
-            self::$main_settings_items[] = array(
-                "url" => $url,
-                "name" => $name
-            );
-        }
-        self::$set_settings_item_loginCheck = false;
     }
 
     private static $set_dashboard_widget_loginCheck = false;
