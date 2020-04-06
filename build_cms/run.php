@@ -21,6 +21,12 @@ plugins::set_submenu_item("system-settings", "General", "/admin/settings/general
 // call plugin definer and routes
 plugins::call_plugins();
 
+// set template loader link in settings menu
+plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/template_loader", "admin");
+
+// query the template folder name from the database
+templateLoaderFiles::set_template_base_dir();
+
 // Create plugins menu
 plugins::set_menu_item("system-plugins", "Plugins", "/admin/dashboard", "admin");
 plugins::set_submenu_item("system-plugins", "Install a plugin", "/admin/plugins/install", "admin");

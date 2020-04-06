@@ -1,3 +1,4 @@
+This no longer works
 <?php
 
-buildCmsTemplateLoader_pluginController::get_template();
+//buildCmsTemplateLoaderController::get_template();

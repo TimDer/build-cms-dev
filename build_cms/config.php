@@ -23,5 +23,12 @@ class config {
     public static $call_plugin_routes   = true;
 
     // directories to skip in the autoloader
-    public static $autoloaderSkipDir = array( "view", "www-root", "data", "backup", "classes_noAutoloader" );
+    public static $autoloaderSkipDir = array(
+        "view",
+        "www-root",
+        "data",
+        "backup",
+        "classes_noAutoloader",
+        "routes"
+    );
 }

@@ -1,7 +1,7 @@
 <?php
 
 // template loader admin view
-/*routes::set("/admin/settings/td_template_loader", function () {
+routes::set("/admin/settings/template_loader", function () {
     buildCmsTLAdminController::templateManager();
 }, "user_id", "admin");
 
@@ -31,16 +31,16 @@ routes::set("/admin_submit/template_loader/create_new_template", function () {
 // delete a template
 routes::set("/admin_submit/template_loader/delete_template", function () {
     buildCmsTLAdminController::delete_template();
-}, "user_id", "admin");*/
+}, "user_id", "admin");
 
 /* ============================== load files ============================== */
-    /*routes::set("/admin_files/template_loader", function () {
-        load_filesController::load_file(config_dir::PLUGINDIR(__DIR__, "/www-root", "ltrim"), "404 not found");
+    routes::set("/admin_files/template_loader", function () {
+        load_filesController::load_file("/www-root/admin/template_loader/select_template", "404 not found");
     }, "user_id", "admin");
     routes::set("/admin/template_loader", function () {
-        load_filesController::load_file(config_dir::PLUGINDIR(__DIR__, "/view/templates", "ltrim"), "404 not found");
+        load_filesController::load_file("/view/templates", "404 not found");
     }, "user_id", "admin");
     routes::set("/template", function () {
-        load_filesController::load_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . templateLoaderFiles::$template_dir . "/www-root", "ltrim"), "404 not found");
-    });*/
+        load_filesController::load_file("/view/templates/" . templateLoaderFiles::$template_dir . "/www-root", "404 not found");
+    });
 /* ============================== /load files ============================== */

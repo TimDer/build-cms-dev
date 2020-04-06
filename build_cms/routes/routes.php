@@ -5,6 +5,7 @@ require config_dir::ROUTES("/admin/admin_submit.php");
 require config_dir::ROUTES("/load_files.php");
 require config_dir::ROUTES("/plugins.php");
 require config_dir::ROUTES("/page_builder.php");
+require config_dir::ROUTES("/template_loader.php");
 
 routes::set("/admin/keep-user-loggedin", function () {
     user_session::keep_user_loggedin();
