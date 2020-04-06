@@ -1,6 +1,6 @@
 <?php
 
-class build_cms_template_loader_pluginModal {
+class build_cms_template_loaderModal {
     public static $all_templates = array(
         0 => array(
             "id"                    => "",

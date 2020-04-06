@@ -20,12 +20,12 @@
     <hr>
 
     <div class="grid grid-3 grid-gap-20">
-        <?php foreach (build_cms_template_loader_pluginModal::$all_templates AS $value) { ?>
+        <?php foreach (build_cms_template_loaderModal::$all_templates AS $value) { ?>
             <div id="template_preview_<?php echo $value["id"]; ?>">
                 <div class="template">
                     <div class="header"><?php echo $value["config"]["tem_name"] ?></div>
                     <div class="body">
-                        <?php if (file_exists(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
+                        <?php if (file_exists(config_dir::BASE("/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
                             <img src="<?php echo config_url::BASE("/admin/template_loader/" . $value["config"]["folder_name"] . "/template_info/template_img.png"); ?>">
                         <?php } else { ?>
                             <img src="<?php echo config_url::BASE("/admin_files/template_loader/template_img.png"); ?>">
@@ -38,7 +38,7 @@
     </div>
 
     <div class="modals">
-        <?php foreach (build_cms_template_loader_pluginModal::$all_templates AS $value) { ?>
+        <?php foreach (build_cms_template_loaderModal::$all_templates AS $value) { ?>
             <div class="template_modal" id="template_edit_modal_<?php echo $value["id"]; ?>">
                 <div class="template_modal_header">
                     <div class="row header">
@@ -49,7 +49,7 @@
                 <div class="row template_modal_content">
                     <div class="col-1 sidebar">
                         <h1>Template screenshot:</h1>
-                        <?php if (file_exists(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
+                        <?php if (file_exists(config_dir::BASE("/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
                             <img src="<?php echo config_url::BASE("/admin/template_loader/" . $value["config"]["folder_name"] . "/template_info/template_img.png"); ?>">
                         <?php } else { ?>
                             <img src="<?php echo config_url::BASE("/admin_files/template_loader/template_img.png"); ?>">
@@ -102,7 +102,7 @@
                                                 <input class="btn btn-block" name="activate" type="submit" value="Activate">
                                                 <input type="hidden" name="dir" value="<?php echo $value["config"]["folder_name"]; ?>">
                                             </form>
-                                            <?php if ( extension_loaded("zip") && count(scandir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $value["config"]["folder_name"]))) > 2 ) { ?>
+                                            <?php if ( extension_loaded("zip") && count(scandir(config_dir::BASE("/view/templates/" . $value["config"]["folder_name"]))) > 2 ) { ?>
                                                 <div class="col-1">
                                                     <a href="<?php echo config_url::BASE("/admin_submit/template_loader/download_template/" . $value["config"]["folder_name"] . "/" . $value["config"]["folder_name"] . ".zip"); ?>" class="btn btn-block">
                                                         Download (<?php echo $value["config"]["tem_name"]; ?>)

@@ -1,15 +1,16 @@
 <?php
 
-class buildCmsTLAdmin_pluginController extends controller {
+class buildCmsTLAdminController extends controller {
     public static function templateManager() {
-        $templates_dir_array = scandir( config_dir::PLUGINDIR( __DIR__, "/view/templates" ) );
+        $templates_dir_array = scandir( config_dir::BASE( "/view/templates" ) );
 
         $id_incrementer = 1;
         $config_data = array();
         foreach ($templates_dir_array AS $template_dir) {
             if ( $template_dir !== "." && $template_dir !== ".." ) {
-                $template_infoDir = config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/template_info");
-                $config_file = $template_infoDir . "/general.csv";
+                $template_infoDir = config_dir::BASE("/view/templates/" . $template_dir . "/template_info");
+                //$config_file = json_decode(file_get_contents($template_infoDir . "/general.json"));
+                $config_file = $template_infoDir . "/general.json";
 
                 // id
                 $config_data[$template_dir]["id"] = (string)$id_incrementer;
@@ -34,12 +35,7 @@ class buildCmsTLAdmin_pluginController extends controller {
                 // get data from csv
                 $config_data[$template_dir]["config"]["folder_name"]  = $template_dir;
                 if ( file_exists($config_file) ) {
-                    $open_config = fopen($config_file, "r");
-                    while ($config_raw = fgetcsv($open_config)) {
-                        if ($config_raw[0] !== "folder_name") {
-                            $config_data[$template_dir]["config"][$config_raw[0]] = $config_raw[1];
-                        }
-                    }
+                    $config_data[$template_dir]["config"] = json_decode(file_get_contents($config_file), true);
                 }
                 // or if the csv does not exist
                 else {
@@ -50,16 +46,22 @@ class buildCmsTLAdmin_pluginController extends controller {
             }
         }
 
-        build_cms_template_loader_pluginModal::$all_templates = $config_data;
+        build_cms_template_loaderModal::$all_templates = $config_data;
 
-        self::set_head("/admin/head.php", __DIR__);
-        self::set_footer("/admin/footer.php", __DIR__);
-        self::getAdminTemplateView("/admin/main.php", __DIR__);
+        self::set_head("/admin/template_loader/head_templates.php");
+        self::set_footer("/admin/template_loader/footer_templates.php");
+        self::getAdminTemplateView("/admin/template_loader/main.php");
     }
 
     public static function upload_template() {
+        if (!is_dir(config_dir::BASE("/data"))) {
+            mkdir(config_dir::BASE("/data"), 775);
+        }
+        if (!is_dir(config_dir::BASE("/data/install_template"))) {
+            mkdir(config_dir::BASE("/data/install_template"), 775);
+        }
         $zip_template = files::upload_to_dir(
-            config_dir::PLUGINDIR(__DIR__, "/data/install_template"),
+            config_dir::BASE("/data/install_template"),
             $_FILES["new_template"],
             array("zip")
         );
@@ -69,37 +71,32 @@ class buildCmsTLAdmin_pluginController extends controller {
         $zip_name = implode(".", $zip_name_array);
 
         if (is_string($zip_template)) {
-            mkdir(config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip"), 775);
+            mkdir(config_dir::BASE("/data/install_template/unzip"), 775);
             // unzip the file
             $unziped = files::unzip(
                 new ZipArchive(),
-                config_dir::PLUGINDIR(__DIR__, "/data/install_template/" . $zip_template),
-                config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip")
+                config_dir::BASE("/data/install_template/" . $zip_template),
+                config_dir::BASE("/data/install_template/unzip")
             );
 
             if ($unziped) {
-                $index_unziped_dir = files::findFiles(config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip"));
-                if (file_exists(config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip/template_info/general.csv"))) {
-                    $generalCSV = fopen(config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip/template_info/general.csv"), "r");
-                    while ($config_raw = fgetcsv($generalCSV)) {
-                        if ($config_raw[0] === "folder_name") {
-                            $folder_name = $config_raw[1];
-                        }
-                    }
+                $index_unziped_dir = files::findFiles(config_dir::BASE("/data/install_template/unzip"));
+                if (file_exists(config_dir::BASE("/data/install_template/unzip/template_info/general.json"))) {
+                    $folder_name = json_decode(file_get_contents(config_dir::BASE("/data/install_template/unzip/template_info/general.json")), true)["folder_name"];
                 }
                 else {
                     $folder_name = $zip_name;
                 }
-                while (is_dir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $folder_name))) {
+                while (is_dir(config_dir::BASE("/view/templates/" . $folder_name))) {
                     $randomString = users::create_password_salt(5, 5);
                     if (!is_dir($folder_name . "_" . $randomString)) {
                         $folder_name = $folder_name . "_" . $randomString;
                     }
                 }
-                mkdir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $folder_name), 775);
+                mkdir(config_dir::BASE("/view/templates/" . $folder_name), 775);
                 files::copy_dir_contents(
-                    config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip"),
-                    config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $folder_name),
+                    config_dir::BASE("/data/install_template/unzip"),
+                    config_dir::BASE("/view/templates/" . $folder_name),
                     $index_unziped_dir
                 );
                 header("Location: " . config_url::BASE("/admin_submit/template_loader/delete_unzip_folder"));
@@ -107,7 +104,7 @@ class buildCmsTLAdmin_pluginController extends controller {
             else {
                 echo "something went terribly wrong";
             }
-            unlink(config_dir::PLUGINDIR(__DIR__, "/data/install_template/" . $zip_template));
+            unlink(config_dir::BASE("/data/install_template/" . $zip_template));
         }
         elseif (isset($zip_template["name"])) {
             // something went terribly wrong
@@ -119,8 +116,8 @@ class buildCmsTLAdmin_pluginController extends controller {
         }
     }
     public static function delete_unzip_dir() {
-        config_dir::deleteDirectory(config_dir::PLUGINDIR(__DIR__, "/data/install_template/unzip", "ltrim"));
-        header("Location: " . config_url::BASE("/admin/settings/td_template_loader"));
+        config_dir::deleteDirectory("/data/install_template/unzip");
+        header("Location: " . config_url::BASE("/admin/settings/template_loader"));
     }
 
     public static function activate_template() {
@@ -134,10 +131,17 @@ class buildCmsTLAdmin_pluginController extends controller {
 
     public static function download_template_zip() {
         if ( extension_loaded("zip") ) {
+            if (!is_dir(config_dir::BASE("/data"))) {
+                mkdir(config_dir::BASE("/data"), 775);
+            }
+            if (!is_dir(config_dir::BASE("/data/download_zip"))) {
+                mkdir(config_dir::BASE("/data/download_zip"), 775);
+            }
+
             $zipName        = user_url::$new_uri[1];
             $folderName     = user_url::$new_uri[0];
-            $templatePath   = config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $folderName);
-            $destination    = config_dir::PLUGINDIR(__DIR__, "/data/download_zip");
+            $templatePath   = config_dir::BASE("/view/templates/" . $folderName);
+            $destination    = config_dir::BASE("/data/download_zip");
             
             files::createZipFile(
                 $templatePath,
@@ -157,62 +161,49 @@ class buildCmsTLAdmin_pluginController extends controller {
         $post = user_url::$post_var;
 
         $template_dir   = preg_replace("/ /", "_", $post["template_dir"]);
-        while (is_dir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir))) {
+        while (is_dir(config_dir::BASE("/view/templates/" . $template_dir))) {
             $randomString = users::create_password_salt(5, 5);
-            if (!is_dir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "_" . $randomString))) {
+            if (!is_dir(config_dir::BASE("/view/templates/" . $template_dir . "_" . $randomString))) {
                 $template_dir = $template_dir . "_" . $randomString;
             }
         }
         $Description    = $post["Description"];
         $license        = $post["license"];
 
-        $csv_array = array(
-            "tem_name" => array(
-                "tem_name", $post["template_name"]
-            ),
-            "folder_name" => array(
-                "folder_name", $template_dir
-            ),
-            "Author" => array(
-                "author", $post["Author"]
-            ),
-            "Author_url" => array(
-                "author_url", $post["Author_url"]
-            )
-        );
+        $json_array = json_encode(array(
+            "tem_name"      => $post["template_name"],
+            "folder_name"   => $template_dir,
+            "Author"        => $post["Author"],
+            "Author_url"    => $post["Author_url"]
+        ), JSON_PRETTY_PRINT);
 
         // create template folder
-        mkdir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir), 775);
+        mkdir(config_dir::BASE("/view/templates/" . $template_dir), 775);
         // create info folder
-        mkdir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/template_info"), 775);
+        mkdir(config_dir::BASE("/view/templates/" . $template_dir . "/template_info"), 775);
 
-        // create general.csv
-        $config_file = fopen(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/template_info/general.csv"), "w");
-        fputcsv($config_file, $csv_array["tem_name"]);
-        fputcsv($config_file, $csv_array["folder_name"]);
-        fputcsv($config_file, $csv_array["Author"]);
-        fputcsv($config_file, $csv_array["Author_url"]);
-        fclose($config_file);
+        // create general.json
+        file_put_contents(config_dir::BASE("/view/templates/" . $template_dir . "/template_info/general.json"), $json_array);
 
         // create info.txt
-        $info_file = fopen(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/template_info/info.txt"), "w");
+        $info_file = fopen(config_dir::BASE("/view/templates/" . $template_dir . "/template_info/info.txt"), "w");
         fwrite($info_file, $Description);
         fclose($info_file);
 
         // create license.txt
-        $license_file = fopen(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/template_info/license.txt"), "w");
+        $license_file = fopen(config_dir::BASE("/view/templates/" . $template_dir . "/template_info/license.txt"), "w");
         fwrite($license_file, $license);
         fclose($license_file);
 
         // create index.php, header.php, footer.php, content.php and functions.php
-        files::create_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/index.php"));
-        files::create_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/header.php"));
-        files::create_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/footer.php"));
-        files::create_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/content.php"));
-        files::create_file(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/functions.php"));
+        files::create_file(config_dir::BASE("/view/templates/" . $template_dir . "/index.php"));
+        files::create_file(config_dir::BASE("/view/templates/" . $template_dir . "/header.php"));
+        files::create_file(config_dir::BASE("/view/templates/" . $template_dir . "/footer.php"));
+        files::create_file(config_dir::BASE("/view/templates/" . $template_dir . "/content.php"));
+        files::create_file(config_dir::BASE("/view/templates/" . $template_dir . "/functions.php"));
 
         // create www-root dir
-        mkdir(config_dir::PLUGINDIR(__DIR__, "/view/templates/" . $template_dir . "/www-root"), 775);
+        mkdir(config_dir::BASE("/view/templates/" . $template_dir . "/www-root"), 775);
 
         // Activate template
         if (isset($post["activate"])) {
@@ -220,7 +211,7 @@ class buildCmsTLAdmin_pluginController extends controller {
             database::query("INSERT INTO `templates` (`id`, `active_template`) VALUES ('1', '$template_dir')");
         }
 
-        header("Location: " . config_url::BASE("/admin/settings/td_template_loader"));
+        header("Location: " . config_url::BASE("/admin/settings/template_loader"));
     }
 
     public static function delete_template() {
@@ -230,7 +221,7 @@ class buildCmsTLAdmin_pluginController extends controller {
             echo "cannot";
         }
         else {
-            config_dir::deleteDirectory( config_dir::PLUGINDIR(__DIR__, "/view/templates/" . user_url::$new_uri[0], "ltrim") );
+            config_dir::deleteDirectory( "/view/templates/" . user_url::$new_uri[0] );
             echo "deleted";
         }
     }
