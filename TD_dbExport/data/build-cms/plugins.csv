@@ -1,5 +1,4 @@
 pluginID,name,directory_name,description
-1,"Template loader",build_cms_template_loader,"This is the default template loader for Build_CMS"
 3,Media,build_cms_media,"This is the default media plugin built by the Build_CMS foundation"
 4,Menus,build_cms_menus,"This is the default menus plugin built by the Build_CMS foundation"
 5,"Custom CSS",build_cms_custom_css,"This is the default custom css plugin built by the Build_CMS foundation"
