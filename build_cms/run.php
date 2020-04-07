@@ -28,7 +28,7 @@ plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/templ
 templateLoaderFiles::set_template_base_dir();
 
 // Create plugins menu
-plugins::set_menu_item("system-plugins", "Plugins", "/admin/dashboard", "admin");
+plugins::set_menu_item("system-plugins", "Plugins", "", "admin");
 plugins::set_submenu_item("system-plugins", "Install a plugin", "/admin/plugins/install", "admin");
 plugins::set_submenu_item("system-plugins", "Create a new plugin", "/admin/plugins/create", "admin");
 plugins::set_submenu_item("system-plugins", "Plugins", "/admin/plugins/plugins", "admin");
