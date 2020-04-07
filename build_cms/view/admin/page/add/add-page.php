@@ -67,72 +67,21 @@
             </div>
             <div class="content">
                 <!-- wysiwyg -->
-                <div class="wysiwyg" id="wysiwyg_block">
-                    <div class="header">
-                        Visual Editor
-                    </div>
-                    <div class="content">
-                        <textarea name="new-text-editer" class="wysiwyg-text-editer" rows="10"></textarea>
-                    </div>
+                <div class="create_block" id="wysiwyg_block">
+                    Visual Editor
                 </div>
-                <!-- /wysiwyg -->
-                <!-- plain text -->
-                <div class="plain-text" id="plain-text_block">
-                    <div class="header">
-                        plain text
-                    </div>
-                    <div class="content">
-                        <textarea name="new-text-editer" class="plain-text-editer" rows="10"></textarea>
-                    </div>
+                <div class="create_block" id="plain-text_block">
+                    Plain text
                 </div>
-                <!-- /plain text -->
-                <!-- image -->
-                <div class="image" id="image_block">
-                    <div class="header">
-                        image
-                    </div>
-                    <div class="content">
-                        <button>Select an image</button>
-                        <img src="" alt="Select an image">
-                        <input type="hidden" name="new-image">
-                    </div>
+                <div class="create_block" id="image_block">
+                    Image
                 </div>
-                <!-- /image -->
-                <!-- create columns -->
-                <div class="create-columns" id="create-columns_block">
-                    <div class="header">
-                        create-columns
-                    </div>
-                    <div class="content">
-                        <p>Number of columns</p>
-                        <input type="number" name="new-create-columns-number" value="1" min="1" max="12" disabled class="number-of-columns">
-                        <div class="columns">
-                            <div column="1">
-                                <input type="number" name="new-column-width" value="100" min="0" max="100" disabled class="column-width-number">%
-                                <div class="new-column-building-blocks-area"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="create_block" id="create-columns_block">
+                    Create-columns
                 </div>
-                <!-- /create columns -->
-                <!-- subcategories -->
-                <div class="subcategories" id="subcategories_block">
-                    <div class="header">
-                        subcategories
-                    </div>
-                    <div class="content">
-                        <select name="subcategories_limit" disabled>
-                            <option value="no-limit">No limit</option>
-                            <option value="limited">Limited</option>
-                        </select>
-                        <input type="number" name="subcategories_limit_number" min="0" value="1" disabled>
-                        <select name="subcategories_order" disabled>
-                            <option value="latest">Latest page first</option>
-                            <option value="first">First page first</option>
-                        </select>
-                    </div>
+                <div class="create_block" id="subcategories_block">
+                    Subcategories
                 </div>
-                <!-- /subcategories -->
             </div>
         </div>
         <!-- ============================== /all-building-blocks ============================== -->

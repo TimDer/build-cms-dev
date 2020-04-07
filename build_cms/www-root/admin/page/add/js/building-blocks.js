@@ -183,7 +183,7 @@ $(document).ready(function () {
             helper: function () {
                 //style="width: ' + $("#wysiwyg_block").width() + 'px"
                 current_block_name  = "wysiwyg";
-                current_block       = '<div style="width: ' + $("#wysiwyg_block").width() + 'px" class="wysiwyg block" block_status="new" id="wysiwyg_block_move"><div class="header">Visual Editor</div><div class="content"><button class="delete_block">Delete</button><textarea name="new-text-editer" class="wysiwyg-text-editer" id="wysiwyg_id-' + block_id + '" wysiwyg_id="' + block_id + '" rows="10"></textarea></div></div>';
+                current_block       = '<div style="width: ' + $("#wysiwyg_block").parent().width() + 'px" class="wysiwyg block" block_status="new" id="wysiwyg_block_move"><div class="header">Visual Editor</div><div class="content"><button class="delete_block">Delete</button><textarea name="new-text-editer" class="wysiwyg-text-editer" id="wysiwyg_id-' + block_id + '" wysiwyg_id="' + block_id + '" rows="10"></textarea></div></div>';
                 block_id++;
                 return current_block;
             }
@@ -195,7 +195,7 @@ $(document).ready(function () {
             helper: function () {
                 //style="width: ' + $("#plain-text_block").width() + 'px"
                 current_block_name  = "plain-text_block";
-                current_block       = '<div style="width: ' + $("#plain-text_block").width() + 'px" class="plain-text block" block_status="new" id="plain-text_block_move"><div class="header">plain text</div><div class="content"><button class="delete_block">Delete</button><textarea name="text-editer" class="plain-text-editer" id="plain_text-' + block_id + '" plain_text="' + block_id + '" rows="10"></textarea></div></div>';
+                current_block       = '<div style="width: ' + $("#plain-text_block").parent().width() + 'px" class="plain-text block" block_status="new" id="plain-text_block_move"><div class="header">plain text</div><div class="content"><button class="delete_block">Delete</button><textarea name="text-editer" class="plain-text-editer" id="plain_text-' + block_id + '" plain_text="' + block_id + '" rows="10"></textarea></div></div>';
                 block_id++;
                 return current_block;
             }
@@ -207,7 +207,7 @@ $(document).ready(function () {
             helper: function () {
                 //style="width: ' + $("#image_block").width() + 'px"
                 current_block_name  = "image_block";
-                current_block       = '<div style="width: ' + $("#image_block").width() + 'px" class="image block" block_status="new" id="image_block_move"><div class="header">image</div><div class="content"><button class="delete_block">Delete</button><button class="image-open-modal-btn">Select an image</button><img src="" alt="Select an image" class="img_data" id="image-' + block_id + '" image_id="' + block_id + '" img_filename="" img_size_mode="auto" img_width="0" img_height="0"></div></div>';
+                current_block       = '<div style="width: ' + $("#image_block").parent().width() + 'px" class="image block" block_status="new" id="image_block_move"><div class="header">image</div><div class="content"><button class="delete_block">Delete</button><button class="image-open-modal-btn">Select an image</button><img src="" alt="Select an image" class="img_data" id="image-' + block_id + '" image_id="' + block_id + '" img_filename="" img_size_mode="auto" img_width="0" img_height="0"></div></div>';
                 block_id++;
                 return current_block;
             }
@@ -219,7 +219,7 @@ $(document).ready(function () {
             helper: function () {
                 //style="width: ' + $("#create-columns_block").width() + 'px"
                 current_block_name  = "create-columns_block";
-                current_block       = '<div style="width: ' + $("#create-columns_block").width() + 'px" class="create-columns block" block_status="new" id="create-columns_block_move" create_columns_id="' + block_id + '"><div class="header">create-columns</div><div class="content"><button class="delete_block">Delete</button><p>Number of columns</p><input type="number" name="new-create-columns-number_move" value="1" min="1" max="12" disabled><div class="columns"><div class="the_column" column="1" style="flex: 100;" flex="100"><input type="number" name="column-width" value="100" min="0" max="100" disabled class="column-width-number">%<div class="new-column-building-blocks-area sortable-building-blocks"></div></div></div></div></div>';
+                current_block       = '<div style="width: ' + $("#create-columns_block").parent().width() + 'px" class="create-columns block" block_status="new" id="create-columns_block_move" create_columns_id="' + block_id + '"><div class="header">create-columns</div><div class="content"><button class="delete_block">Delete</button><p>Number of columns</p><input type="number" name="new-create-columns-number_move" value="1" min="1" max="12" disabled><div class="columns"><div class="the_column" column="1" style="flex: 100;" flex="100"><input type="number" name="column-width" value="100" min="0" max="100" disabled class="column-width-number">%<div class="new-column-building-blocks-area sortable-building-blocks"></div></div></div></div></div>';
                 block_id++;
                 return current_block;
             }
@@ -231,7 +231,7 @@ $(document).ready(function () {
             helper: function () {
                 //style="width: ' + $("#subcategories_block").width() + 'px"
                 current_block_name  = "subcategories_block";
-                current_block       = '<div style="width: ' + $("#subcategories_block").width() + 'px" class="subcategories block" block_status="new" id="subcategories_block_move" subcategories_block_id="' + block_id + '"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit" disabled><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1" disabled><select name="subcategories_order" disabled><option value="latest">Latest page first</option><option value="first">First page first</option></select></div></div>';
+                current_block       = '<div style="width: ' + $("#subcategories_block").parent().width() + 'px" class="subcategories block" block_status="new" id="subcategories_block_move" subcategories_block_id="' + block_id + '"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit" disabled><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1" disabled><select name="subcategories_order" disabled><option value="latest">Latest page first</option><option value="first">First page first</option></select></div></div>';
                 block_id++;
                 return current_block;
             }

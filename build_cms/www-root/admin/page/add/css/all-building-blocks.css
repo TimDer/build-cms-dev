@@ -14,11 +14,24 @@
         padding: 10px;
     }
 
-    .all-building-blocks > .content > * {
+    /*.all-building-blocks > .content > * {
         margin-top: 10px;
     }
     .all-building-blocks > .content > *:first-child {
         margin-top: 0;
+    }*/
+
+    .all-building-blocks > .content {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+    }
+    .all-building-blocks > .content > .create_block {
+        box-sizing: border-box;
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        text-align: center;
     }
 /* ============================== /default ============================== */
 
