@@ -2,5 +2,9 @@ id,page_id,block_type,block_id,building_blocks_area,the_order
 32,4,wysiwyg,1,content,1
 33,5,wysiwyg,1,content,1
 34,6,wysiwyg,1,content,1
-35,6,plain_text,2,left_sidebar,1
-36,6,plain_text,3,right_sidebar,1
+35,6,plain_text,2,content,2
+36,6,plain_text,3,content,3
+37,6,subcategories,4,content,4
+38,6,create_columns,5,content,5
+39,6,plain_text,6,5-0,1
+40,6,image,7,content,6
