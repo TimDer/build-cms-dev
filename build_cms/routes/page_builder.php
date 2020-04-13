@@ -12,9 +12,6 @@ routes::set("/admin/pages/edit-pages", function() {
 routes::set("/admin_submit/page", function () {
     save_pageController::save_pages();
 }, "user_id", "author");
-routes::set("/admin_submit/page/load-page", function () {
-    load_pageController::load();
-}, "user_id", "author");
 routes::set("/admin_submit/page/delete_page", function () {
     save_pageController::delete_page();
 }, "user_id", "author");
