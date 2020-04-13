@@ -83,8 +83,11 @@ class database {
             header("Location: " . config_url::BASE($num_rows_else));
         }
         // if num_rows_else is a function invoke the function
-        elseif ($num_rows_else !== null) {
-            $num_rows_else->__invoke($to_function2);
+        elseif (is_callable($num_rows_else)) {
+            return $num_rows_else->__invoke($to_function2);
+        }
+        else {
+            return false;
         }
     }
 
