@@ -178,7 +178,7 @@
         });
 
         // set block status to saved
-        $("#building-blocks-area, #sortable-building-blocks-left, #sortable-building-blocks-right").find(".block").each(function () {
+        $(".sortable-building-blocks").find(".block").each(function () {
             $(this).attr("block_status", "saved");
         });
 
@@ -215,18 +215,6 @@
 
     function page_category() {
         return $("#page-category").find('input[checked="checked"]').val();
-    }
-
-    function get_category_info() {
-        var image       = $("#category_image").attr("img_filename");
-        var text        = tinymce.get("category_text").getContent();
-
-        var data        = {};
-
-        data["image"]   = image;
-        data["text"]    = text;
-
-        return data;
     }
 
 /* ============================== /other functions ============================== */
@@ -320,9 +308,6 @@ $(document).ready(function () {
 
             // page_category
             data_array["page_category"]         = page_category();
-
-            // category info
-            data_array["category_info"]         = get_category_info();
         /* ============================== data array ============================== */
 
 

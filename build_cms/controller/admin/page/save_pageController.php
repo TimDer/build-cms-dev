@@ -98,10 +98,6 @@ class save_pageController extends controller {
         // category
         $page_category      = $data_array["page_category"];
 
-        // category info
-        $info_image         = $data_array["category_info"]["image"];
-        $info_text          = $data_array["category_info"]["text"];
-
         // save data
         database::query("INSERT INTO `page` (`pagename`,
                                                 `status`,
@@ -111,9 +107,7 @@ class save_pageController extends controller {
                                                 `author`,
                                                 `keywords`,
                                                 `description`,
-                                                `post_page`,
-                                                `category_image`,
-                                                `category_text`)
+                                                `post_page`)
                                         VALUES ('$general_pagename',
                                                 '$general_status',
                                                 '$general_homepage',
@@ -122,9 +116,7 @@ class save_pageController extends controller {
                                                 '$seo_author',
                                                 '$seo_keywords',
                                                 '$seo_description',
-                                                '$page_category',
-                                                '$info_image',
-                                                '$info_text')");
+                                                '$page_category')");
     
         // return auto_increment id
         if (database::$query) {
@@ -339,10 +331,6 @@ class save_pageController extends controller {
         // category
         $page_category      = $data_array["page_category"];
 
-        // category info
-        $info_image         = $data_array["category_info"]["image"];
-        $info_text          = $data_array["category_info"]["text"];
-
         // time_stamp
         $time_stamp         = $data_array["general_time_stamp"];
 
@@ -355,8 +343,6 @@ class save_pageController extends controller {
                                             `keywords`='$seo_keywords',
                                             `description`='$seo_description',
                                             `post_page`='$page_category',
-                                            `category_image`='$info_image',
-                                            `category_text`='$info_text',
                                             `time_stamp`='$time_stamp'
                                             WHERE id = '$id'");
 
@@ -488,13 +474,13 @@ class save_pageController extends controller {
                     $width_id   = $data['width_id'];
                     $width      = $data['width'];
                     database::query("INSERT INTO `page_cc_block` (`page_id`,
-                                                                                `block_id`,
-                                                                                `column_id`,
-                                                                                `width`)
-                                                                        VALUES ('$page_id',
-                                                                                '$block_id',
-                                                                                '$width_id',
-                                                                                '$width')");
+                                                                    `block_id`,
+                                                                    `column_id`,
+                                                                    `width`)
+                                                            VALUES ('$page_id',
+                                                                    '$block_id',
+                                                                    '$width_id',
+                                                                    '$width')");
                 }, array(
                     "page_id" => $page_id,
                     "block_id" => $block_id,

@@ -1,4 +1,21 @@
-#building-blocks-area, .sortable-building-blocks {
+.building-blocks-area-container:first-child {
+    margin-top: 0;
+}
+.building-blocks-area-container {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+.building-blocks-area-container > .header {
+    padding: 10px;
+    cursor: pointer;
+}
+.building-blocks-area-container > .content {
+    border-top: 1px solid black;
+    padding: 10px;
+}
+
+.sortable-building-blocks {
     box-sizing: border-box;
     padding: 10px;
     min-height: 600px;
