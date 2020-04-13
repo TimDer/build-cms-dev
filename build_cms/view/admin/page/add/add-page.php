@@ -10,7 +10,20 @@
 
 <div class="page-content">
     <div class="build">
-        <h2>Content</h2>
+        <?php foreach (plugins::$building_blocks_area AS $building_blocks_area) { ?>
+            <div class="building-blocks-area-container">
+                <div class="header">
+                    <h2><?php echo $building_blocks_area["display_name"]; ?></h2>
+                </div>
+                <div class="content" style="display: <?php echo $building_blocks_area["css_display"]; ?>">
+                    <div id="<?php echo $building_blocks_area["id"]; ?>" class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
+                        <?php load_pageSubController::load_blocks($building_blocks_area["name"]); ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
+
+        <?php /* <h2>Content</h2>
         <!-- ============================== building-blocks-area ============================== -->
         <div id="building-blocks-area" class="sortable-building-blocks" building_blocks_area="content">
 
@@ -36,7 +49,7 @@
         <!-- ============================== building-blocks-area sidebars ============================== -->
         <h3>Category info</h3>
         <div class="building-blocks-area-category-info sortable-building-blocks" id="building-blocks-area-category-info" building_blocks_area="category-info"></div>
-        <!-- ============================== building-blocks-area sidebars ============================== -->
+        <!-- ============================== building-blocks-area sidebars ============================== -->*/ ?>
     </div>
     <div class="sidebar">
         <!-- ============================== general ============================== -->
@@ -86,6 +99,21 @@
         </div>
         <!-- ============================== /all-building-blocks ============================== -->
 
+        <!-- ============================== category ============================== -->
+        <div class="page-category">
+            <div class="header">
+                Category
+            </div>
+            <div class="content" id="page-category">
+                <div class="category_container">
+                    <input type="radio" name="page_category" id="root" value="" <?php echo add_pageSubController::select_root_category(); ?>><label for="root">Root</label>
+                </div>
+                <hr>
+                <?php echo add_pageSubController::get_category(); ?>
+            </div>
+        </div>
+        <!-- ============================== /category ============================== -->
+
         <!-- ============================== SEO ============================== -->
         <div class="search-engine-optimization">
             <div class="header">
@@ -103,34 +131,6 @@
             </div>
         </div>
         <!-- ============================== /SEO ============================== -->
-
-        <!-- ============================== category_image ============================== -->
-        <div class="category_image">
-            <div class="header">
-                Category info
-            </div>
-            <div class="content">
-                <button class="image-open-modal-btn">Select an image</button>
-                <img src="<?php echo add_pageSubController::get_category_image_src(); ?>" alt="Select an image" class="img_data" id="category_image" img_filename="<?php echo add_pageSubController::get_category_image(); ?>" category_image>
-                <textarea id="category_text" class="wysiwyg-text-editer" rows="10"><?php echo add_pageSubController::get_category_text(); ?></textarea>
-            </div>
-        </div>
-        <!-- ============================== /category_image ============================== -->
-
-        <!-- ============================== category ============================== -->
-        <div class="page-category">
-            <div class="header">
-                Category
-            </div>
-            <div class="content" id="page-category">
-                <div class="category_container">
-                    <input type="radio" name="page_category" id="root" value="" <?php echo add_pageSubController::select_root_category(); ?>><label for="root">Root</label>
-                </div>
-                <hr>
-                <?php echo add_pageSubController::get_category(); ?>
-            </div>
-        </div>
-        <!-- ============================== /category ============================== -->
     </div>
 </div>
 

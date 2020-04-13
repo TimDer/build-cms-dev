@@ -365,4 +365,16 @@ $(document).ready(function () {
 
     /* ============================== /delete_block btn ============================== */
 
+    /* ============================== open and close building-blocks-areas ============================== */
+
+        $(".building-blocks-area-container > .header").click(function () {
+            $(this).parent().children().each(function () {
+                if ($(this).hasClass("content")) {
+                    $(this).toggle("blind", 300);
+                }
+            });
+        });
+
+    /* ============================== /open and close building-blocks-areas ============================== */
+
 }); // <-- $(document).ready()

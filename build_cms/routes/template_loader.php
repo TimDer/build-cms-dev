@@ -41,6 +41,6 @@ routes::set("/admin_submit/template_loader/delete_template", function () {
         load_filesController::load_file("/view/templates", "404 not found");
     }, "user_id", "admin");
     routes::set("/template", function () {
-        load_filesController::load_file("/view/templates/" . templateLoaderFiles::$template_dir . "/www-root", "404 not found");
+        load_filesController::load_file("/view/templates/" . templateLoader::$template_dir . "/www-root", "404 not found");
     });
 /* ============================== /load files ============================== */
