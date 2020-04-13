@@ -1,8 +1,25 @@
 <?php
 
-class templateLoaderFiles {
+class templateLoader {
     public static $template_dir     = "";
     public static $template_file    = "index.php";
+
+    public static function call_template_definer() {
+        $dir_to_file = config_dir::BASE("/view/templates/" . self::$template_dir . "/define.php");
+        if (file_exists($dir_to_file)) {
+            require $dir_to_file;
+        }
+        /*$plugin_dir_array = scandir( config_dir::BASE( "/plugins" ) );
+        foreach ($plugin_dir_array AS $value) {
+            if ($value === "." || $value === "..") {
+                continue;
+            }
+            $dir_to_file = config_dir::BASE( "/plugins/" . $value . "/" . $file );
+            if ( file_exists( $dir_to_file ) ) {
+                require $dir_to_file;
+            }
+        }*/
+    }
 
     public static function set_template_file($template = "") {
         if (!empty($template)) {
@@ -50,5 +67,9 @@ class templateLoaderFiles {
         else {
             require config_dir::BASE("/view/templates/" . self::$template_dir . "/" . $footer_file . "_footer.php");
         }
+    }
+
+    public static function set_building_blocks_area($id, $name, $display_name, $css_display = "none") {
+        plugins::set_building_blocks_area($id, $name, $display_name, $css_display);
     }
 }
