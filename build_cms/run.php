@@ -18,14 +18,23 @@ plugins::set_submenu_item("TD_Page_builder", "Edit pages", "/admin/pages/edit-pa
 plugins::set_menu_item("system-settings", "Settings", "", "admin");
 plugins::set_submenu_item("system-settings", "General", "/admin/settings/general", "admin");
 
+// query the template folder name from the database
+templateLoader::set_template_base_dir();
+
 // call plugin definer and routes
 plugins::call_plugins();
 
+// call template definer
+templateLoader::call_template_definer();
+
+// set default page builder areas
+plugins::set_building_blocks_area("building-blocks-area", "content", "Content", "block");
+plugins::set_building_blocks_area("sortable-building-blocks-left", "left_sidebar", "Left sidebar");
+plugins::set_building_blocks_area("sortable-building-blocks-right", "right_sidebar", "Right sidebar");
+plugins::set_building_blocks_area("building-blocks-area-category-info", "category-info", "Category info");
+
 // set template loader link in settings menu
 plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/template_loader", "admin");
-
-// query the template folder name from the database
-templateLoaderFiles::set_template_base_dir();
 
 // Create plugins menu
 plugins::set_menu_item("system-plugins", "Plugins", "", "admin");
