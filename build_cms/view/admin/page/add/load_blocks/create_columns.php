@@ -1,4 +1,4 @@
-<div class="create-columns block" block_status="saved" create_columns_id="<?php echo pageBuilder_loadCreateColumnsSubModal::$block_id; ?>">
+<div class="create-columns" block_type="create_columns">
     <div class="header">create-columns</div>
     <div class="content">
         <button class="delete_block">Delete</button>

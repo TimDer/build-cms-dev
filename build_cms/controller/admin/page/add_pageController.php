@@ -6,6 +6,12 @@ class add_pageController extends controller {
         self::set_head("/admin/page/add/head.php");
         self::set_footer("/admin/page/add/footer.php");
 
+        if (!empty(page_functions::$custom_page_js_footer)) {
+            foreach (page_functions::$custom_page_js_footer AS $footer) {
+                self::set_footer($footer["path"], $footer["location"]);
+            }
+        }
+
         // setup page array
         self::get_page_array();
 

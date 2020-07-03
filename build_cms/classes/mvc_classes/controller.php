@@ -5,13 +5,21 @@ class controller {
     private static $footer  = array();
 
     public static function getView($file = "", $location = false) {
+        if (!is_callable("html_compress")) {
+            function html_compress($buf){
+                return preg_replace(array('/<!--(.*)-->/Uis',"/[[:blank:]]+/"),array('',' '),str_replace(array("\n","\r","\t"),'',$buf));
+            }
+        }
+
         if (!empty($file)) {
+            ob_start("html_compress");
             if ($location === false) {
                 require config_dir::VIEW($file);
             }
             else {
                 require config_dir::PLUGINDIR($location, DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . $file);
             }
+            ob_end_flush();
         }
     }
 
@@ -24,11 +32,11 @@ class controller {
     // get the header
     public static function getAdminHeader() {
         admin_basicsModal::$version = database::select("SELECT `cms_version` FROM `settings`")[0]["cms_version"];
-        require config_dir::VIEW("/admin/admin_basics/header.php");
+        self::getView("/admin/admin_basics/header.php");
     }
     // get the footer
     public static function getAdminFooter() {
-        require config_dir::VIEW("/admin/admin_basics/footer.php");
+        self::getView("/admin/admin_basics/footer.php");
     }
 
     // set functions

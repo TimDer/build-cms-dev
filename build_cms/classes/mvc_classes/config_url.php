@@ -25,7 +25,7 @@ class config_url {
             $result = false;
             $trusted = false;
             foreach (config::$TrustedDomains AS $value_domain) {
-                if ( (self::$trusted_protocol !== self::protocol() OR $value_domain !== self::domain()) AND self::$trusted_protocol === "https://" ) {
+                if ( (self::$trusted_protocol !== self::protocol() AND self::$trusted_protocol === "https://") OR ($value_domain !== self::domain()) ) {
                     if (!$trusted) {
                         $result = true;
                     }
@@ -35,7 +35,7 @@ class config_url {
                     $trusted = true;
                 }
             }
-
+            
             if ($result) {
                 if (count(config::$TrustedDomains) === 1) {
                     header("Location: " . self::$trusted_protocol . config::$TrustedDomains[0] . $_SERVER["REQUEST_URI"]);

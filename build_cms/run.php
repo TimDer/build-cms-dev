@@ -21,6 +21,24 @@ plugins::set_submenu_item("system-settings", "General", "/admin/settings/general
 // query the template folder name from the database
 templateLoader::set_template_base_dir();
 
+// define blocks
+page_functions::define_block("wysiwyg", "Visual Editor");
+page_functions::define_block("plain_text", "Plain text");
+page_functions::define_block("create_columns", "Create-columns");
+page_functions::define_block("subcategories", "Subcategories");
+
+// set page_builder default insert blocks
+page_functions::set_insert_block("create_columns", function ($block_array, $page_id) { save_page::add_create_columns($block_array, $page_id); });
+page_functions::set_insert_block("wysiwyg", function ($block_array, $page_id, $database_block_id) { save_page::add_wysiwyg($block_array, $page_id, $database_block_id); });
+page_functions::set_insert_block("plain_text", function ($block_array, $page_id, $database_block_id) { save_page::add_plain_text($block_array, $page_id, $database_block_id); });
+page_functions::set_insert_block("subcategories", function ($block_array, $page_id, $database_block_id) { save_page::add_subcategories($block_array, $page_id, $database_block_id); });
+
+// set page_builder default update blocks
+page_functions::set_update_block("create_columns", function ($block_array, $page_id) { save_page::save_create_columns($block_array, $page_id); });
+page_functions::set_update_block("wysiwyg", function ($block_array, $page_id, $database_block_id) { save_page::save_wysiwyg($block_array, $page_id, $database_block_id); });
+page_functions::set_update_block("plain_text", function ($block_array, $page_id, $database_block_id) { save_page::save_plain_text($block_array, $page_id, $database_block_id); });
+page_functions::set_update_block("subcategories", function ($block_array, $page_id, $database_block_id) { save_page::save_subcategories($block_array, $page_id, $database_block_id); });
+
 // call plugin definer and routes
 plugins::call_plugins();
 
@@ -28,9 +46,6 @@ plugins::call_plugins();
 templateLoader::call_template_definer();
 
 // set default page builder areas
-plugins::set_building_blocks_area("building-blocks-area", "content", "Content", "block");
-plugins::set_building_blocks_area("sortable-building-blocks-left", "left_sidebar", "Left sidebar");
-plugins::set_building_blocks_area("sortable-building-blocks-right", "right_sidebar", "Right sidebar");
 plugins::set_building_blocks_area("building-blocks-area-category-info", "category-info", "Category info");
 
 // set template loader link in settings menu

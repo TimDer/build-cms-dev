@@ -1,4 +1,4 @@
-<div class="subcategories block" block_status="saved" id="subcategories_block_<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>" subcategories_block_id="<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>">
+<div class="subcategories" block_status="saved" id="subcategories_block_<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>" subcategories_block_id="<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>" block_type="subcategories">
     <div class="header">subcategories</div>
     <div class="content">
         <button class="delete_block">Delete</button>

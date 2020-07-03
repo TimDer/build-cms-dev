@@ -10,7 +10,7 @@ class config {
     public static $useHttps                 = true;
     public static $domainDir                = "/build-cms-dev";
     public static $displayUntrustedDomain   = true;
-    public static $TrustedDomains           = array( "localhost" );
+    public static $TrustedDomains           = array( "localhost", "10.1.1.1" );
 
     // database connection
     public static $servername   = "localhost";

@@ -1,4 +1,4 @@
-<div class="plain-text block" block_status="saved">
+<div class="plain-text" block_status="saved" block_type="plain_text">
     <div class="header">plain text</div>
     <div class="content">
         <button class="delete_block">Delete</button>

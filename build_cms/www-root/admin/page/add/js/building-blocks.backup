@@ -1,69 +1,41 @@
-/* ============================== move blocks ============================== */
-
-    var create_columns_move_block_functions = {};
-
-    function create_columns_move_block_function(block_type, move_block_function) {
-        if (!(block_type in create_columns_move_block_functions)) {
-            create_columns_move_block_functions[block_type] = move_block_function;
-        }
-    }
-
-    var sortable_get_move_block_functions = {};
-
-    function sortable_get_move_block_function(block_type, move_block_function) {
-        if (!(block_type in sortable_get_move_block_functions)) {
-            sortable_get_move_block_functions[block_type] = move_block_function;
-        }
-    }
-
-    var sortable_set_move_block_functions = {};
-
-    function sortable_set_move_block_function(block_type, move_block_function) {
-        if (!(block_type in sortable_set_move_block_functions)) {
-            sortable_set_move_block_functions[block_type] = move_block_function;
-        }
-    }
-
-/* ============================== /move blocks ============================== */
-
-/* ============================== block function ============================== */
-
-    var make_block_functions = {};
-    /*
-    Example: make_block_functions
-    {
-        current_block_name: {
-            current_block_name: "name",
-            current_block: "html"
-        }
-    }
-    */
-
-    function make_block_function(current_block_name = "", current_block) {
-        if (!(current_block_name in make_block_functions)) {
-            make_block_functions[current_block_name] = {
-                current_block_name: current_block_name,
-                current_block:      current_block
-            };
-        }
-    }
-
-/* ============================== /block function ============================== */
-
 /* ============================== sortable ============================== */
     function page_builder_sortable() {
+        var wysiwyg_data        = "";
+        var wysiwyg_id          = "";
+        var wysiwyg_id_number   = 0;
+        var wysiwyg_array       = [];
+
         $(".sortable-building-blocks").sortable({
             connectWith: ".sortable-building-blocks",
 
             sort: function (event, ui) {
-                if (ui.item.attr('block_type') in sortable_get_move_block_functions) {
-                    sortable_get_move_block_functions[ui.item.attr('block_type')](event, ui);
+                // reload one wysiwyg
+                if (ui.item.is('[block_type="wysiwyg"]')) {
+                    ui.item.each(function () {
+                        $(this).attr("id", "wysiwyg_block_sortable");
+
+                        var wysiwyg_text_editer = $(this).find(".wysiwyg-text-editer").attr("id");
+
+                        wysiwyg_data        = tinymce.get(wysiwyg_text_editer).getContent();
+                        wysiwyg_id          = wysiwyg_text_editer;
+                        wysiwyg_id_number   = $("#" + wysiwyg_text_editer).attr("wysiwyg_id");
+                    });
                 }
             },
-            stop: function (event, ui) {
-                if (ui.item.attr('block_type') in sortable_set_move_block_functions) {
-                    sortable_set_move_block_functions[ui.item.attr('block_type')](event, ui);
-                }
+            stop: function () {
+                // reload one wysiwyg
+                $(".sortable-building-blocks").find("#wysiwyg_block_sortable").each(function () {
+                    $(this).removeAttr("id");
+                    
+                    $(this).find(".content").html(function () {
+                        return '<button class="delete_block">Delete</button><textarea name="text-editer" class="wysiwyg-text-editer" id="' + wysiwyg_id + '" wysiwyg_id="' + wysiwyg_id_number + '" rows="10">' + wysiwyg_data + '</textarea>';
+                    });
+                    text_editer();
+
+                    wysiwyg_data        = "";
+                    wysiwyg_id          = "";
+                    wysiwyg_id_number   = 0;
+                });
             }
         });
     }
@@ -96,15 +68,35 @@ $(document).ready(function () {
                     if (input_value < number_of_columns) {
                         for (let remove_column_number = number_of_columns; remove_column_number > input_value; remove_column_number = remove_column_number - 1) {
                             // move
-                            var move_to_column = $(this).parent().find('.the_column[column="' + (remove_column_number - 1) + '"]').find(".column-building-blocks-area");
+                            var move_to_child       = $(this).parent().find('.the_column[column="' + (remove_column_number - 1) + '"]').find(".column-building-blocks-area");
+                            var wysiwyg_id_number   = "";
+                            var wysiwyg_id          = "";
+                            var wysiwyg_data        = "";
                             $(this).parent().find('.the_column[column="' + remove_column_number + '"]').each(function () {
                                 $(this).find(".column-building-blocks-area").find(".block").each(function () {
-                                    // custom
-                                    if ($(this).attr("block_type") in create_columns_move_block_functions) {
-                                        create_columns_move_block_functions[$(this).attr("block_type")](move_to_column, $(this));
+                                    // wysiwyg
+                                    if ($(this).hasClass("wysiwyg")) {
+                                        $(this).find(".wysiwyg-text-editer").each(function () {
+                                            wysiwyg_id_number   = $(this).attr("wysiwyg_id");
+                                            wysiwyg_id          = $(this).attr("id");
+                                            wysiwyg_data        = tinymce.get( wysiwyg_id ).getContent();
+                                            $(this).parent().html("");
+                                        });
+
+                                        move_to_child.append($(this).clone());
+                                        $(this).remove();
+                                        
+                                        move_to_child.find(".wysiwyg:last-child").find(".content").each(function () {
+                                            $(this).html(function () {
+                                                return '<button class="delete_block">Delete</button><textarea name="text-editer" class="wysiwyg-text-editer" id="' + wysiwyg_id + '" wysiwyg_id="' + wysiwyg_id_number + '" rows="10">' + wysiwyg_data + '</textarea>';
+                                            });
+                                            wysiwyg_id_number   = "";
+                                            wysiwyg_data        = "";
+                                            wysiwyg_id          = "";
+                                        });
                                     } // else
                                     else {
-                                        move_to_column.append($(this).clone());
+                                        move_to_child.append($(this).clone());
                                         $(this).remove();
                                     }
                                 });
@@ -112,6 +104,7 @@ $(document).ready(function () {
 
                             // remove
                             $(this).parent().find('.the_column[column="' + remove_column_number + '"]').remove();
+                            text_editer();
                         }
                     }
                     
@@ -144,25 +137,66 @@ $(document).ready(function () {
     // block id
     var block_id = $("#block_id_start").val();
 
-    $("#all-building-blocks > .content > .create_block").draggable({
-        helper: function () {
-            var head_html = '<div class="block" block_status="new" block_id="' + block_id + '" block_type="' + $(this).attr("block_type") + '" id="block_id_' + block_id + '">';
-            var footer_html = "</div>";
 
-            var body_html = "";
-            if ($(this).attr("block_type") in make_block_functions) {
-                body_html = make_block_functions[$(this).attr("block_type")].current_block(block_id);
+    /* ============================== wysiwyg_block ============================== */
+        $("#wysiwyg_block").draggable({
+            helper: function () {
+                //style="width: ' + $("#wysiwyg_block").width() + 'px"
+                current_block_name  = "wysiwyg";
+                current_block       = '<div style="width: ' + $("#wysiwyg_block").parent().width() + 'px" class="wysiwyg block" block_status="new" id="wysiwyg_block_move"><div class="header">Visual Editor</div><div class="content"><button class="delete_block">Delete</button><textarea name="new-text-editer" class="wysiwyg-text-editer" id="wysiwyg_id-' + block_id + '" wysiwyg_id="' + block_id + '" rows="10"></textarea></div></div>';
+                block_id++;
+                return current_block;
             }
-            else {
-                body_html = "<p>" + $(this).attr("block_type") + "</p>";
-            }
+        });
+    /* ============================== /wysiwyg_block ============================== */
 
-            current_block_name  = $(this).attr("block_type");
-            current_block       = head_html + body_html + footer_html;
-            block_id++;
-            return current_block;
-        }
-    });
+    /* ============================== plain-text_block ============================== */
+        $("#plain-text_block").draggable({
+            helper: function () {
+                //style="width: ' + $("#plain-text_block").width() + 'px"
+                current_block_name  = "plain-text_block";
+                current_block       = '<div style="width: ' + $("#plain-text_block").parent().width() + 'px" class="plain-text block" block_status="new" id="plain-text_block_move"><div class="header">plain text</div><div class="content"><button class="delete_block">Delete</button><textarea name="text-editer" class="plain-text-editer" id="plain_text-' + block_id + '" plain_text="' + block_id + '" rows="10"></textarea></div></div>';
+                block_id++;
+                return current_block;
+            }
+        });
+    /* ============================== /plain-text_block ============================== */
+
+    /* ============================== image_block ============================== */
+        $("#image_block").draggable({
+            helper: function () {
+                //style="width: ' + $("#image_block").width() + 'px"
+                current_block_name  = "image_block";
+                current_block       = '<div style="width: ' + $("#image_block").parent().width() + 'px" class="image block" block_status="new" id="image_block_move"><div class="header">image</div><div class="content"><button class="delete_block">Delete</button><button class="image-open-modal-btn">Select an image</button><img src="" alt="Select an image" class="img_data" id="image-' + block_id + '" image_id="' + block_id + '" img_filename="" img_size_mode="auto" img_width="0" img_height="0"></div></div>';
+                block_id++;
+                return current_block;
+            }
+        });
+    /* ============================== /image_block ============================== */
+
+    /* ============================== create-columns_block ============================== */
+        $("#create-columns_block").draggable({
+            helper: function () {
+                //style="width: ' + $("#create-columns_block").width() + 'px"
+                current_block_name  = "create-columns_block";
+                current_block       = '<div style="width: ' + $("#create-columns_block").parent().width() + 'px" class="create-columns block" block_status="new" id="create-columns_block_move" create_columns_id="' + block_id + '"><div class="header">create-columns</div><div class="content"><button class="delete_block">Delete</button><p>Number of columns</p><input type="number" name="new-create-columns-number_move" value="1" min="1" max="12" disabled><div class="columns"><div class="the_column" column="1" style="flex: 100;" flex="100"><input type="number" name="column-width" value="100" min="0" max="100" disabled class="column-width-number">%<div class="new-column-building-blocks-area sortable-building-blocks"></div></div></div></div></div>';
+                block_id++;
+                return current_block;
+            }
+        });
+    /* ============================== /create-columns_block ============================== */
+
+    /* ============================== subcategories_block ============================== */
+        $("#subcategories_block").draggable({
+            helper: function () {
+                //style="width: ' + $("#subcategories_block").width() + 'px"
+                current_block_name  = "subcategories_block";
+                current_block       = '<div style="width: ' + $("#subcategories_block").parent().width() + 'px" class="subcategories block" block_status="new" id="subcategories_block_move" subcategories_block_id="' + block_id + '"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit" disabled><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1" disabled><select name="subcategories_order" disabled><option value="latest">Latest page first</option><option value="first">First page first</option></select></div></div>';
+                block_id++;
+                return current_block;
+            }
+        });
+    /* ============================== /subcategories_block ============================== */
 
     /* ============================== droppable ============================== */
         function td_droppable(id) {
@@ -269,7 +303,7 @@ $(document).ready(function () {
 
             del_block_from_building_area.toggle("highlight", 400);
             setTimeout(function () {
-                if (del_block_from_building_area.attr("block_type") === "create_columns") {
+                if (del_block_from_building_area.hasClass("create-columns")) {
                     // delete new blocks
                     del_block_from_building_area.find('.block[block_status="new"]').each(function () {
                         $(this).remove();
