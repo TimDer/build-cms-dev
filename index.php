@@ -19,5 +19,12 @@ if  (
 {
     require __DIR__ . "/TD_dbExport/TD_dbExport.php";
     $export_database = new TD_dbExport(database::$conn);
+    /*$export_database = new TD_dbExport(array(
+        "servername" => "localhost",
+        "username" => "root",
+        "password" => "root",
+        "dbname" => "build-cms"
+    ));*/
+    $export_database->export_to_file("../../../build-cms-dev-database/build-cms_" . date("Y-m-d-H"));
     $export_database->export_to_file("build-cms");
 }

@@ -10,46 +10,27 @@
 
 <div class="page-content">
     <div class="build">
-        <?php foreach (plugins::$building_blocks_area AS $building_blocks_area) { ?>
-            <div class="building-blocks-area-container">
-                <div class="header">
-                    <h2><?php echo $building_blocks_area["display_name"]; ?></h2>
-                </div>
-                <div class="content" style="display: <?php echo $building_blocks_area["css_display"]; ?>">
-                    <div id="<?php echo $building_blocks_area["id"]; ?>" class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
-                        <?php load_pageSubController::load_blocks($building_blocks_area["name"]); ?>
+        <div class="all_building_blocks_area">
+            <?php foreach (plugins::$building_blocks_area AS $building_blocks_area) { ?>
+                <div class="building-blocks-area-container">
+                    <div class="header">
+                        <h2><?php echo $building_blocks_area["display_name"]; ?></h2>
+                    </div>
+                    <div class="content" style="display: <?php echo $building_blocks_area["css_display"]; ?>">
+                        <div id="<?php echo $building_blocks_area["id"]; ?>" class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
+                            <?php load_pageSubController::load_blocks($building_blocks_area["name"]); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-        <?php } ?>
-
-        <?php /* <h2>Content</h2>
-        <!-- ============================== building-blocks-area ============================== -->
-        <div id="building-blocks-area" class="sortable-building-blocks" building_blocks_area="content">
-
+            <?php } ?>
         </div>
-        <!-- ============================== /building-blocks-area ============================== -->
-        <!-- ============================== building-blocks-area sidebars ============================== -->
-        <div class="building-blocks-area-sidebars">
-            <div class="header">
-                Left and Right sidebar
-            </div>
-            <div class="content left-and-right-sidebar">
-                <div>
-                    <h3>Left sidebar</h3>
-                    <div class="sortable-building-blocks" id="sortable-building-blocks-left" building_blocks_area="left_sidebar"></div>
+        <div class="build_custom_area">
+            <?php foreach (page_functions::$build_custom_area AS $area) { ?>
+                <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
+                    <?php $area["function"]->__invoke(); ?>
                 </div>
-                <div>
-                    <h3>Right sidebar</h3>
-                    <div class="sortable-building-blocks" id="sortable-building-blocks-right" building_blocks_area="right_sidebar"></div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
-        <!-- ============================== building-blocks-area sidebars ============================== -->
-        <!-- ============================== building-blocks-area sidebars ============================== -->
-        <h3>Category info</h3>
-        <div class="building-blocks-area-category-info sortable-building-blocks" id="building-blocks-area-category-info" building_blocks_area="category-info"></div>
-        <!-- ============================== building-blocks-area sidebars ============================== -->*/ ?>
     </div>
     <div class="sidebar">
         <!-- ============================== general ============================== -->
@@ -74,27 +55,16 @@
         <!-- ============================== /general ============================== -->
 
         <!-- ============================== all-building-blocks ============================== -->
-        <div class="all-building-blocks">
+        <div class="all-building-blocks" id="all-building-blocks">
             <div class="header">
                 All building blocks
             </div>
             <div class="content">
-                <!-- wysiwyg -->
-                <div class="create_block" id="wysiwyg_block">
-                    Visual Editor
-                </div>
-                <div class="create_block" id="plain-text_block">
-                    Plain text
-                </div>
-                <div class="create_block" id="image_block">
-                    Image
-                </div>
-                <div class="create_block" id="create-columns_block">
-                    Create-columns
-                </div>
-                <div class="create_block" id="subcategories_block">
-                    Subcategories
-                </div>
+                <?php foreach (page_functions::$define_block AS $define_block) { ?>
+                    <div class="create_block" block_type="<?php echo $define_block["name"]; ?>">
+                        <?php echo $define_block["display_name"] ?>
+                    </div>
+                <?php } ?>
             </div>
         </div>
         <!-- ============================== /all-building-blocks ============================== -->
@@ -131,6 +101,16 @@
             </div>
         </div>
         <!-- ============================== /SEO ============================== -->
+
+        <!-- ============================== sidebar custom area ============================== -->
+        <div class="sidebar_custom_area">
+            <?php foreach (page_functions::$sidebar_custom_area AS $area) { ?>
+                <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
+                    <?php $area["function"]->__invoke(); ?>
+                </div>
+            <?php } ?>
+        </div>
+        <!-- ============================== sidebar custom area ============================== -->
     </div>
 </div>
 
@@ -138,43 +118,16 @@
 
     <div id="del_area_blocks"></div>
 
-<!-- ============================== del_area ============================== -->
+<!-- ============================== /del_area ============================== -->
 
-<!-- ============================== image modal ============================== -->
+<!-- ============================== bottom custom area ============================== -->
 
-    <div class="modal" id="image_modal">
-        <div class="header">
-            <div class="modal-title">
-                <h1>image</h1>
+    <div class="bottom_custom_area">
+        <?php foreach (page_functions::$bottom_custom_area AS $area) { ?>
+            <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
+                <?php $area["function"]->__invoke(); ?>
             </div>
-            <div class="modal-close" id="close-image-modal">
-                &#x2573;
-            </div>
-        </div>
-        <div class="body">
-            <div class="content">
-                <?php echo image_modalSubController::get_images_modal(); ?>
-            </div>
-            <div class="sidebar">
-                <div class="selected_image">
-                    <img src="" alt="select an image">
-                </div>
-                <h4>Select image size</h4>
-                <select name="img_size_mode" class="img_size_mode">
-                    <option value="auto">Auto</option>
-                    <option value="custom">Custom pixels</option>
-                </select>
-                <div class="form_group_img">
-                    <input type="number" name="img_width" min="0" disabled> <p>X</p> <input type="number" name="img_height" min="0" disabled>
-                </div>
-                <h4>Align image</h4>
-                <select name="align_image" class="align_image_modal" disabled>
-                    <option value="left">Left</option>
-                    <option value="right">Right</option>
-                    <option value="center">Center</option>
-                </select>
-            </div>
-        </div>
+        <?php } ?>
     </div>
 
-<!-- ============================== image modal ============================== -->
+<!-- ============================== /bottom custom area ============================== -->

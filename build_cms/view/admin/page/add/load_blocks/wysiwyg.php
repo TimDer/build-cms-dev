@@ -1,4 +1,4 @@
-<div class="wysiwyg block" block_status="saved">
+<div class="wysiwyg" block_status="saved" block_type="wysiwyg">
     <div class="header">Visual Editor</div>
     <div class="content">
         <button class="delete_block">Delete</button>

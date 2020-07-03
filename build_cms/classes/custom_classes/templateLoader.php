@@ -9,16 +9,6 @@ class templateLoader {
         if (file_exists($dir_to_file)) {
             require $dir_to_file;
         }
-        /*$plugin_dir_array = scandir( config_dir::BASE( "/plugins" ) );
-        foreach ($plugin_dir_array AS $value) {
-            if ($value === "." || $value === "..") {
-                continue;
-            }
-            $dir_to_file = config_dir::BASE( "/plugins/" . $value . "/" . $file );
-            if ( file_exists( $dir_to_file ) ) {
-                require $dir_to_file;
-            }
-        }*/
     }
 
     public static function set_template_file($template = "") {

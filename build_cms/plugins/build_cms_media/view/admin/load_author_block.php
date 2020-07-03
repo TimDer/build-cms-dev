@@ -1,4 +1,4 @@
-<div class="image block" block_status="saved">
+<div class="image" block_status="saved" block_type="image">
     <div class="header">image</div>
     <div class="content">
         <button class="delete_block">Delete</button>

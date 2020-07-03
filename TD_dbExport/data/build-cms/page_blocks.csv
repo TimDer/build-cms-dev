@@ -1,10 +1,8 @@
 id,page_id,block_type,block_id,building_blocks_area,the_order
 32,4,wysiwyg,1,content,1
 33,5,wysiwyg,1,content,1
-34,6,wysiwyg,1,content,1
-35,6,plain_text,2,content,2
-36,6,plain_text,3,content,3
-37,6,subcategories,4,content,4
-38,6,create_columns,5,content,5
-39,6,plain_text,6,5-0,1
-40,6,image,7,content,6
+42,7,wysiwyg,1,content,1
+43,7,plain_text,2,content,2
+44,7,image,3,left_sidebar,1
+45,7,create_columns,4,right_sidebar,1
+46,7,subcategories,5,category-info,1

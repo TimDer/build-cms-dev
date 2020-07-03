@@ -1,49 +1,7 @@
 <?php
 
 class load_pageSubController extends controller {
-    private static $block_functions = array();
-    /*
-    Example: $block_functions
-    array(
-        "block_type_name" => array(
-            "function" => function () {}
-        )
-    )
-    */
-    private static $blocks = array();
-    /*
-    Example: $blocks
-    array(
-        "building_blocks_area" => array(
-            (int)the_order => array(
-                "block_type" => "value",
-                "page_id" => "value",
-                "block_id" => "value",
-                "db_block_id" => "",
-                "building_blocks_area" => "value",
-                "the_order" => "value"
-            )
-        )
-    )
-    */
-
-    public static function set_block_type($block_type, $function) {
-        $default_block_types = array("wysiwyg", "plain_text", "create_columns", "subcategories");
-
-        if (in_array($block_type, $default_block_types) && is_callable($function)) {
-            if (isset(self::$block_functions[$block_type])) {
-                unset(self::$block_functions[$block_type]);
-            }
-            self::$block_functions[$block_type] = array(
-                "function" => $function
-            );
-        }
-        elseif (!isset(self::$block_functions[$block_type]) && is_callable($function)) {
-            self::$block_functions[$block_type] = array(
-                "function" => $function
-            );
-        }
-    }
+    
 
     private static function create_query($load_building_blocks_area) {
         $building_blocks_area_array = array();
@@ -79,7 +37,7 @@ class load_pageSubController extends controller {
     private static function query_blocks_from_db($array) {
         if ($array) {
             foreach ($array AS $value) {
-                self::$blocks[$value["building_blocks_area"]][(int)$value["the_order"]] = array(
+                page_functions::$blocks[$value["building_blocks_area"]][(int)$value["the_order"]] = array(
                     "block_type" => $value["block_type"],
                     "block_id" => $value["block_id"],
                     "db_block_id" => $value["id"],
@@ -93,18 +51,23 @@ class load_pageSubController extends controller {
 
     public static function load_blocks($load_building_blocks_area) {
         if (isset(user_url::$new_uri[0]) && is_numeric(user_url::$new_uri[0])) {
-            self::set_block_type("wysiwyg", function ($data) { self::load_wysiwyg($data); });
-            self::set_block_type("plain_text", function ($data) { self::load_plain_text($data); });
-            self::set_block_type("create_columns", function ($data) { self::load_create_columns($data); });
-            self::set_block_type("subcategories", function ($data) { self::load_subcategories($data); });
+            page_functions::set_load_block("wysiwyg", function ($data) { self::load_wysiwyg($data); });
+            page_functions::set_load_block("plain_text", function ($data) { self::load_plain_text($data); });
+            page_functions::set_load_block("create_columns", function ($data) { self::load_create_columns($data); });
+            page_functions::set_load_block("subcategories", function ($data) { self::load_subcategories($data); });
     
             self::query_blocks_from_db(database::select( (string)self::create_query($load_building_blocks_area) ));
     
-            if (isset(self::$blocks[$load_building_blocks_area])) {
-                foreach (self::$blocks[$load_building_blocks_area] AS $block) {
-                    if (isset(self::$block_functions[$block["block_type"]])) {
-                        self::$block_functions[$block["block_type"]]["function"]->__invoke($block);
+            if (isset(page_functions::$blocks[$load_building_blocks_area])) {
+                foreach (page_functions::$blocks[$load_building_blocks_area] AS $block) {
+                    echo '<div class="block" block_status="saved" block_id="' . $block["block_id"] . '" block_type="' . $block["block_type"] . '" id="block_id_' . $block["block_id"] . '">';
+                    if (isset(page_functions::$block_functions[$block["block_type"]])) {
+                        page_functions::$block_functions[$block["block_type"]]["function"]->__invoke($block);
                     }
+                    else {
+                        echo "<p>" . $block["block_type"] . "</p>";
+                    }
+                    echo "</div>";
                 }
             }
         }
