@@ -325,25 +325,4 @@ class save_page {
         database::query("DELETE FROM `page_blocks` WHERE `page_id`='$page_id' AND `block_id`='$block_id'");
     }
     /* ============================== /del ============================== */
-
-    /* ============================== del page ============================== */
-    public static function delete_page() {
-        database::reset();
-        $page_id = database::escape( user_url::$new_uri )[0];
-        database::query("DELETE FROM `page` WHERE id='$page_id'");
-        database::query("DELETE FROM `page_blocks` WHERE page_id='$page_id'");
-        database::query("DELETE FROM `page_cc_block` WHERE page_id='$page_id'");
-        database::query("DELETE FROM `page_plain_text` WHERE page_id='$page_id'");
-        database::query("DELETE FROM `page_sub_cat` WHERE page_id='$page_id'");
-        database::query("DELETE FROM `page_wysiwyg` WHERE page_id='$page_id'");
-
-        if ( isset(page_functions::$delete_page_functions) ) {
-            foreach (page_functions::$delete_page_functions AS $delete) {
-                $delete->__invoke($page_id);
-            }
-        }
-
-        database::reset();
-    }
-    /* ============================== /del page ============================== */
 }
