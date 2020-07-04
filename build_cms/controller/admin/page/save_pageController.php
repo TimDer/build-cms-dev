@@ -1,6 +1,7 @@
 <?php
 
 class save_pageController extends controller {
+    /* ============================== save page ============================== */
     public static function save_pages() {
         // Save the basics and get the page id
         $page_id = save_page::basics(user_url::$post_var["system_area"]["basics"]["data"]);
@@ -33,4 +34,26 @@ class save_pageController extends controller {
         );
         echo json_encode( $return_json );
     }
+    /* ============================== /save page ============================== */
+
+    /* ============================== del page ============================== */
+    public static function delete_page() {
+        database::reset();
+        $page_id = database::escape( user_url::$new_uri )[0];
+        database::query("DELETE FROM `page` WHERE id='$page_id'");
+        database::query("DELETE FROM `page_blocks` WHERE page_id='$page_id'");
+        database::query("DELETE FROM `page_cc_block` WHERE page_id='$page_id'");
+        database::query("DELETE FROM `page_plain_text` WHERE page_id='$page_id'");
+        database::query("DELETE FROM `page_sub_cat` WHERE page_id='$page_id'");
+        database::query("DELETE FROM `page_wysiwyg` WHERE page_id='$page_id'");
+
+        if ( isset(page_functions::$delete_page_functions) ) {
+            foreach (page_functions::$delete_page_functions AS $delete) {
+                $delete->__invoke($page_id);
+            }
+        }
+
+        database::reset();
+    }
+    /* ============================== /del page ============================== */
 }
