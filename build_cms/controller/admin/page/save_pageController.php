@@ -19,7 +19,7 @@ class save_pageController extends controller {
         if (isset(user_url::$post_var["custom_area"])) {
             foreach (user_url::$post_var["custom_area"] AS $custom_area) {
                 if (isset(page_functions::$save_custom_area[$custom_area["area_name"]])) {
-                    page_functions::$save_custom_area[$custom_area["area_name"]]->__invoke($custom_area["data"]);
+                    page_functions::$save_custom_area[$custom_area["area_name"]]->__invoke($custom_area["data"], $page_id);
                 }
             }
         }
