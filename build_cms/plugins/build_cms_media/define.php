@@ -18,6 +18,10 @@ page_functions::set_delete_block("image", function ($block_array, $page_id) {
     pluginClass_build_cms_media::delete_image_block($block_array, $page_id);
 });
 
+page_functions::set_delete_page("build_cms_media", function ($page_id) {
+    pluginClass_build_cms_media::delete_page($page_id);
+});
+
 
 page_functions::set_custom_js_footer("/admin/footer.php", __DIR__);
 

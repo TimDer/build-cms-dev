@@ -48,4 +48,8 @@ class pluginClass_build_cms_media {
         $block_id = $block_array["block_id"];
         database::query("DELETE FROM `page_img_block` WHERE `page_id`='$page_id' AND `block_id`='$block_id'");
     }
+
+    public static function delete_page($page_id) {
+        database::query("DELETE FROM `page_img_block` WHERE page_id='$page_id'");
+    }
 }
