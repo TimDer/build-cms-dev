@@ -78,7 +78,7 @@ class page_functions {
         }
     }
     public static function set_delete_page($area_name, $function) {
-        if (!isset(self::$delete_page_functions[$area_name]) AND isset(self::$define_block[$area_name])) {
+        if (!isset(self::$delete_page_functions[$area_name])) {
             self::$delete_page_functions[$area_name] = $function;
         }
     }
