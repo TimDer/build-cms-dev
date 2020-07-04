@@ -27,7 +27,7 @@
         <div class="build_custom_area">
             <?php foreach (page_functions::$build_custom_area AS $area) { ?>
                 <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                    <?php $area["function"]->__invoke(); ?>
+                    <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
                 </div>
             <?php } ?>
         </div>
@@ -106,7 +106,7 @@
         <div class="sidebar_custom_area">
             <?php foreach (page_functions::$sidebar_custom_area AS $area) { ?>
                 <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                    <?php $area["function"]->__invoke(); ?>
+                    <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
                 </div>
             <?php } ?>
         </div>
@@ -125,7 +125,7 @@
     <div class="bottom_custom_area">
         <?php foreach (page_functions::$bottom_custom_area AS $area) { ?>
             <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                <?php $area["function"]->__invoke(); ?>
+                <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
             </div>
         <?php } ?>
     </div>
