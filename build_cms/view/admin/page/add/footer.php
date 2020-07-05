@@ -1,3 +1,5 @@
+<script src="<?php echo config_url::BASE("/admin_files/page_builder/add/js/page_builder_page_loader.js"); ?>"></script>
+
 <!-- tinymce -->
 <script src="<?php echo config_url::BASE("/admin_files/page_builder/tinymce/tinymce.min.js"); ?>"></script>
 <script src="<?php echo config_url::BASE("/admin_files/page_builder/tinymce/tinymce.init.js"); ?>"></script>

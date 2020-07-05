@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?php echo config_url::VIEW("/admin/admin_basics/css/jquery-ui.min.css"); ?>">
     <link rel="stylesheet" href="<?php echo config_url::VIEW("/admin/admin_basics/css/main.css"); ?>">
     <?php controller::get_head(); ?>
     <title>Build-CMS Admin</title>
