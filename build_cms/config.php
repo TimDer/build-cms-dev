@@ -29,6 +29,7 @@ class config {
         "data",
         "backup",
         "classes_noAutoloader",
+        "functions",
         "routes"
     );
 }
