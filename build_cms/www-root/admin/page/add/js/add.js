@@ -29,46 +29,50 @@
 /* ============================== ajax functions ============================== */
 
     function ajax_success(this_massage) {
-        // set time_stamp
-        if ($('input[name="time_stamp"]').attr("value") === "") {
-            $('input[name="time_stamp"]').attr("value", this_massage.time_stamp);
-        }
+        close_load_page(function () {
+            // set time_stamp
+            if ($('input[name="time_stamp"]').attr("value") === "") {
+                $('input[name="time_stamp"]').attr("value", this_massage.time_stamp);
+            }
 
-        // delete del blocks
-        $("#del_area_blocks > .block").each(function () {
-            $(this).remove();
+            // delete del blocks
+            $("#del_area_blocks > .block").each(function () {
+                $(this).remove();
+            });
+
+            // set block status to saved
+            $(".sortable-building-blocks").find(".block").each(function () {
+                $(this).attr("block_status", "saved");
+            });
+
+            // set page title
+            $("#td_cms-page_title").text( "Edit: " + $('input[name="pagename"]').val() );
+
+            // get page id
+            $('input[name="page_id"]').attr("value", this_massage.page_id)
+
+            // added massage
+            $("html, body").animate({ scrollTop: 0 }, 0);
+            $("#save_massage_success").css("display", "block");
+            $("#save_massage_success").html( this_massage.status );
+
+            setTimeout(function () {
+                $("#save_massage_success").removeAttr("style");
+            }, (3 * 1000));
         });
-
-        // set block status to saved
-        $(".sortable-building-blocks").find(".block").each(function () {
-            $(this).attr("block_status", "saved");
-        });
-
-        // set page title
-        $("#td_cms-page_title").text( "Edit: " + $('input[name="pagename"]').val() );
-
-        // get page id
-        $('input[name="page_id"]').attr("value", this_massage.page_id)
-
-        // added massage
-        $("html, body").animate({ scrollTop: 0 }, 0);
-        $("#save_massage_success").css("display", "block");
-        $("#save_massage_success").html( this_massage.status );
-
-        setTimeout(function () {
-            $("#save_massage_success").removeAttr("style");
-        }, (3 * 1000));
     }
 
     function ajax_error(fail_massage = "fail") {
-        $("html, body").animate({ scrollTop: 0 }, 0);
-        $("#save_massage_success").css("display", "block");
-        $("#save_massage_success").css("background-color", "red");
-        $("#save_massage_success").html( fail_massage );
+        close_load_page(function () {
+            $("html, body").animate({ scrollTop: 0 }, 0);
+            $("#save_massage_success").css("display", "block");
+            $("#save_massage_success").css("background-color", "red");
+            $("#save_massage_success").html( fail_massage );
 
-        setTimeout(function () {
-            $("#save_massage_success").removeAttr("style");
-        }, (3 * 1000));
+            setTimeout(function () {
+                $("#save_massage_success").removeAttr("style");
+            }, (3 * 1000));
+        });
     }
 
 /* ============================== ajax functions ============================== */
@@ -77,6 +81,12 @@
 $(document).ready(function () {
 
     $("#add_btn").click(function () {
+        /* ============================== loading page ============================== */
+
+            open_load_page("saving page...");
+
+        /* ============================== /loading page ============================== */
+
         /* ============================== check if inputs are empty ============================== */
 
             if ($('input[name="pagename"]').val() === "") {
@@ -89,7 +99,7 @@ $(document).ready(function () {
                 return;
             }
 
-        /* ============================== check if inputs are empty ============================== */
+        /* ============================== /check if inputs are empty ============================== */
 
         /* ============================== custom area loop ============================== */
 
@@ -100,7 +110,7 @@ $(document).ready(function () {
                 custom_area_data[value.area_name].data = value.save_function();
             });
 
-        /* ============================== custom area loop ============================== */
+        /* ============================== /custom area loop ============================== */
 
         /* ============================== system area loop ============================== */
 
@@ -111,7 +121,7 @@ $(document).ready(function () {
                 system_area_data[value.area_name].data = value.save_function();
             });
 
-        /* ============================== system area loop ============================== */
+        /* ============================== /system area loop ============================== */
         
         /* ============================== data object ============================== */
             var data_array = {};
@@ -119,7 +129,7 @@ $(document).ready(function () {
             // custom area to ajax object
             data_array.system_area              = system_area_data;
             data_array.custom_area              = custom_area_data;
-        /* ============================== data object ============================== */
+        /* ============================== /data object ============================== */
 
         /* ============================== ajax ============================== */
             
