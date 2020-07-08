@@ -359,6 +359,10 @@ class page_builder_template_loader {
                 $return .= (!empty($pages_sql['keywords'])) ? '<meta name="keywords" content="' . $pages_sql['keywords'] . '">' : "";
                 $return .= '<meta name="description" content="' . ( (empty($pages_sql["description"])) ? $empty_sql["sideslogan"] : $pages_sql['description'] ) . '">';
             }
+            else {
+                $return .= '<title>' . $empty_sql["sidetitle"] . '</title>';
+                $return .= '<meta name="description" content="' . $empty_sql["sideslogan"] . '">';
+            }
             return $return;
         }
     }
