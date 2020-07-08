@@ -78,10 +78,11 @@ class config_url {
         return self::protocol() . self::domain() . self::url_dir() . $url;
     }
 
+    public static function TEMPLATE($url = "") {
+        return self::BASE("/template" . $url);
+    }
+
     /* ============================== view ============================== */
-        public static function VIEW_TEMP($url = "") {
-            return self::BASE("/template" . $url);
-        }
         public static function VIEW($url = "") {
             return self::BASE("/view" . $url);
         }
