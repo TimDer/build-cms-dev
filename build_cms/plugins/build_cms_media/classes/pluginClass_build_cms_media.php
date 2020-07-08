@@ -52,4 +52,35 @@ class pluginClass_build_cms_media {
     public static function delete_page($page_id) {
         database::query("DELETE FROM `page_img_block` WHERE page_id='$page_id'");
     }
+
+    public static function display_image_block($block_array) {
+        $db_block_id = $block_array["id"];
+        $image_sql = database::select("SELECT `image` FROM `page_img_block` WHERE `page_blocks_id`='$db_block_id'")[0];
+
+
+        echo '<img src="' . config_url::BASE("/images/" . $image_sql["image"]) . '" class="image_' . $block_array["id"] . '">';
+    }
+
+    public static function display_css_image_block($block_array) {
+        $db_block_id = $block_array["id"];
+        $image_sql = database::select("SELECT `img_size_mode`, `img_width`, `img_height`, `image_align` FROM `page_img_block` WHERE `page_blocks_id`='$db_block_id'")[0];
+
+        if ($image_sql["img_size_mode"] === "custom") {
+            echo ".block_" . $db_block_id . " {";
+                echo "text-align: " . $image_sql["image_align"] . ";";
+                echo "display: block;";
+            echo "}";
+        }
+        
+        echo ".image_" . $block_array["id"] . " {";
+            if ($image_sql["img_size_mode"] === "auto") {
+                echo "width: 100%;";
+                echo "height: auto;";
+            }
+            else {
+                echo "height: " . $image_sql["img_height"] . "px;";
+                echo "width: " . $image_sql["img_width"] . "px;";
+            }
+        echo "}";
+    }
 }

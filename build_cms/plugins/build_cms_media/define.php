@@ -18,6 +18,14 @@ page_functions::set_delete_block("image", function ($block_array, $page_id) {
     pluginClass_build_cms_media::delete_image_block($block_array, $page_id);
 });
 
+page_functions::set_load_block_template_function("image", function ($block_array) {
+    pluginClass_build_cms_media::display_image_block($block_array);
+});
+
+page_functions::set_load_blocks_css_function("image", function ($block_data) {
+    pluginClass_build_cms_media::display_css_image_block($block_data);
+});
+
 page_functions::set_delete_page("build_cms_media", function ($page_id) {
     pluginClass_build_cms_media::delete_page($page_id);
 });

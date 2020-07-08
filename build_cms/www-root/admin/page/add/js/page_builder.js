@@ -165,39 +165,16 @@
         create_columns_data["block_type"]   = "create_columns";
         create_columns_data["the_order"]    = block_order;
         create_columns_data["block_id"]     = this_block.attr("create_columns_id");
-        //create_columns_data["data"]         = {};
         create_columns_data["status"]       = this_block.attr("block_status");
         create_columns_data["width"]        = {};
         
         this_block.find(".the_column").each(function () {
             var create_columns_column_id = $(this).attr("column") - 1;
-            //var create_columns_the_order = 0;
-
             // add column width
             create_columns_data["width"][create_columns_column_id]              = {};
             
             create_columns_data["width"][create_columns_column_id]["width_id"]  = create_columns_column_id;
             create_columns_data["width"][create_columns_column_id]["width"]     = $(this).attr("flex");
-
-            // create new column data array
-            /*create_columns_data["data"][create_columns_column_id] = {};
-
-            $(this).find(".column-building-blocks-area > .block").each(function () {
-                if ($(this).hasClass("wysiwyg")) {
-                    create_columns_data["data"][create_columns_column_id][create_columns_the_order] = block_functions["wysiwyg"]($(this), create_columns_the_order);
-                }
-                else if ($(this).hasClass("plain-text")) {
-                    create_columns_data["data"][create_columns_column_id][create_columns_the_order] = block_functions["plain_text"]($(this), create_columns_the_order);
-                }
-                else if ($(this).hasClass("image")) {
-                    create_columns_data["data"][create_columns_column_id][create_columns_the_order] = block_functions["image"]($(this), create_columns_the_order);
-                }
-                else if (this_block.hasClass("subcategories")) {
-                    create_columns_data["data"][create_columns_column_id][create_columns_the_order] = block_functions["subcategories"](this_block, block_order);
-                }
-
-                create_columns_the_order++;
-            }); */ // <-- $(this).find(".column-building-blocks-area").find(".block")
         }); // <-- this_block.find(".the_column")
 
         return create_columns_data;
@@ -333,7 +310,7 @@
         });
 
         make_block_function("subcategories", function (block_id) {
-            return '<div class="subcategories" id="subcategories_block_' + block_id + '" subcategories_block_id="' + block_id + '" block_type="subcategories"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit"><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1"><select name="subcategories_order"><option value="latest">Latest page first</option><option value="first">First page first</option></select></div></div>';
+            return '<div class="subcategories" id="subcategories_block_' + block_id + '" subcategories_block_id="' + block_id + '" block_type="subcategories"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit"><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1"><select name="subcategories_order"><option value="DESC">Latest page first</option><option value="ASC">First page first</option></select></div></div>';
         });
     });
 

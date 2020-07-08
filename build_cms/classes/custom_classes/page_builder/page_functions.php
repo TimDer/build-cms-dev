@@ -5,7 +5,7 @@ class page_functions {
     /*
     Example: insert_functions
     array(
-        (int)0 => array(
+        "block_type" => array(
             "name" => "block_type",
             "display_name" => "display_name"
         )
@@ -185,4 +185,42 @@ class page_functions {
     }
 
     /* ============================== /custom areas ============================== */
+
+    /* ============================== template loader (load blocks) ============================== */
+
+    public static $set_load_block_template_functions = array();
+    public static function set_load_block_template_function($block, $function) {
+        $default_block_types = array("wysiwyg", "plain_text", "create_columns", "subcategories");
+
+        if (in_array($block, $default_block_types)) {
+            if (isset(self::$set_load_block_template_functions[$block])) {
+                unset(self::$set_load_block_template_functions[$block]);
+            }
+            self::$set_load_block_template_functions[$block] = $function;
+        }
+        elseif (!isset(self::$set_load_block_template_functions[$block]) && is_callable($function) && isset(self::$define_block[$block])) {
+            self::$set_load_block_template_functions[$block] = $function;
+        }
+    }
+
+    /* ============================== template loader (load blocks) ============================== */
+
+    /* ============================== Load blocks (css) ============================== */
+
+    public static $set_load_blocks_css_functions = array();
+    public static function set_load_blocks_css_function($block, $function) {
+        $default_block_types = array("wysiwyg", "plain_text", "create_columns");
+
+        if (in_array($block, $default_block_types)) {
+            if (isset(self::$set_load_blocks_css_functions[$block])) {
+                unset(self::$set_load_blocks_css_functions[$block]);
+            }
+            self::$set_load_blocks_css_functions[$block] = $function;
+        }
+        elseif (!isset(self::$set_load_blocks_css_functions[$block]) && is_callable($function) && isset(self::$define_block[$block])) {
+            self::$set_load_blocks_css_functions[$block] = $function;
+        }
+    }
+
+    /* ============================== /Load blocks (css) ============================== */
 }

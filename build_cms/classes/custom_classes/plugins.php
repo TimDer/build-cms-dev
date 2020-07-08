@@ -34,9 +34,9 @@ class plugins {
     Example: building_blocks_area
     array(
         "id" => array(
-            "id" => "value",
             "name" => "value",
-            "display_name" => "value"
+            "display_name" => "value",
+            "css_display" => "value"
         )
     )
     */
@@ -168,23 +168,12 @@ class plugins {
         }
         self::$set_dashboard_widget_loginCheck = false;
     }
-
-    private static $set_building_blocks_area_loginCheck = false;
-    public static function set_building_blocks_area($id, $name, $display_name, $css_display = "none") {
-        user_session::check_session("user_id", function () {
-            user_session::check_session_permission("author", function () {
-                self::$set_building_blocks_area_loginCheck = true;
-            });
-        }, false);
-
-        if (self::$set_building_blocks_area_loginCheck) {
-            self::$building_blocks_area[$id] = array(
-                "id" => $id,
-                "name" => $name,
-                "display_name" => $display_name,
-                "css_display" => $css_display
-            );
-        }
-        self::$set_building_blocks_area_loginCheck = false;
+    
+    public static function set_building_blocks_area($id, $display_name = "", $css_display = "none") {
+        self::$building_blocks_area[$id] = array(
+            "name" => $id,
+            "display_name" => $display_name,
+            "css_display" => $css_display
+        );
     }
 }

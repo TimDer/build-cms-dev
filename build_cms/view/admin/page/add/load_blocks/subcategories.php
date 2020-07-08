@@ -8,8 +8,8 @@
         </select>
         <input type="number" name="subcategories_limit_number" min="0" value="<?php echo pageBuilder_loadSubcategoriesSubModal::$the_limit ?>">
         <select name="subcategories_order">
-            <option value="latest"<?php echo pageBuilder_loadSubcategoriesSubModal::$latest ?>>Latest page first</option>
-            <option value="first"<?php echo pageBuilder_loadSubcategoriesSubModal::$first ?>>First page first</option>
+            <option value="DESC"<?php echo pageBuilder_loadSubcategoriesSubModal::$latest ?>>Latest page first</option>
+            <option value="ASC"<?php echo pageBuilder_loadSubcategoriesSubModal::$first ?>>First page first</option>
         </select>
     </div>
 </div>
