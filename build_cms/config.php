@@ -30,6 +30,7 @@ class config {
         "backup",
         "classes_noAutoloader",
         "functions",
-        "routes"
+        "routes",
+        "scripts"
     );
 }
