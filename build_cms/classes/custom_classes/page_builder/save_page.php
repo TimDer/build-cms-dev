@@ -57,6 +57,7 @@ class save_page {
         $general_status         = $data_array["general_status"];
         if (isset($data_array["general_homepage"])) {
             $general_homepage   = "true";
+            database::query("UPDATE `page` SET `home_page`='false'");
         }
         else {
             $general_homepage   = "false";
@@ -165,7 +166,6 @@ class save_page {
                                                         '$plain_text_id',
                                                         '$data')");
     }
-
     
     /* ============================== /add ============================== */
 
@@ -179,10 +179,11 @@ class save_page {
         $general_url            = $data_array["general_url"];
         $general_status         = $data_array["general_status"];
         if (isset($data_array["general_homepage"])) {
-            $general_homepage   = true;
+            $general_homepage   = "true";
+            database::query("UPDATE `page` SET `home_page`='false'");
         }
         else {
-            $general_homepage   = false;
+            $general_homepage   = "false";
         }
 
         // SEO
