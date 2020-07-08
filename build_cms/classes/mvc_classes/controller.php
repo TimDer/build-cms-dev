@@ -5,21 +5,13 @@ class controller {
     private static $footer  = array();
 
     public static function getView($file = "", $location = false) {
-        if (!is_callable("html_compress")) {
-            function html_compress($buf){
-                return preg_replace(array('/<!--(.*)-->/Uis',"/[[:blank:]]+/"),array('',' '),str_replace(array("\n","\r","\t"),'',$buf));
-            }
-        }
-
         if (!empty($file)) {
-            ob_start("html_compress");
             if ($location === false) {
                 require config_dir::VIEW($file);
             }
             else {
                 require config_dir::PLUGINDIR($location, DIRECTORY_SEPARATOR . "view" . DIRECTORY_SEPARATOR . $file);
             }
-            ob_end_flush();
         }
     }
 
