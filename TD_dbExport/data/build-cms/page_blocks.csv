@@ -1,4 +1,7 @@
 id,page_id,block_type,block_id,building_blocks_area,the_order
 32,4,wysiwyg,1,content,1
 33,5,wysiwyg,1,content,1
-35,6,image,2,content,1
+45,5,wysiwyg,2,category-info,1
+54,5,create_columns,3,category-info,2
+55,5,image,4,3-0,1
+56,5,image,5,3-1,1
