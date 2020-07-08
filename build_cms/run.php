@@ -46,7 +46,7 @@ plugins::call_plugins();
 templateLoader::call_template_definer();
 
 // set default page builder areas
-plugins::set_building_blocks_area("building-blocks-area-category-info", "category-info", "Category info");
+plugins::set_building_blocks_area("category-info", "Category info");
 
 // set template loader link in settings menu
 plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/template_loader", "admin");

@@ -1,8 +1,6 @@
 <?php
 
 class load_pageSubController extends controller {
-    
-
     private static function create_query($load_building_blocks_area) {
         $building_blocks_area_array = array();
         foreach (plugins::$building_blocks_area AS $value) {
@@ -29,7 +27,7 @@ class load_pageSubController extends controller {
         $table_name = "`page_blocks`";
 
         // setup sql
-        $sql = "SELECT $selecter FROM $table_name WHERE $where";
+        $sql = "SELECT $selecter FROM $table_name WHERE $where ORDER BY `the_order` ASC";
         
         return $sql;
     }

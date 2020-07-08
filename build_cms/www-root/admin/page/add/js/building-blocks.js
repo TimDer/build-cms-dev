@@ -118,7 +118,7 @@ $(document).ready(function () {
                     // add
                     if (input_value > number_of_columns) {
                         for (let column_number = new_number_of_columns; column_number <= input_value; column_number++) {
-                            var add_html = '<div class="the_column" column="' + column_number + '" style="flex: 100;"><input type="number" name="column-width" value="100" min="0" max="100" class="column-width-number">%<div class="sortable-building-blocks column-building-blocks-area"></div></div>';
+                            var add_html = '<div class="the_column" column="' + column_number + '" style="flex: 100;"><input type="number" name="column-width" value="100" min="0" max="100" class="column-width-number">%<div class="sortable-building-blocks column-building-blocks-area" building_blocks_area="' + $(this).parent().parent().parent().attr("block_id") + '-' + (column_number - 1) + '"></div></div>';
 
                             $(this).parent().find(".columns").append(function () {
                                 return add_html;

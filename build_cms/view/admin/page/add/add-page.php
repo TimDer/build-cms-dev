@@ -22,10 +22,14 @@
                     <?php foreach (plugins::$building_blocks_area AS $building_blocks_area) { ?>
                         <div class="building-blocks-area-container">
                             <div class="header">
-                                <h2><?php echo $building_blocks_area["display_name"]; ?></h2>
+                                <?php if ( !empty($building_blocks_area["display_name"]) ): ?>
+                                    <h2><?php echo $building_blocks_area["display_name"]; ?></h2>
+                                <?php else: ?>
+                                    <h2><?php echo $building_blocks_area["name"]; ?></h2>
+                                <?php endif; ?>
                             </div>
                             <div class="content" style="display: <?php echo $building_blocks_area["css_display"]; ?>">
-                                <div id="<?php echo $building_blocks_area["id"]; ?>" class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
+                                <div class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
                                     <?php load_pageSubController::load_blocks($building_blocks_area["name"]); ?>
                                 </div>
                             </div>

@@ -87,6 +87,10 @@ class user_url {
     public static function uri() {
         $uri_array = explode( "/", trim(self::uri_string(), "/") );
 
-        return $uri_array;
+        if (empty( end($uri_array) )) {
+            array_pop($uri_array);
+        }
+
+        return database::escape($uri_array);
     }
 }

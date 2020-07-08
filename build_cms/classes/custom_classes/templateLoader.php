@@ -59,7 +59,39 @@ class templateLoader {
         }
     }
 
-    public static function set_building_blocks_area($id, $name, $display_name, $css_display = "none") {
-        plugins::set_building_blocks_area($id, $name, $display_name, $css_display);
+    public static function set_building_blocks_area($id, $display_name = "", $css_display = "none") {
+        plugins::set_building_blocks_area($id, $display_name, $css_display);
+    }
+
+    private static $set_default_head = array();
+    public static function set_default_head($function) {
+        self::$set_default_head[] = $function;
+    }
+
+    public static function load_default_head($charset, $page_builder = true) {
+        $return = "";
+
+        $return .= "<meta charset='" . $charset . "'>";
+        $return .= "<base href='" . config_url::BASE("/") . "'>";
+
+        if ($page_builder) {
+            if (user_url::uri_string() !== "/" && user_url::uri_string() !== "") {
+                $page_css = "?page=" . user_url::uri_string();
+            }
+            else {
+                $page_css = "";
+            }
+            $return .= '<link rel="stylesheet" href="' . config_url::BASE("/files/page_builder/load_blocks.css" . $page_css) . '">';
+        }
+
+        foreach (self::$set_default_head AS $head) {
+            if (is_callable($head)) {
+                $return .= $head();
+            }
+        }
+
+        $return .= page_builder_template_loader::get_seo();
+
+        return $return;
     }
 }

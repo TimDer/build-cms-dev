@@ -20,3 +20,9 @@ routes::set("/admin_submit/page/delete_page", function () {
 routes::set("/admin_files/page_builder", function () {
     load_filesController::load_file("/www-root/admin/page", "404 Not found");
 }, "user_id", "author");
+
+// load block (CSS)
+routes::set("/files/page_builder/load_blocks.css", function () {
+    header("Content-Type: text/css");
+    page_builder_template_loader::load_css(user_url::$get_var, false);
+});

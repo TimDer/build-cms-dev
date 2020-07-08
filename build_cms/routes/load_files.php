@@ -27,12 +27,3 @@ routes::set("/admin_files/settings/users", function () {
 routes::set("/view", function () {
     load_filesController::load_file("/www-root", "select a file (404)");
 });
-
-
-
-
-
-
-routes::set("/images", function () {
-    load_filesController::load_file("/www-root/images", "select a file (404)");
-});
