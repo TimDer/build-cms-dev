@@ -50,6 +50,17 @@
 
 /* ============================== /block function ============================== */
 
+/* ============================== droppable custom functions ============================== */
+
+    var droppable_custom_functions = {};
+    function droppable_custom_function(block, block_function) {
+        if (!(block in droppable_custom_functions)) {
+            droppable_custom_functions[block] = block_function;
+        }
+    }
+
+/* ============================== /droppable custom functions ============================== */
+
 /* ============================== sortable ============================== */
     function page_builder_sortable() {
         $(".sortable-building-blocks").sortable({
@@ -165,11 +176,11 @@ $(document).ready(function () {
     });
 
     /* ============================== droppable ============================== */
-        function td_droppable(id) {
+        function td_droppable(id, event, ui) {
             $(id).append(function () {
                 return current_block;
             });
-
+            
             // wysiwyg
             if (current_block_name === "wysiwyg") {
                 $("#wysiwyg_block_move").each(function () {
@@ -183,12 +194,6 @@ $(document).ready(function () {
             } // plain-text_block
             else if (current_block_name === "plain-text_block") {
                 $("#plain-text_block_move").each(function () {
-                    $(this).removeAttr("style");
-                    $(this).removeAttr("id");
-                });
-            } // image_block
-            else if (current_block_name === "image_block") {
-                $("#image_block_move").each(function () {
                     $(this).removeAttr("style");
                     $(this).removeAttr("id");
                 });
@@ -232,6 +237,10 @@ $(document).ready(function () {
                     $(this).find("input").removeAttr("disabled");
                 });
             }
+            else {
+                var JQ_this = id;
+                droppable_custom_functions[current_block_name]((block_id - 1), JQ_this, event, ui);
+            }
 
             // reset variables
             current_block       = null;
@@ -240,7 +249,7 @@ $(document).ready(function () {
 
         $(".sortable-building-blocks").droppable({
             drop: function (event, ui) {
-                td_droppable($(this));
+                td_droppable($(this), event, ui);
             }
         });
     /* ============================== /droppable ============================== */
