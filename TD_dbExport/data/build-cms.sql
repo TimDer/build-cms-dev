@@ -24,7 +24,7 @@ CREATE TABLE `page` (
   `post_page` varchar(6000) NOT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 ALTER TABLE `page` ADD PRIMARY KEY (`id`);
 
 -- page_blocks
@@ -36,7 +36,7 @@ CREATE TABLE `page_blocks` (
   `building_blocks_area` varchar(6000) NOT NULL,
   `the_order` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `page_blocks` ADD PRIMARY KEY (`id`);
 
 -- page_cc_block
@@ -47,7 +47,7 @@ CREATE TABLE `page_cc_block` (
   `column_id` int(2) NOT NULL,
   `width` decimal(65,30) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `page_cc_block` ADD PRIMARY KEY (`id`);
 
 -- page_img_block
@@ -62,7 +62,7 @@ CREATE TABLE `page_img_block` (
   `img_height` int(11) NOT NULL,
   `image_align` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_img_block` ADD PRIMARY KEY (`id`);
 
 -- page_plain_text
@@ -73,7 +73,7 @@ CREATE TABLE `page_plain_text` (
   `block_id` bigint(20) NOT NULL,
   `data` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `page_plain_text` ADD PRIMARY KEY (`id`);
 
 -- page_sub_cat
@@ -86,7 +86,7 @@ CREATE TABLE `page_sub_cat` (
   `the_limit` bigint(20) NOT NULL,
   `sort` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `page_sub_cat` ADD PRIMARY KEY (`id`);
 
 -- page_wysiwyg
@@ -97,7 +97,7 @@ CREATE TABLE `page_wysiwyg` (
   `block_id` bigint(20) NOT NULL,
   `data` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_wysiwyg` ADD PRIMARY KEY (`id`);
 
 -- plugins
