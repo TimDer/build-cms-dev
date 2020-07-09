@@ -192,13 +192,13 @@ $(document).ready(function () {
                 });
                 text_editer();
             } // plain-text_block
-            else if (current_block_name === "plain-text_block") {
+            else if (current_block_name === "plain_text") {
                 $("#plain-text_block_move").each(function () {
                     $(this).removeAttr("style");
                     $(this).removeAttr("id");
                 });
             } // create-columns_block
-            else if (current_block_name === "create-columns_block") {
+            else if (current_block_name === "create_columns") {
                 $("#create-columns_block_move").each(function () {
                     $(this).removeAttr("style");
                     $(this).removeAttr("id");
@@ -227,7 +227,7 @@ $(document).ready(function () {
                     create_columns_columns();
                 });
             }
-            else if (current_block_name === "subcategories_block") {
+            else if (current_block_name === "subcategories") {
                 $("#subcategories_block_move").each(function () {
                     $(this).removeAttr("style");
                     $(this).removeAttr("id");
@@ -237,7 +237,7 @@ $(document).ready(function () {
                     $(this).find("input").removeAttr("disabled");
                 });
             }
-            else {
+            else if (current_block_name in droppable_custom_functions) {
                 var JQ_this = id;
                 droppable_custom_functions[current_block_name]((block_id - 1), JQ_this, event, ui);
             }
