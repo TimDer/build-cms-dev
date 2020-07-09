@@ -1,40 +1,7 @@
 <?php
 
-page_functions::define_block("image", "Image");
+require_once config_dir::PLUGINDIR(__DIR__, "/scripts/image_block_define.php");
 
-page_functions::set_load_block("image", function ($data) { media_loadImageBlock_pluginController::author_get_image_block($data); });
-
-// insert image block in the database
-page_functions::set_insert_block("image", function ($block_array, $page_id, $page_blocks_id) {
-    pluginClass_build_cms_media::add_image($block_array, $page_id, $page_blocks_id);
-});
-
-// update image block in the database
-page_functions::set_update_block("image", function ($block_array, $page_id) {
-    pluginClass_build_cms_media::save_image($block_array, $page_id);
-});
-
-page_functions::set_delete_block("image", function ($block_array, $page_id) {
-    pluginClass_build_cms_media::delete_image_block($block_array, $page_id);
-});
-
-page_functions::set_load_block_template_function("image", function ($block_array) {
-    pluginClass_build_cms_media::display_image_block($block_array);
-});
-
-page_functions::set_load_blocks_css_function("image", function ($block_data) {
-    pluginClass_build_cms_media::display_css_image_block($block_data);
-});
-
-page_functions::set_delete_page("build_cms_media", function ($page_id) {
-    pluginClass_build_cms_media::delete_page($page_id);
-});
-
-
-page_functions::set_custom_js_footer("/admin/footer.php", __DIR__);
-
-
-// custom area (modal)
-page_functions::bottom_custom_area("image_modal", function () {
-    controller::getView("/admin/image_modal.php", __DIR__);
-});
+plugins::set_menu_item("build_cms_media", "Media", "", "author");
+plugins::set_submenu_item("build_cms_media", "Images", "/admin/media/images", "author");
+plugins::set_submenu_item("build_cms_media", "Downloads", "/admin/media/downloads", "author");
