@@ -1,1 +1,1 @@
-<iframe src="<?php echo config_url::BASE(); ?>"></iframe>
+<iframe src="<?php echo config_url::BASE( (implode("/", user_url::$new_uri) !== "/" AND implode("/", user_url::$new_uri) !== "") ? "/" . implode("/", user_url::$new_uri) : "" ); ?>"></iframe>
