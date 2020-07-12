@@ -4,7 +4,9 @@
 page_functions::define_block("image", "Image");
 
 // Image loader back-end (page builder)
-page_functions::set_load_block("image", function ($data) { pluginClass_build_cms_media::author_get_image_block($data); });
+page_functions::set_load_block("image", function ($data) {
+    pluginClass_build_cms_media::author_get_image_block($data);
+});
 
 // Insert image block in the database
 page_functions::set_insert_block("image", function ($block_array, $page_id, $page_blocks_id) {
