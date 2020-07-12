@@ -1,0 +1,1 @@
+<link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/plugin/media/main.css"); ?>">
