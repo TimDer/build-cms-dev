@@ -2,7 +2,7 @@
     <div class="loader_root_container">
         <div class="loading_box">
             <h1>Loading Images...</h1>
-            <img src="<?php echo config_url::BASE("/admin_files/plugin/media/images/loading_page.gif"); ?>">
+            <img src="<?php echo config_url::BASE("/admin_files/plugin/media/loading_page.gif"); ?>">
         </div>
     </div>
     <div class="content_root_container" style="visibility: hidden;">
