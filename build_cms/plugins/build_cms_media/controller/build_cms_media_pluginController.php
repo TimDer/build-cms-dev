@@ -3,7 +3,7 @@
 class build_cms_media_pluginController extends controller {
     /* ============================== Images ============================== */
     public static function load_images() {
-        self::set_head("/images/head.php", __DIR__);
+        self::set_head("/head_images_downloads.php", __DIR__);
         self::set_footer("/images/footer.php", __DIR__);
         
         foreach (user_url::$get_var AS $get_var_key => $get_var) {
