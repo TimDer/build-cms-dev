@@ -1,9 +1,43 @@
 <?php
 
 class files {
+    public static $file_error_list = array(
+        0 => "There is no error, the file uploaded with success.",
+        1 => "The uploaded file exceeds the \"upload_max_filesize\" directive in php.ini.",
+        2 => "The uploaded file exceeds the \"MAX_FILE_SIZE\" directive that was specified in the HTML form.",
+        3 => "The uploaded file was only partially uploaded.",
+        4 => "No file was uploaded.",
+        6 => "Missing a temporary folder. Introduced in PHP 5.0.3.",
+        7 => "Failed to write file to disk. Introduced in PHP 5.1.0.",
+        8 => "A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with \"phpinfo()\" may help. Introduced in PHP 5.2.0.",
+    );
+
     public static function create_file($dir_file) {
         $create = fopen($dir_file, "w");
         fclose($create);
+    }
+
+    private static function prepare_files_array($files_array) {
+        $fix_array = array();
+
+        foreach ($files_array AS $root_key => $root_value) {
+            foreach ($root_value AS $theFile_key => $theFile_value) {
+                $fix_array[$theFile_key][$root_key] = $theFile_value;
+            }
+        }
+
+        return $fix_array;
+    }
+
+    public static function upload_multiple_files_to_dir($to_dir, $file_array, $fileAlloued_array, $customFileName = false) {
+        $fix_file_array = self::prepare_files_array($file_array);
+        
+        $return = array();
+        foreach ($fix_file_array AS $file) {
+            $return[] = self::upload_to_dir($to_dir, $file, $fileAlloued_array, $customFileName);
+        }
+
+        return $return;
     }
 
     public static function upload_to_dir($to_dir, $file_array, $fileAlloued_array, $customFileName = false) {
@@ -11,10 +45,14 @@ class files {
         $fileTmpDir = $file_array['tmp_name'];
         $fileError  = $file_array['error'];
 
+        foreach ($fileAlloued_array AS $ext_key => $ext) {
+            $fileAlloued_array[$ext_key] = strtolower((string)$ext);
+        }
+
         $fileExt            = explode('.', $fileName);
         $fileActualExt      = end($fileExt);
 
-        if ( in_array($fileActualExt, $fileAlloued_array) ) {
+        if ( in_array(strtolower($fileActualExt), $fileAlloued_array) OR $fileAlloued_array === "all" ) {
             if ($fileError === 0) {
                 if (is_string($customFileName)) {
                     move_uploaded_file($fileTmpDir, $to_dir . "/" . $customFileName . "." . $fileActualExt);
