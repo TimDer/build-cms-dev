@@ -36,7 +36,7 @@ CREATE TABLE `page_blocks` (
   `building_blocks_area` varchar(6000) NOT NULL,
   `the_order` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `page_blocks` ADD PRIMARY KEY (`id`);
 
 -- page_cc_block
@@ -86,7 +86,7 @@ CREATE TABLE `page_sub_cat` (
   `the_limit` bigint(20) NOT NULL,
   `sort` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_sub_cat` ADD PRIMARY KEY (`id`);
 
 -- page_wysiwyg
