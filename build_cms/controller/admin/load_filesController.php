@@ -1,7 +1,7 @@
 <?php
 
 class load_filesController extends controller {
-    public static function load_file($dir, $message_404) {
+    public static function load_file($dir, $message_404, $php = "run") {
         $uri = user_url::$new_uri;
         
         if (!empty($uri)) {
@@ -20,7 +20,17 @@ class load_filesController extends controller {
                 $file_extension = end($file_array);
 
                 if ($file_extension === "php") {
-                    require config_dir::BASE($file_path);
+                    if ($php === "run") {
+                        require config_dir::BASE($file_path);
+                    }
+                    elseif ($php === "echo") {
+                        $file = file_get_contents( config_dir::BASE($file_path) );
+                        header("Content-Type: text/plain");
+                        echo $file;
+                    }
+                    elseif ($php === "block") {
+                        echo $message_404;
+                    }
                 }
                 else {
                     $file = file_get_contents( config_dir::BASE($file_path) );
