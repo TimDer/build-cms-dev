@@ -1,5 +1,9 @@
 <?php
 
+// do not change this line (config_dir::ROOT_DIR())
+$GLOBALS["index_root_dir"] = __DIR__;
+
+// load the CMS
 require __DIR__ . "/build_cms/start.php";
 
 // Export database but not on AJAX request
@@ -13,6 +17,7 @@ require __DIR__ . "/build_cms/start.php";
 if  (
     !isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     implode("/", user_url::$routes_uri) !== "images" &&
+    implode("/", user_url::$routes_uri) !== "downloads" &&
     implode("/", user_url::$routes_uri) !== "view" &&
     (isset(user_url::$routes_uri[0]) && user_url::$routes_uri[0] !== "admin_files")
 )
