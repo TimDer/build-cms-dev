@@ -1,7 +1,7 @@
 <div class="create-columns" block_type="create_columns">
     <div class="header">create-columns</div>
     <div class="content">
-        <button class="delete_block">Delete</button>
+        <button class="delete_block" delete_id="block_id_<?php echo pageBuilder_loadCreateColumnsSubModal::$block_id; ?>">Delete</button>
         <p>Number of columns</p>
         <input type="number" name="create-columns-number" class="create-columns-number" value="<?php echo pageBuilder_loadCreateColumnsSubModal::$create_columns_number; ?>" min="1" max="12">
         <div class="columns">

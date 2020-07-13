@@ -14,13 +14,6 @@
         padding: 10px;
     }
 
-    /*.all-building-blocks > .content > * {
-        margin-top: 10px;
-    }
-    .all-building-blocks > .content > *:first-child {
-        margin-top: 0;
-    }*/
-
     .all-building-blocks > .content {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
@@ -70,59 +63,6 @@
         background-color: white;
     }
 /* ============================== /plain-text ============================== */
-
-
-/* ============================== image ============================== */
-    .image .header {
-        border-bottom: 1px solid black;
-        padding: 10px;
-    }
-    .image .content {
-        padding: 10px;
-    }
-    .image {
-        border: 1px solid black;
-        padding: 0px;
-        width: 100%;
-        border-radius: 5px;
-        box-sizing: border-box;
-        background-color: white;
-    }
-
-    .image button {
-        width: 100%;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        padding: 10px;
-        background-color: green;
-        border: 1px solid green;
-        color: white;
-    }
-    .image button:hover {
-        background-color: #009E00;
-        border: 1px solid #009E00;
-        cursor: pointer;
-    }
-    .image button:active {
-        background-color: green;
-        border: 1px solid green;
-        cursor: pointer;
-    }
-
-    .image .img_data {
-        max-width: 100%;
-    }
-
-    .image .align_image_center {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    .image .align_image_right {
-        display: block;
-        margin-left: auto;
-    }
-/* ============================== /image ============================== */
 
 
 /* ============================== create-columns ============================== */

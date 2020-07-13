@@ -298,19 +298,19 @@
 
     $(function () {
         make_block_function("wysiwyg", function (block_id) {
-            return '<div class="wysiwyg" block_type="wysiwyg"><div class="header">Visual Editor</div><div class="content"><button class="delete_block">Delete</button><textarea name="text-editer" class="wysiwyg-text-editer" id="wysiwyg_id-' + block_id + '" wysiwyg_id="' + block_id + '" rows="10"></textarea></div></div>';
+            return '<div class="wysiwyg" block_type="wysiwyg"><div class="header">Visual Editor</div><div class="content"><button class="delete_block" delete_id="block_id_' + block_id + '">Delete</button><textarea name="text-editer" class="wysiwyg-text-editer" id="wysiwyg_id-' + block_id + '" wysiwyg_id="' + block_id + '" rows="10"></textarea></div></div>';
         });
 
         make_block_function("plain_text", function (block_id) {
-            return '<div class="plain-text" block_type="plain_text"><div class="header">plain text</div><div class="content"><button class="delete_block">Delete</button><textarea name="text-editer" class="plain-text-editer" id="plain_text-' + block_id + '" plain_text="' + block_id + '" rows="10"></textarea></div></div>';
+            return '<div class="plain-text" block_type="plain_text"><div class="header">plain text</div><div class="content"><button class="delete_block" delete_id="block_id_' + block_id + '">Delete</button><textarea name="text-editer" class="plain-text-editer" id="plain_text-' + block_id + '" plain_text="' + block_id + '" rows="10"></textarea></div></div>';
         });
 
         make_block_function("create_columns", function (block_id) {
-            return '<div class="create-columns" block_type="create_columns"><div class="header">create-columns</div><div class="content"><button class="delete_block">Delete</button><p>Number of columns</p><input type="number" name="create-columns-number" class="create-columns-number" value="1" min="1" max="12"><div class="columns"><div class="the_column" column="1" style="flex: 100;" flex="100"><input type="number" name="column-width" value="100" min="0" max="100" class="column-width-number">%<div class="column-building-blocks-area sortable-building-blocks" building_blocks_area="' + block_id + '-0"></div></div></div></div></div>';
+            return '<div class="create-columns" block_type="create_columns"><div class="header">create-columns</div><div class="content"><button class="delete_block" delete_id="block_id_' + block_id + '">Delete</button><p>Number of columns</p><input type="number" name="create-columns-number" class="create-columns-number" value="1" min="1" max="12"><div class="columns"><div class="the_column" column="1" style="flex: 100;" flex="100"><input type="number" name="column-width" value="100" min="0" max="100" class="column-width-number">%<div class="column-building-blocks-area sortable-building-blocks" building_blocks_area="' + block_id + '-0"></div></div></div></div></div>';
         });
 
         make_block_function("subcategories", function (block_id) {
-            return '<div class="subcategories" id="subcategories_block_' + block_id + '" subcategories_block_id="' + block_id + '" block_type="subcategories"><div class="header">subcategories</div><div class="content"><button class="delete_block">Delete</button><select name="subcategories_limit"><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1"><select name="subcategories_order"><option value="DESC">Latest page first</option><option value="ASC">First page first</option></select></div></div>';
+            return '<div class="subcategories" id="subcategories_block_' + block_id + '" subcategories_block_id="' + block_id + '" block_type="subcategories"><div class="header">subcategories</div><div class="content"><button class="delete_block" delete_id="block_id_' + block_id + '">Delete</button><select name="subcategories_limit"><option value="no-limit">No limit</option><option value="limited">Limited</option></select><input type="number" name="subcategories_limit_number" min="0" value="1"><select name="subcategories_order"><option value="DESC">Latest page first</option><option value="ASC">First page first</option></select></div></div>';
         });
     });
 
