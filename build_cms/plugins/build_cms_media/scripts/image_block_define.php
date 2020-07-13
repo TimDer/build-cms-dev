@@ -41,6 +41,9 @@ page_functions::set_delete_page("build_cms_media", function ($page_id) {
 // Custom javascript (page builder)
 page_functions::set_custom_js_footer("/admin/footer.php", __DIR__);
 
+// Custom CSS (page builder)
+page_functions::set_custom_css_head("/admin/page_builder_head.php", __DIR__);
+
 // custom area (modal)
 page_functions::bottom_custom_area("image_modal", function () {
     controller::getView("/admin/image_modal.php", __DIR__);

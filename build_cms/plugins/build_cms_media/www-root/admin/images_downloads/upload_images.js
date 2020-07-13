@@ -1,6 +1,6 @@
 $(function () {
 
-    $("#images_upload_submit").click(function (event) {
+    $("#data_upload_submit").click(function (event) {
         event.preventDefault();
 
         if ( parseInt( $("#files_uploader")[0].files.length ) > parseInt( $(this).attr("max_files") )) {
@@ -8,7 +8,7 @@ $(function () {
             $("#error_modal").modal();
         }
         else {
-            $("#images_upload_form").submit();
+            $("#data_upload_form").submit();
         }
     });
 

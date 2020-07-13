@@ -2,8 +2,17 @@
     #load_image {
         width: 100%;
     }
+
+    #error_modal {
+        .modal-header, .modal-footer {
+            background-color: red;
+        }
+        .modal-title {
+            color: white;
+        }
+    }
     
-    .error_content_p {
+    .content_p {
         p {
             border-bottom: 1px solid black;
             margin: 0;
