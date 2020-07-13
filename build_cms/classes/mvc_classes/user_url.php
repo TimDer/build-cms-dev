@@ -25,7 +25,7 @@ class user_url {
         // remove get var from uri
         $without_get_var = explode(
             "?",
-            $_SERVER['REQUEST_URI']
+            urldecode($_SERVER['REQUEST_URI'])
         );
 
         // escape post_var and get_var
