@@ -270,11 +270,16 @@ $(document).ready(function () {
     /* ============================== delete_block btn ============================== */
 
         $(document).on("click", ".delete_block", function () {
+            if ($(this).attr("delete_id") === undefined) {
+                alert("Missing delete id");
+                return;
+            }
+
             if (warning_message("solve this to delete your block", "Are you sure you want to delete this block?")) {
                 return;
             }
 
-            var del_block_from_building_area = $(this).parent().parent().parent();
+            var del_block_from_building_area = $("#" + $(this).attr("delete_id"));
 
             del_block_from_building_area.toggle("highlight", 400);
             setTimeout(function () {

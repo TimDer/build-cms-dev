@@ -6,8 +6,6 @@
 <link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/search-engine-optimization.css"); ?>">
 <link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/building-blocks-area-sidebars.css"); ?>">
 <link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/page-category.css"); ?>">
-<link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/category-image.css"); ?>">
-<link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/building-blocks-area-category-info.css"); ?>">
 <link rel="stylesheet" href="<?php echo config_url::BASE("/admin_files/page_builder/add/css/page_builder_page_loader.css"); ?>">
 
 <!-- modal -->

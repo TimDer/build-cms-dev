@@ -1,7 +1,7 @@
 <div class="subcategories" block_status="saved" id="subcategories_block_<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>" subcategories_block_id="<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>" block_type="subcategories">
     <div class="header">subcategories</div>
     <div class="content">
-        <button class="delete_block">Delete</button>
+        <button class="delete_block" delete_id="block_id_<?php echo pageBuilder_loadSubcategoriesSubModal::$block_id ?>">Delete</button>
         <select name="subcategories_limit">
             <option value="no-limit"<?php echo pageBuilder_loadSubcategoriesSubModal::$no_limit ?>>No limit</option>
             <option value="limited"<?php echo pageBuilder_loadSubcategoriesSubModal::$limited ?>>Limited</option>

@@ -12,6 +12,12 @@ class add_pageController extends controller {
             }
         }
 
+        if (!empty(page_functions::$custom_page_css_head)) {
+            foreach (page_functions::$custom_page_css_head AS $head) {
+                self::set_head($head["path"], $head["location"]);
+            }
+        }
+
         // setup page array
         self::get_page_array();
 
@@ -64,7 +70,7 @@ class add_pageController extends controller {
             // ==================== /set status ====================
 
             // if (home page)
-            if (self::$get_page_array_array["home_page"] === "1") {
+            if (self::$get_page_array_array["home_page"] === "true") {
                 add_pageModal::$page_home = "checked";
             }
             // seo page title

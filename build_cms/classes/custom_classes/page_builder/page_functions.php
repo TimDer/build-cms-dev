@@ -145,6 +145,21 @@ class page_functions {
 
     /* ============================== /load javascript ============================== */
 
+    /* ============================== load CSS ============================== */
+
+    public static $custom_page_css_head = array();
+
+    public static function set_custom_css_head($path, $location) {
+        if (!isset(self::$custom_page_css_head[$path])) {
+            self::$custom_page_css_head[$path] = array(
+                "path" => $path,
+                "location" => $location
+            );
+        }
+    }
+
+    /* ============================== load CSS ============================== */
+
     /* ============================== custom areas ============================== */
 
     public static $build_custom_area = array();
