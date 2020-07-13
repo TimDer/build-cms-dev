@@ -1,0 +1,48 @@
+.data_container {
+    .images_container {
+        margin: 15px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-gap: 20px;
+        .image_container {
+            height: 100%;
+            
+            .image_btn {
+                height: 100%;
+                background-color: white;
+                border: 0 !important;
+                padding: 3px !important;
+                .image_img {
+                    display: block;
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .downloads_container {
+        margin: 0 15px;
+
+        .table {
+            thead {
+                tr {
+                    th {
+                        border-bottom: 0px;
+                    }
+                }
+            }
+            tbody {
+                tr:first-child {
+                    td {
+                        border-top: 0px;
+                    }
+                }
+                td {
+                    border-top: 1px solid #BCBCBC;
+                }
+            }
+        }
+    }
+}

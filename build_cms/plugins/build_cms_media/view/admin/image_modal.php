@@ -9,7 +9,7 @@
     </div>
     <div class="body">
         <div class="content">
-            <?php echo image_modalSubController::get_images_modal(); ?>
+            <?php echo build_cms_media_image_modal_pluginSubController::get_images_modal(); ?>
         </div>
         <div class="sidebar">
             <div class="selected_image">

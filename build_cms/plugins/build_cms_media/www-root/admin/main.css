@@ -10888,7 +10888,7 @@
   display: none;
 }
 
-.root_container .content_root_container .main_container .images_container {
+.root_container .content_root_container .main_container .data_container .images_container {
   margin: 15px;
   display: -ms-grid;
   display: grid;
@@ -10897,18 +10897,18 @@
   grid-gap: 20px;
 }
 
-.root_container .content_root_container .main_container .images_container .image_container {
+.root_container .content_root_container .main_container .data_container .images_container .image_container {
   height: 100%;
 }
 
-.root_container .content_root_container .main_container .images_container .image_container .image_btn {
+.root_container .content_root_container .main_container .data_container .images_container .image_container .image_btn {
   height: 100%;
   background-color: white;
   border: 0 !important;
   padding: 3px !important;
 }
 
-.root_container .content_root_container .main_container .images_container .image_container .image_btn .image_img {
+.root_container .content_root_container .main_container .data_container .images_container .image_container .image_btn .image_img {
   display: block;
   -o-object-fit: cover;
      object-fit: cover;
@@ -10916,17 +10916,41 @@
   height: 100%;
 }
 
+.root_container .content_root_container .main_container .data_container .downloads_container {
+  margin: 0 15px;
+}
+
+.root_container .content_root_container .main_container .data_container .downloads_container .table thead tr th {
+  border-bottom: 0px;
+}
+
+.root_container .content_root_container .main_container .data_container .downloads_container .table tbody tr:first-child td {
+  border-top: 0px;
+}
+
+.root_container .content_root_container .main_container .data_container .downloads_container .table tbody td {
+  border-top: 1px solid #BCBCBC;
+}
+
 .data_modal_container #load_image {
   width: 100%;
 }
 
-.data_modal_container .error_content_p p {
+.data_modal_container #error_modal .modal-header, .data_modal_container #error_modal .modal-footer {
+  background-color: red;
+}
+
+.data_modal_container #error_modal .modal-title {
+  color: white;
+}
+
+.data_modal_container .content_p p {
   border-bottom: 1px solid black;
   margin: 0;
   padding-bottom: 16px;
   padding-top: 16px;
 }
 
-.data_modal_container .error_content_p p:last-child {
+.data_modal_container .content_p p:last-child {
   border-bottom: 0;
 }
