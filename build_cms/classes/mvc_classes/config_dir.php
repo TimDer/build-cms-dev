@@ -39,6 +39,9 @@ class config_dir {
     public static function ROUTES($dir = "") {
         return self::BASE("/routes") . $dir;
     }
+    public static function ROOT_DIR($dir = "") {
+        return $GLOBALS["index_root_dir"] . $dir;
+    }
 
     public static function PLUGINDIR($location, $dir = "", $type = "fullPath") {
         $location_array = explode(DIRECTORY_SEPARATOR, $location);
