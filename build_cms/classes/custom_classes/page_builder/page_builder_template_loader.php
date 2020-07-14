@@ -2,9 +2,17 @@
 
 class page_builder_template_loader {
     /* ============================== Load blocks ============================== */
-    public static function get_blocks($building_blocks_area, $array = array()) {
-        $page_id = (isset($array["page_id"])) ? (int)$array["page_id"] : "use_url";
-        $page_array = (isset($array["page_array"])) ? $array["page_array"] : "default";
+    public static function get_page($array_or_building_blocks_area = array()) {
+        if (is_array($array_or_building_blocks_area)) {
+            $page_id = (isset($array_or_building_blocks_area["page_id"])) ? (int)$array_or_building_blocks_area["page_id"] : "use_url";
+            $page_array = (isset($array_or_building_blocks_area["page_array"])) ? $array_or_building_blocks_area["page_array"] : "default";
+            $building_blocks_area = (isset($array_or_building_blocks_area["area"])) ? $array_or_building_blocks_area["area"] : "";
+        }
+        else  {
+            $page_id = "use_url";
+            $page_array = "default";
+            $building_blocks_area = $array_or_building_blocks_area;
+        }
 
         page_functions::set_load_block_template_function("wysiwyg", function ($data) { self::load_wysiwyg($data); });
         page_functions::set_load_block_template_function("plain_text", function ($data) { self::load_plain_text($data); });
@@ -12,11 +20,19 @@ class page_builder_template_loader {
         page_functions::set_load_block_template_function("subcategories", function ($data) { self::load_subcategories($data); });
 
         if (is_array($page_array)) {
-            if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"])) {
+            if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"])) {
                 self::load_blocks($page_array, $building_blocks_area);
             }
             else {
                 echo "invalid array";
+            }
+        }
+        elseif (is_int($page_id)) {
+            // get page using page id
+            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE `id`='$page_id'")[0];
+    
+            if ($pages_sql) {
+                self::load_blocks($pages_sql, $building_blocks_area);
             }
         }
         elseif ((user_url::uri_string() !== "/" AND user_url::uri_string() !== "") AND $page_id === "use_url") {
@@ -26,7 +42,7 @@ class page_builder_template_loader {
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE $where_string"), user_url::uri() );
+            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE $where_string"), user_url::uri() );
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area);
@@ -35,17 +51,9 @@ class page_builder_template_loader {
                 echo "404 error";
             }
         }
-        elseif (is_int($page_id)) {
-            // get page using page id
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE `id`='$page_id'")[0];
-    
-            if ($pages_sql) {
-                self::load_blocks($pages_sql, $building_blocks_area);
-            }
-        }
         else {
             // get home page
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE `home_page`='true'")[0];
+            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE `home_page`='true'")[0];
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area);
@@ -56,7 +64,7 @@ class page_builder_template_loader {
     private static function fix_page_array($array = array(), $user_url_uri) {
         $new_array = array();
 
-        if (count($array) === count($user_url_uri)) {
+        if ($array !== false && count($array) === count($user_url_uri)) {
             // key number to page url
             foreach ($array AS $sub_array) {
                 $new_array[$sub_array["url"]] = $sub_array;
@@ -102,16 +110,22 @@ class page_builder_template_loader {
     }
 
     private static function load_blocks($page_array, $building_blocks_area) {
-        $page_id = $page_array["id"];
-        $query = "SELECT `id`, `page_id`, `block_type`, `block_id` FROM `page_blocks` WHERE `building_blocks_area`='$building_blocks_area' AND `page_id`='$page_id' ORDER BY `the_order` ASC";
-        $blocks_array = database::select($query);
+        if (is_callable($building_blocks_area)) {
+            $page_array["home_page"] = ($page_array["home_page"] === "true") ? true : false;
+            $building_blocks_area($page_array);
+        }
+        else {
+            $page_id = $page_array["id"];
+            $query = "SELECT `id`, `page_id`, `block_type`, `block_id` FROM `page_blocks` WHERE `building_blocks_area`='$building_blocks_area' AND `page_id`='$page_id' ORDER BY `the_order` ASC";
+            $blocks_array = database::select($query);
 
-        if (is_array($blocks_array)) {
-            foreach ($blocks_array AS $block) {
-                if (isset(page_functions::$set_load_block_template_functions[$block["block_type"]])) {
-                    echo '<div class="block_' . $block["id"] . '">';
-                    page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block);
-                    echo "</div>";
+            if (is_array($blocks_array)) {
+                foreach ($blocks_array AS $block) {
+                    if (isset(page_functions::$set_load_block_template_functions[$block["block_type"]])) {
+                        echo '<div class="block_' . $block["id"] . '">';
+                        page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block);
+                        echo "</div>";
+                    }
                 }
             }
         }
@@ -150,7 +164,7 @@ class page_builder_template_loader {
 
         if (is_array($page_array)) {
             foreach ($page_array AS $page) {
-                self::get_blocks("category-info", array("page_array" => $page));
+                self::get_page(array("area" => "category-info", "page_array" => $page));
             }
         }
     }
@@ -164,10 +178,10 @@ class page_builder_template_loader {
         if (!empty($columns)) {
             foreach ($columns AS $column) {
                 echo '<div class="column_' . $column["column_id"] . '">';
-                self::get_blocks(
-                    $column["block_id"] . "-" . $column["column_id"],
+                self::get_page(
                     array(
-                        "page_id" => $page_id
+                        "area"      => $column["block_id"] . "-" . $column["column_id"],
+                        "page_id"   => $page_id
                     )
                 );
                 echo '</div>';
@@ -184,7 +198,10 @@ class page_builder_template_loader {
         page_functions::set_load_blocks_css_function("create_columns", function ($block) { self::load_create_columns_css($block); });
         page_functions::set_load_blocks_css_function("subcategories", function ($block) { self::load_subcategories_css($block); });
 
-        if (!is_int($page)) {
+        if (isset($page["page_id"])) {
+            $page = (int)$page["page_id"];
+        }
+        elseif (!is_int($page)) {
             $page = (isset($page["page"]) AND !empty($page["page"])) ? explode("/", trim($page["page"], "/")) : "";
         }
 
