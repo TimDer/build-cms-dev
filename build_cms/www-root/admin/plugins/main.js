@@ -19,7 +19,7 @@ $(".delete_btn").click(function () {
 
     var base_url = $("#build_cms_base_url").attr("base_url");
     $.ajax({
-        url: base_url + "/admin/plugins/delete/" + id,
+        url: base_url + "/admin_submit/plugins/delete/" + id,
         success: function () {
             delete_btn.parent().parent().remove();
             setTimeout(function () {
