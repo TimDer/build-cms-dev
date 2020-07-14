@@ -31,7 +31,7 @@ class loginController extends controller {
     public static function submit_login() {
         $user_name = user_url::$post_var['username'];
 
-        database::query("SELECT * FROM users WHERE user='$user_name'");
+        database::query("SELECT * FROM `users` WHERE `user`='$user_name' AND (`user_type`='admin' OR `user_type`='author' OR `user_type`='user')");
         
         database::query_num_rows(function () {
             database::fetch_all();
