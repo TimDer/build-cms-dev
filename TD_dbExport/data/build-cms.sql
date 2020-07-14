@@ -7,7 +7,7 @@ CREATE TABLE `media` (
   `the_file_name` varchar(255) NOT NULL,
   `media_type` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 ALTER TABLE `media` ADD PRIMARY KEY (`id`);
 
 -- page
@@ -104,10 +104,10 @@ ALTER TABLE `page_wysiwyg` ADD PRIMARY KEY (`id`);
 CREATE TABLE `plugins` (
   `pluginID` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
-  `directory_name` varchar(1000) NOT NULL,
-  `description` varchar(8000) NOT NULL,
+  `directory_name` varchar(256) NOT NULL,
+  `description` varchar(500) NOT NULL,
   PRIMARY KEY (`pluginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 ALTER TABLE `plugins` ADD PRIMARY KEY (`pluginID`);
 
 -- settings
