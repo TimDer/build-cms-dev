@@ -1,0 +1,23 @@
+.plugin_btn {
+    padding: 10px;
+    border: 0;
+    border-radius: 5px;
+    color: white;
+}
+.plugin_btn:hover {
+    cursor: pointer;
+}
+
+.delete_btn {
+    background-color: red;
+}
+.delete_btn:active {
+    background-color: #FF6B6B;
+}
+
+.create_installer_btn {
+    background-color: green;
+}
+.create_installer_btn:active {
+    background-color: #00B200;
+}
