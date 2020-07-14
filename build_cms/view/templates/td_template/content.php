@@ -5,5 +5,5 @@ Dies ist der hallo welt pagina<br><br>
 <br><br><br><br>
 
 <div>
-    <?php echo page_builder_template_loader::get_blocks("content"); ?>
+    <?php page_builder_template_loader::get_page("content"); ?>
 </div>
