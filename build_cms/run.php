@@ -52,10 +52,15 @@ plugins::set_building_blocks_area("category-info", "Category info");
 plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/template_loader", "admin");
 
 // Create plugins menu
-plugins::set_menu_item("system-plugins", "Plugins", "", "admin");
-plugins::set_submenu_item("system-plugins", "Install a plugin", "/admin/plugins/install", "admin");
-plugins::set_submenu_item("system-plugins", "Create a new plugin", "/admin/plugins/create", "admin");
-plugins::set_submenu_item("system-plugins", "Plugins", "/admin/plugins/plugins", "admin");
+users::is_developer(function () {
+    plugins::set_menu_item("system-plugins", "Plugins", "", "admin");
+    plugins::set_submenu_item("system-plugins", "Create a new plugin", "/admin/plugins/create", "admin");
+    plugins::set_submenu_item("system-plugins", "Plugins", "/admin/plugins", "admin");
+},
+function () {
+    plugins::set_menu_item("system-plugins", "Plugins", "/admin/plugins", "admin");
+});
+
 
 // set settings to the end of the array
 if (isset(plugins::$main_menu_items["system-settings"])) {
