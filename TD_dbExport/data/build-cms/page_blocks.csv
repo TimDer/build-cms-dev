@@ -9,3 +9,4 @@ id,page_id,block_type,block_id,building_blocks_area,the_order
 58,6,image,2,1-0,1
 59,6,image,3,1-1,1
 60,6,subcategories,4,content,2
+61,5,wysiwyg,6,sidebar,1
