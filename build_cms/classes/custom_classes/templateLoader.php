@@ -74,14 +74,14 @@ class templateLoader {
         $return .= "<meta charset='" . $charset . "'>";
         $return .= "<base href='" . config_url::BASE("/") . "'>";
 
-        if ($page_builder) {
+        if ($page_builder !== false) {
             if (user_url::uri_string() !== "/" && user_url::uri_string() !== "") {
                 $page_css = "?page=" . user_url::uri_string();
             }
             else {
                 $page_css = "";
             }
-            $return .= '<link rel="stylesheet" href="' . config_url::BASE("/files/page_builder/load_blocks.css" . $page_css) . '">';
+            $return .= '<link rel="stylesheet" href="' . config_url::BASE("/files/page_builder/load_blocks.css" . ( (is_bool($page_builder)) ? $page_css : "?page_id=" . $page_builder) ) . '">';
         }
 
         foreach (self::$set_default_head AS $head) {
