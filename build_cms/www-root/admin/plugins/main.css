@@ -1,67 +1,111 @@
-/* ============================== basics ============================== */
-    h1 {
-        padding: 21px 0;
-        margin: 0;
-    }
+main h1 {
+  padding: 21px 0;
+  margin: 0;
+}
 
-    .plugins_main_container {
-        padding: 10px;
-    }
+main .plugins_header {
+  background-color: #BABABA;
+}
 
-    .plugins_header {
-        background-color: #BABABA;
-    }
-/* ============================== /basics ============================== */
+main .plugins_main_container {
+  padding: 10px;
+}
 
-/* ============================== table ============================== */
-    .table {
-        border-collapse: collapse;
-        width: 100%;
-        text-align: left;
-    }
+main .plugins_main_container .plugin_install {
+  padding-bottom: 10px;
+}
 
-    .table th {
-        font-size: 20px;
-    }
+main .plugins_main_container .plugin_install form .form_row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 
-    .table td {
-        font-size: 17px;
-    }
+main .plugins_main_container .plugin_install form .form_row .col {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding-right: 10px;
+  padding-left: 10px;
+}
 
-    .table, .table td, .table th {
-        padding-top: 15px;
-        padding-bottom: 15px;
-        border-top: 1px solid;
-        border-bottom: 1px solid;
-    }
-/* ============================== /table ============================== */
+main .plugins_main_container .plugin_install form .form_row .col:first-child {
+  padding-left: 0;
+}
 
+main .plugins_main_container .plugin_install form .form_row .col:last-child {
+  padding-right: 0;
+}
 
-/* ============================== btn ============================== */
+main .plugins_main_container .plugin_install form .form_row .plugin_upload_label {
+  display: block;
+  text-align: center;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: green;
+}
 
-    .plugin_btn {
-        padding: 10px;
-        border: 0;
-        border-radius: 5px;
-        color: white;
-    }
-    .plugin_btn:hover {
-        cursor: pointer;
-    }
+main .plugins_main_container .plugin_install form .form_row .upload_submit_btn {
+  border: 0;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: green;
+  width: 100%;
+  color: white;
+  font-size: 16px;
+}
 
-    .delete_btn {
-        background-color: red;
-    }
-    .delete_btn:active {
-        /*background-color: #FF4747;*/
-        background-color: #FF6B6B;
-    }
+main .plugins_main_container .plugin_install form .form_row #plugin_zip_file {
+  display: none;
+}
 
-    .create_installer_btn {
-        background-color: green;
-    }
-    .create_installer_btn:active {
-        background-color: #00B200;
-    }
+main .plugins_main_container .plugins_all .table {
+  border-collapse: collapse;
+  width: 100%;
+  text-align: left;
+}
 
-/* ============================== /btn ============================== */
+main .plugins_main_container .plugins_all .table th {
+  font-size: 20px;
+}
+
+main .plugins_main_container .plugins_all .table td {
+  font-size: 17px;
+}
+
+main .plugins_main_container .plugins_all .table,
+main .plugins_main_container .plugins_all .table td,
+main .plugins_main_container .plugins_all .table th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+main .plugins_main_container .plugins_all .plugin_btn {
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  color: white;
+}
+
+main .plugins_main_container .plugins_all .plugin_btn:hover {
+  cursor: pointer;
+}
+
+main .plugins_main_container .plugins_all .delete_btn {
+  background-color: red;
+}
+
+main .plugins_main_container .plugins_all .delete_btn:active {
+  background-color: #FF6B6B;
+}
+
+main .plugins_main_container .plugins_all .create_installer_btn {
+  background-color: green;
+}
+
+main .plugins_main_container .plugins_all .create_installer_btn:active {
+  background-color: #00B200;
+}

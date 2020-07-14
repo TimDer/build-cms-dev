@@ -1,0 +1,13 @@
+@import "_basics";
+
+.plugins_main_container {
+    padding: 10px;
+    .plugin_install {
+        padding-bottom: 10px;
+        @import "_install_form";
+    }
+    .plugins_all {
+        @import "_table";
+        @import "_btn";
+    }
+}
