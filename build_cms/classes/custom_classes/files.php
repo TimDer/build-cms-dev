@@ -101,7 +101,7 @@ class files {
                     // folder
                     $zipLibrary->addEmptyDir($zip_dir . $item);
                     if ( is_array($array[$item]) ) {
-                        self::createZipFile_loop($zipLibrary, $dir . "/" . $item, $array[$item], $item . "/");
+                        self::createZipFile_loop($zipLibrary, $dir . "/" . $item, $array[$item], $zip_dir . $item . "/");
                     }
                 }
                 else {
