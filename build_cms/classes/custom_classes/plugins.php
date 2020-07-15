@@ -60,6 +60,8 @@ class plugins {
             mkdir($plugin_base_dir . "/view");
             // create www-root folder
             mkdir($plugin_base_dir . "/www-root");
+            // create scripts folder
+            mkdir($plugin_base_dir . "/scripts");
             /* ============================== /create folders ============================== */
 
             /* ============================== create files ============================== */
@@ -73,10 +75,16 @@ class plugins {
             // create view/admin/.dirPlaceholder
             files::create_file($plugin_base_dir . "/view/.dirPlaceholder");
             // create www-root/admin/main.css
-            files::create_file($plugin_base_dir . "/www-root/main.css");
+            files::create_file($plugin_base_dir . "/www-root/.dirPlaceholder");
+
+            // create installer and uninstaller
+            files::create_file($plugin_base_dir . "/scripts/install.php");
+            files::create_file($plugin_base_dir . "/scripts/delete.php");
 
             // create routes.php
             files::create_file($plugin_base_dir . "/routes.php");
+            // create define.php
+            files::create_file($plugin_base_dir . "/define.php");
             /* ============================== /create files ============================== */
         }
     }
