@@ -1,5 +1,9 @@
 @import "_basics";
 
+.message_container {
+    @import "_message_container";
+}
+
 .plugins_main_container {
     padding: 10px;
     .plugin_install {
