@@ -24,7 +24,7 @@ CREATE TABLE `page` (
   `post_page` varchar(6000) NOT NULL,
   `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 ALTER TABLE `page` ADD PRIMARY KEY (`id`);
 
 -- page_blocks
@@ -107,7 +107,7 @@ CREATE TABLE `plugins` (
   `directory_name` varchar(256) NOT NULL,
   `description` varchar(500) NOT NULL,
   PRIMARY KEY (`pluginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 ALTER TABLE `plugins` ADD PRIMARY KEY (`pluginID`);
 
 -- settings
