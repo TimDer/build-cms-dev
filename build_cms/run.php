@@ -61,7 +61,6 @@ function () {
     plugins::set_menu_item("system-plugins", "Plugins", "/admin/plugins", "admin");
 });
 
-
 // set settings to the end of the array
 if (isset(plugins::$main_menu_items["system-settings"])) {
     $settings = plugins::$main_menu_items["system-settings"];
