@@ -23,10 +23,12 @@ routes::set("/admin_submit/template_loader/download_template", function () {
     buildCmsTLAdminController::download_template_zip();
 }, "user_id", "admin");
 
-// create a new template
-routes::set("/admin_submit/template_loader/create_new_template", function () {
-    buildCmsTLAdminController::create_new_template();
-}, "user_id", "admin");
+users::is_developer(function () {
+    // create a new template
+    routes::set("/admin_submit/template_loader/create_new_template", function () {
+        buildCmsTLAdminController::create_new_template();
+    }, "user_id", "admin");
+});
 
 // delete a template
 routes::set("/admin_submit/template_loader/delete_template", function () {

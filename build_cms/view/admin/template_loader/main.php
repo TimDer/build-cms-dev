@@ -12,9 +12,11 @@
                 </form>
             </div>
         <?php } ?>
-        <div class="col-1">
-            <button class="btn btn-block toggle_modal" toggle="#create_new_template">Build a new template</button>
-        </div>
+        <?php if (users::is_developer()): ?>
+            <div class="col-1">
+                <button class="btn btn-block toggle_modal" toggle="#create_new_template">Build a new template</button>
+            </div>
+        <?php endif; ?>
     </div>
 
     <hr>
