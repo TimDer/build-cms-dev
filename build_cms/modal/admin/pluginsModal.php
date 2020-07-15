@@ -9,4 +9,7 @@ class pluginsModal {
             "description"       => "There is no plugin installed"
         )
     );
+
+    public static $message_class    = "";
+    public static $display_message  = "";
 }

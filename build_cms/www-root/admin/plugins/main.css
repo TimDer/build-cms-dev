@@ -1,10 +1,29 @@
 main h1 {
-  padding: 21px 0;
+  padding: 21px 5px;
   margin: 0;
 }
 
 main .plugins_header {
   background-color: #BABABA;
+}
+
+main .message_container h4 {
+  padding: 19px 5px;
+  margin: 0;
+}
+
+main .message_container .message {
+  display: none;
+}
+
+main .message_container .error {
+  display: block;
+  background-color: red;
+}
+
+main .message_container .success {
+  display: block;
+  background-color: green;
 }
 
 main .plugins_main_container {
@@ -88,6 +107,8 @@ main .plugins_main_container .plugins_all .plugin_btn {
   border: 0;
   border-radius: 5px;
   color: white;
+  text-decoration: none;
+  font-size: 16px;
 }
 
 main .plugins_main_container .plugins_all .plugin_btn:hover {

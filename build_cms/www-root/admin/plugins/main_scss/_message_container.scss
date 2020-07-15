@@ -1,0 +1,18 @@
+h4 {
+    padding: 19px 5px;
+    margin: 0;
+}
+
+.message {
+    display: none;
+}
+
+.error {
+    display: block;
+    background-color: red;
+}
+
+.success {
+    display: block;
+    background-color: green;
+}
