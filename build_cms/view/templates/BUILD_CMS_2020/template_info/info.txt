@@ -1,1 +1,1 @@
-This is the default template for TD CMS 4.0.1 from 2020
+This is the default template for Build CMS 1.0 from 2020

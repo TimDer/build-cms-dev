@@ -176,7 +176,7 @@ $(document).ready(function () {
     });
 
     /* ============================== droppable ============================== */
-        function td_droppable(id, event, ui) {
+        function PB_droppable(id, event, ui) {
             $(id).append(function () {
                 return current_block;
             });
@@ -249,7 +249,7 @@ $(document).ready(function () {
 
         $(".sortable-building-blocks").droppable({
             drop: function (event, ui) {
-                td_droppable($(this), event, ui);
+                PB_droppable($(this), event, ui);
             }
         });
     /* ============================== /droppable ============================== */

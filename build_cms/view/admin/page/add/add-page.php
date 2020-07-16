@@ -11,7 +11,7 @@
         </div>
 
         <div class="title">
-            <h1 id="td_cms-page_title"><?php echo add_pageModal::$edit_page_name; ?></h1>
+            <h1 id="build_cms-page_title"><?php echo add_pageModal::$edit_page_name; ?></h1>
         </div>
 
         <input type="hidden" value="<?php echo add_pageModal::$highest_block_id; ?>" id="block_id_start">
