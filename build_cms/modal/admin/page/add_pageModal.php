@@ -5,6 +5,9 @@ class add_pageModal {
     public static $page_id = "new";
     // highest block id
     public static $highest_block_id = 1;
+    // template
+    public static $index_the_template   = array();
+    public static $default_template     = " selected";
 
     /* ==================== General ==================== */
     // edit: page name
@@ -27,5 +30,5 @@ class add_pageModal {
     public static $seo_author       = "";
     public static $seo_keywords     = "";
     public static $seo_description  = "";
-    /* ==================== SEO ==================== */
+    /* ==================== /SEO ==================== */
 }

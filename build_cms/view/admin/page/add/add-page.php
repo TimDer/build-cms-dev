@@ -57,6 +57,17 @@
                         <option value="not-published"<?php echo add_pageModal::$status_not_published; ?>>Not published</option>
                         <option value="published"<?php echo add_pageModal::$status_published; ?>>Published</option>
                     </select>
+
+                    <p>Choose a template</p>
+                    <select name="choose_template">
+                        <option value="default"<?php echo add_pageModal::$default_template; ?>>Default</option>
+                        <?php foreach (add_pageModal::$index_the_template AS $template_file): ?>
+                            <option value="<?php echo $template_file["template"]; ?>"<?php echo $template_file["active"]; ?>>
+                                <?php echo $template_file["template"]; ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
                     <p>Homepage: <input type="checkbox" name="homepage" <?php echo add_pageModal::$page_home; ?>></p>
 
                     <input type="submit" value="Save" id="add_btn">

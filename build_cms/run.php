@@ -15,7 +15,7 @@ plugins::set_submenu_item("TD_Page_builder", "Add page", "/admin/pages", "author
 plugins::set_submenu_item("TD_Page_builder", "Edit pages", "/admin/pages/edit-pages", "author");
 
 // Create settings menu
-plugins::set_menu_item("system-settings", "Settings", "", "admin");
+plugins::set_menu_item("system-settings", "Settings", "", "author");
 plugins::set_submenu_item("system-settings", "General", "/admin/settings/general", "admin");
 
 // query the template folder name from the database
@@ -38,6 +38,9 @@ page_functions::set_update_block("create_columns", function ($block_array, $page
 page_functions::set_update_block("wysiwyg", function ($block_array, $page_id, $database_block_id) { save_page::save_wysiwyg($block_array, $page_id, $database_block_id); });
 page_functions::set_update_block("plain_text", function ($block_array, $page_id, $database_block_id) { save_page::save_plain_text($block_array, $page_id, $database_block_id); });
 page_functions::set_update_block("subcategories", function ($block_array, $page_id, $database_block_id) { save_page::save_subcategories($block_array, $page_id, $database_block_id); });
+
+// set template (page builder)
+page_builder_template_loader::set_template();
 
 // call plugin definer and routes
 plugins::call_plugins();

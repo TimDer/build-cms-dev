@@ -1,27 +1,42 @@
 <?php
 
 class page_builder_template_loader {
+    /* ============================== set template ============================== */
+    public static function set_template() {
+        self::get_page(array(
+            "error_404" => false,
+            "area" => function ($page_data) {
+                if (!empty($page_data["choose_template"])) {
+                    templateLoader::set_template_file($page_data["choose_template"]);
+                }
+            }
+        ));
+    }
+    /* ============================== /set template ============================== */
+
     /* ============================== Load blocks ============================== */
     public static function get_page($array_or_building_blocks_area = array()) {
         if (is_array($array_or_building_blocks_area)) {
             $page_id = (isset($array_or_building_blocks_area["page_id"])) ? (int)$array_or_building_blocks_area["page_id"] : "use_url";
             $page_array = (isset($array_or_building_blocks_area["page_array"])) ? $array_or_building_blocks_area["page_array"] : "default";
             $building_blocks_area = (isset($array_or_building_blocks_area["area"])) ? $array_or_building_blocks_area["area"] : "";
+            $error_404 = (isset($array_or_building_blocks_area["error_404"])) ? $array_or_building_blocks_area["error_404"] : "404 error";
         }
         else  {
             $page_id = "use_url";
             $page_array = "default";
             $building_blocks_area = $array_or_building_blocks_area;
+            $error_404 = "404 error";
         }
 
         page_functions::set_load_block_template_function("wysiwyg", function ($data) { self::load_wysiwyg($data); });
         page_functions::set_load_block_template_function("plain_text", function ($data) { self::load_plain_text($data); });
-        page_functions::set_load_block_template_function("create_columns", function ($data) { self::load_create_columns($data); });
-        page_functions::set_load_block_template_function("subcategories", function ($data) { self::load_subcategories($data); });
+        page_functions::set_load_block_template_function("create_columns", function ($data, $error_404) { self::load_create_columns($data, $error_404); });
+        page_functions::set_load_block_template_function("subcategories", function ($data, $error_404) { self::load_subcategories($data, $error_404); });
 
         if (is_array($page_array)) {
-            if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"])) {
-                self::load_blocks($page_array, $building_blocks_area);
+            if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"]) && isset($page_array["choose_template"])) {
+                self::load_blocks($page_array, $building_blocks_area, $error_404);
             }
             else {
                 echo "invalid array";
@@ -29,10 +44,13 @@ class page_builder_template_loader {
         }
         elseif (is_int($page_id)) {
             // get page using page id
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE `id`='$page_id'")[0];
+            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `id`='$page_id'")[0];
     
             if ($pages_sql) {
-                self::load_blocks($pages_sql, $building_blocks_area);
+                self::load_blocks($pages_sql, $building_blocks_area, $error_404);
+            }
+            elseif ($error_404 !== false) {
+                echo $error_404;
             }
         }
         elseif ((user_url::uri_string() !== "/" AND user_url::uri_string() !== "") AND $page_id === "use_url") {
@@ -42,21 +60,24 @@ class page_builder_template_loader {
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE $where_string"), user_url::uri() );
+            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE $where_string"), user_url::uri() );
     
             if ($pages_sql) {
-                self::load_blocks($pages_sql, $building_blocks_area);
+                self::load_blocks($pages_sql, $building_blocks_area, $error_404);
             }
-            else {
-                echo "404 error";
+            elseif ($error_404 !== false) {
+                echo $error_404;
             }
         }
         else {
             // get home page
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page` FROM `page` WHERE `home_page`='true'")[0];
+            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `home_page`='true'")[0];
     
             if ($pages_sql) {
-                self::load_blocks($pages_sql, $building_blocks_area);
+                self::load_blocks($pages_sql, $building_blocks_area, $error_404);
+            }
+            elseif ($error_404 !== false) {
+                echo $error_404;
             }
         }
     }
@@ -109,7 +130,7 @@ class page_builder_template_loader {
         }
     }
 
-    private static function load_blocks($page_array, $building_blocks_area) {
+    private static function load_blocks($page_array, $building_blocks_area, $error_404) {
         if (is_callable($building_blocks_area)) {
             $page_array["home_page"] = ($page_array["home_page"] === "true") ? true : false;
             $building_blocks_area($page_array);
@@ -123,7 +144,7 @@ class page_builder_template_loader {
                 foreach ($blocks_array AS $block) {
                     if (isset(page_functions::$set_load_block_template_functions[$block["block_type"]])) {
                         echo '<div class="block_' . $block["id"] . '">';
-                        page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block);
+                        page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block, $error_404);
                         echo "</div>";
                     }
                 }
@@ -145,7 +166,7 @@ class page_builder_template_loader {
         echo $data_plain_text;
     }
 
-    private static function load_subcategories($data) {
+    private static function load_subcategories($data, $error_404) {
         $block_root_id = $data["id"];
         $subcategories_sql = database::select("SELECT `limit_type`, `the_limit`, `sort` FROM `page_sub_cat` WHERE `page_blocks_id`='$block_root_id'")[0];
 
@@ -154,22 +175,22 @@ class page_builder_template_loader {
         $the_limit = $subcategories_sql["the_limit"];
 
         if ($subcategories_sql["limit_type"] === "no-limit") {
-            $query = "SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort";
+            $query = "SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort";
             $page_array = database::select($query);
         }
         else {
-            $query = "SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort LIMIT $the_limit";
+            $query = "SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort LIMIT $the_limit";
             $page_array = database::select($query);
         }
 
         if (is_array($page_array)) {
             foreach ($page_array AS $page) {
-                self::get_page(array("area" => "category-info", "page_array" => $page));
+                self::get_page(array("area" => "category-info", "page_array" => $page, "error_404" => $error_404));
             }
         }
     }
 
-    private static function load_create_columns($data) {
+    private static function load_create_columns($data, $error_404) {
         $page_id = $data["page_id"];
         $block_id = $data["block_id"];
 
@@ -181,7 +202,8 @@ class page_builder_template_loader {
                 self::get_page(
                     array(
                         "area"      => $column["block_id"] . "-" . $column["column_id"],
-                        "page_id"   => $page_id
+                        "page_id"   => $page_id,
+                        "error_404" => $error_404
                     )
                 );
                 echo '</div>';
