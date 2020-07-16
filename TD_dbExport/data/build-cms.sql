@@ -16,6 +16,7 @@ CREATE TABLE `page` (
   `pagename` varchar(100) NOT NULL,
   `status` varchar(50) NOT NULL,
   `home_page` varchar(10) NOT NULL,
+  `choose_template` varchar(255) NOT NULL,
   `url` varchar(6000) NOT NULL,
   `pagetitle` varchar(6000) NOT NULL,
   `author` varchar(6000) NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE `page_blocks` (
   `building_blocks_area` varchar(6000) NOT NULL,
   `the_order` bigint(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4;
 ALTER TABLE `page_blocks` ADD PRIMARY KEY (`id`);
 
 -- page_cc_block
@@ -86,7 +87,7 @@ CREATE TABLE `page_sub_cat` (
   `the_limit` bigint(20) NOT NULL,
   `sort` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_sub_cat` ADD PRIMARY KEY (`id`);
 
 -- page_wysiwyg
