@@ -1,3 +1,3 @@
 <?php
 
-plugins::set_menu_item("build_cms_menus", "Menus", "/admin/settings/menus", "author");
+plugins::set_submenu_item("system-settings", "Menus", "/admin/settings/menus", "author");
