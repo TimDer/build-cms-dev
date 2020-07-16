@@ -33,22 +33,24 @@
     <aside>
         <ul class="main-menu">
             <?php foreach (plugins::$main_menu_items AS $value) { ?>
-                <li class="parent main-menu-parent<?php echo $value["class_event"]; ?>" id="<?php echo $value["id"]; ?>">
-                    <?php if ($value["url"] === "") { ?>
-                        <?php echo $value["name"]; ?>
-                        <?php if ( isset( $value["sub_menu_items"] ) ) { ?>
-                            <ul class="parent-menu">
-                                <?php foreach ($value["sub_menu_items"] AS $sub_value) { ?>
-                                    <li class="child">
-                                        <a href="<?php echo config_url::BASE($sub_value["url"]); ?>"><?php echo $sub_value["name"]; ?></a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
+                <?php if ($value["url"] !== "" || isset($value["sub_menu_items"])) { ?>
+                    <li class="parent main-menu-parent<?php echo $value["class_event"]; ?>" id="<?php echo $value["id"]; ?>">
+                        <?php if ($value["url"] === "") { ?>
+                            <?php echo $value["name"]; ?>
+                            <?php if ( isset( $value["sub_menu_items"] ) ) { ?>
+                                <ul class="parent-menu">
+                                    <?php foreach ($value["sub_menu_items"] AS $sub_value) { ?>
+                                        <li class="child">
+                                            <a href="<?php echo config_url::BASE($sub_value["url"]); ?>"><?php echo $sub_value["name"]; ?></a>
+                                        </li>
+                                    <?php } ?>
+                                </ul>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <a href="<?php echo config_url::BASE($value["url"]); ?>"><?php echo $value["name"]; ?></a>
                         <?php } ?>
-                    <?php } else { ?>
-                        <a href="<?php echo config_url::BASE($value["url"]); ?>"><?php echo $value["name"]; ?></a>
-                    <?php } ?>
-                </li>
+                    </li>
+                <?php } ?>
             <?php } ?>
         </ul>
     </aside>
