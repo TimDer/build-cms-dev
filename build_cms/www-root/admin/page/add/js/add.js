@@ -46,7 +46,7 @@
             });
 
             // set page title
-            $("#td_cms-page_title").text( "Edit: " + $('input[name="pagename"]').val() );
+            $("#build_cms-page_title").text( "Edit: " + $('input[name="pagename"]').val() );
 
             // get page id
             $('input[name="page_id"]').attr("value", this_massage.page_id)
