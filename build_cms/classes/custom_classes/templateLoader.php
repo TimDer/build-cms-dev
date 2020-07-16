@@ -12,7 +12,8 @@ class templateLoader {
     }
 
     public static function set_template_file($template = "") {
-        if (!empty($template)) {
+        self::set_template_base_dir();
+        if (!empty($template) && file_exists( config_dir::BASE("/view/templates/" . self::$template_dir . "/" . $template . "_template.php") )) {
             self::$template_file = $template . "_template.php";
         }
     }

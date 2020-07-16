@@ -55,6 +55,7 @@ class save_page {
         $general_pagename       = $data_array["general_pagename"];
         $general_url            = $data_array["general_url"];
         $general_status         = $data_array["general_status"];
+        $choose_template        = ($data_array["general_template"] === "default") ? "" : $data_array["general_template"];
         if (isset($data_array["general_homepage"])) {
             $general_homepage   = "true";
             database::query("UPDATE `page` SET `home_page`='false'");
@@ -76,6 +77,7 @@ class save_page {
         database::query("INSERT INTO `page` (`pagename`,
                                                 `status`,
                                                 `home_page`,
+                                                `choose_template`,
                                                 `url`,
                                                 `pagetitle`,
                                                 `author`,
@@ -85,6 +87,7 @@ class save_page {
                                         VALUES ('$general_pagename',
                                                 '$general_status',
                                                 '$general_homepage',
+                                                '$choose_template',
                                                 '$general_url',
                                                 '$seo_pagetitle',
                                                 '$seo_author',
@@ -178,6 +181,7 @@ class save_page {
         $general_pagename       = $data_array["general_pagename"];
         $general_url            = $data_array["general_url"];
         $general_status         = $data_array["general_status"];
+        $choose_template        = ($data_array["general_template"] === "default") ? "" : $data_array["general_template"];
         if (isset($data_array["general_homepage"])) {
             $general_homepage   = "true";
             database::query("UPDATE `page` SET `home_page`='false'");
@@ -201,6 +205,7 @@ class save_page {
         database::query("UPDATE `page` SET `pagename`='$general_pagename',
                                             `status`='$general_status',
                                             `home_page`='$general_homepage',
+                                            `choose_template`='$choose_template',
                                             `url`='$general_url',
                                             `pagetitle`='$seo_pagetitle',
                                             `author`='$seo_author',

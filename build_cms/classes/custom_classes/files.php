@@ -72,6 +72,27 @@ class files {
         }
     }
 
+    private static $findFiles_toSingleArray_ARRAY = array();
+    private static function loop_findFiles_toSingleArray($dir_array, $in_dir) {
+        foreach ($dir_array AS $item_key => $item) {
+            if (is_numeric($item_key)) {
+                if (is_numeric($item_key) && isset( $dir_array[$item] )) {
+                    // is a directory
+                    if ($dir_array[$item] !== "empty_folder") {
+                        self::loop_findFiles_toSingleArray($dir_array[$item], ( (!empty($in_dir)) ? $in_dir . DIRECTORY_SEPARATOR . $item : $item ));
+                    }
+                }
+                else {
+                    // is a file
+                    self::$findFiles_toSingleArray_ARRAY[] = (!empty($in_dir)) ? $in_dir . DIRECTORY_SEPARATOR . $item : $item;
+                }
+            }
+        }
+    }
+    public static function findFiles_toSingleArray($dir_array) {
+        self::loop_findFiles_toSingleArray($dir_array, $in_dir = "");
+        return self::$findFiles_toSingleArray_ARRAY;
+    }
     public static function findFiles($dir) {
         $return = array();
 
