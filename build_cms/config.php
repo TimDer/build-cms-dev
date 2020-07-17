@@ -24,6 +24,7 @@ class config {
 
     // For developers
     public static $dev_mode_on = true;
+    public static $cms_version = "1.0";
 
     // Directories to skip in the autoloader
     public static $autoloaderSkipDir = array(
