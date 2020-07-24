@@ -1,1 +1,0 @@
-<?php require config_dir::BASE("/../../demo/demo.html"); ?>
