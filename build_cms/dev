@@ -1,0 +1,9 @@
+<?php
+
+if (!isset($GLOBALS["dir_to_build_cms"])) {
+    $GLOBALS["dir_to_build_cms"] = __DIR__;
+}
+
+require_once __DIR__ . "/autoload.php";
+
+start_terminal::main();

@@ -73,7 +73,6 @@ class pluginsController extends controller {
                     $plugin_description = $get_json["description"];
 
                     database::query("INSERT INTO `plugins` (`name`, `directory_name`, `description`) VALUES ('$plugin_name', '$plugin_dir', '$plugin_description')");
-                    unlink( $install_destination . "/" . $plugin_dir . "/plugin_data.json" );
                     $install_file = $install_destination . "/" . $plugin_dir . "/scripts/install.php";
                     if ($install_file) {
                         require $install_file;
