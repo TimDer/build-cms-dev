@@ -2,13 +2,26 @@
 
 // select a file to require
 function auto_select_a_dir($dir, $file, $return = false) {
+    $autoloaderSkipDir = array(
+        "view",
+        "www-root",
+        "data",
+        "backup",
+        "classes_noAutoloader",
+        "functions",
+        "routes",
+        "scripts",
+        ".",
+        ".."
+    );
+
     if (file_exists($dir . "/" . $file)) {
         return $dir . "/" . $file;
     }
 
     foreach (scandir($dir) as $item) {
         // (skip the specified folders) or (skip everything if the file has bin found)
-        if ( $return || $item == '.' || $item == '..' || ( in_array($item, config::$autoloaderSkipDir) && is_dir($dir . "/" . $item) ) ) {
+        if ( $return || ( in_array($item, $autoloaderSkipDir) && is_dir($dir . "/" . $item) ) ) {
             continue;
         }
 

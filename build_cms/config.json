@@ -1,0 +1,17 @@
+{
+    "useHttps": false,
+    "domainDir": "\/build-cms-dev",
+    "displayUntrustedDomain": true,
+    "TrustedDomains": [
+        "localhost",
+        "10.1.1.1"
+    ],
+    "DB_servername": "localhost",
+    "DB_username": "root",
+    "DB_password": "root",
+    "DB_dbname": "build-cms",
+    "call_plugin_definer": true,
+    "call_plugin_routes": true,
+    "dev_mode_on": true,
+    "cms_version": "1.0"
+}

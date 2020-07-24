@@ -19,12 +19,12 @@ class config_url {
         }
     }
     public static function displayUntrustedDomain() {
-        self::set_url_dir(config::$domainDir);
-        self::useHttps(config::$useHttps);
-        if (config::$displayUntrustedDomain) {
+        self::set_url_dir(config::get_config()["domainDir"]);
+        self::useHttps(config::get_config()["useHttps"]);
+        if (config::get_config()["displayUntrustedDomain"]) {
             $result = false;
             $trusted = false;
-            foreach (config::$TrustedDomains AS $value_domain) {
+            foreach (config::get_config()["TrustedDomains"] AS $value_domain) {
                 if ( (self::$trusted_protocol !== self::protocol() AND self::$trusted_protocol === "https://") OR ($value_domain !== self::domain()) ) {
                     if (!$trusted) {
                         $result = true;
@@ -37,8 +37,8 @@ class config_url {
             }
             
             if ($result) {
-                if (count(config::$TrustedDomains) === 1) {
-                    header("Location: " . self::$trusted_protocol . config::$TrustedDomains[0] . $_SERVER["REQUEST_URI"]);
+                if (count(config::get_config()["TrustedDomains"]) === 1) {
+                    header("Location: " . self::$trusted_protocol . config::get_config()["TrustedDomains"][0] . $_SERVER["REQUEST_URI"]);
                 }
 
                 echo "Your URL: " . self::protocol() . self::domain() . $_SERVER["REQUEST_URI"] . "<br><br>";
@@ -46,7 +46,7 @@ class config_url {
                 echo "This domain or protocol is not trusted please use the following links<br><br>";
 
                 $url = "";
-                foreach (config::$TrustedDomains AS $value) {
+                foreach (config::get_config()["TrustedDomains"] AS $value) {
                     $url = self::$trusted_protocol . $value . $_SERVER["REQUEST_URI"];
                     echo '<a href="' . $url . '">' . $url . '</a>' . '<br>';
                 }
