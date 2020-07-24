@@ -42,9 +42,9 @@ class plugins {
     */
 
 
-    public static function create_plugin_folder($plugin_dir) {
-        if ( !is_dir( config_dir::BASE("/plugins/" . $plugin_dir) ) ) {
-            $plugin_base_dir = config_dir::BASE("/plugins/" . $plugin_dir);
+    public static function create_plugin_folder($plugin_dir, $plugins_install_dir = "plugins") {
+        if ( !is_dir( config_dir::BASE("/$plugins_install_dir/" . $plugin_dir) ) ) {
+            $plugin_base_dir = config_dir::BASE("/$plugins_install_dir/" . $plugin_dir);
 
             // create plugin dir
             mkdir($plugin_base_dir);
@@ -115,8 +115,8 @@ class plugins {
     }
 
     public static function call_plugins() {
-        self::call_plugin_definer(config::$call_plugin_definer);
-        self::call_plugin_routes(config::$call_plugin_routes);
+        self::call_plugin_definer(config::get_config()["call_plugin_definer"]);
+        self::call_plugin_routes(config::get_config()["call_plugin_routes"]);
     }
 
     private static $set_menu_item_loginCheck = false;

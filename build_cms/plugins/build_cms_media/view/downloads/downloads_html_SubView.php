@@ -11,7 +11,7 @@
             <?php foreach (build_cms_media_pluginModal::$data_array AS $download): ?>
                 <tr>
                     <td><?php echo $download["the_file_name"] ?></td>
-                    <td><?php echo config::$domainDir; ?>/downloads/<?php echo $download["the_file_name"]; ?></td>
+                    <td><?php echo config::get_config()["domainDir"]; ?>/downloads/<?php echo $download["the_file_name"]; ?></td>
                     <td>
                         <button class="btn btn-primary download_open_btn" download_filename="<?php echo $download["the_file_name"]; ?>" download_id="<?php echo $download["id"]; ?>">
                             Delete
