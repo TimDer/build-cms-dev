@@ -33,14 +33,13 @@ class config_dir {
 
     // directories
     public static function BASE($dir = "") {
-        return realpath(__DIR__ . "/../..") . $dir;
-        //return __DIR__ . "/../.." . $dir;
+        return realpath($GLOBALS["dir_to_build_cms"]) . $dir;
     }
     public static function ROUTES($dir = "") {
         return self::BASE("/routes") . $dir;
     }
     public static function ROOT_DIR($dir = "") {
-        return $GLOBALS["index_root_dir"] . $dir;
+        return realpath($GLOBALS["index_root_dir"]) . $dir;
     }
 
     public static function PLUGINDIR($location, $dir = "", $type = "fullPath") {
