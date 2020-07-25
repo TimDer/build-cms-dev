@@ -115,6 +115,20 @@ class plugins {
     }
 
     public static function call_plugins() {
+        $load_sys = config::get_config()["load_system_plugins"];
+
+        foreach ($load_sys AS $dir) {
+            $define = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir . "/define.php");
+            $routes = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir . "/routes.php");
+
+            if (file_exists($define)) {
+                require $define;
+            }
+            if (file_exists($routes)) {
+                require $routes;
+            }
+        }
+
         self::call_plugin_definer(config::get_config()["call_plugin_definer"]);
         self::call_plugin_routes(config::get_config()["call_plugin_routes"]);
     }
