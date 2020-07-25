@@ -1,5 +1,6 @@
 {
     "name": "Custom CSS",
     "directory_name": "build_cms_custom_css",
-    "description": "This is the default custom css plugin built by the Build_CMS foundation"
+    "description": "This is the default custom css plugin built by the Build_CMS foundation",
+    "version": "1.0"
 }
