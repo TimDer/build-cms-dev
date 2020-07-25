@@ -27,7 +27,7 @@
                 <div class="template">
                     <div class="header"><?php echo $value["config"]["tem_name"] ?></div>
                     <div class="body">
-                        <?php if (file_exists(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
+                        <?php if (file_exists(config_dir::BASE("/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
                             <img src="<?php echo config_url::BASE("/admin/template_loader/" . $value["config"]["folder_name"] . "/template_info/template_img.png"); ?>">
                         <?php } else { ?>
                             <img src="<?php echo config_url::BASE("/admin_files/template_loader/template_img.png"); ?>">
@@ -51,7 +51,7 @@
                 <div class="row template_modal_content">
                     <div class="col-1 sidebar">
                         <h1>Template screenshot:</h1>
-                        <?php if (file_exists(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
+                        <?php if (file_exists(config_dir::BASE("/templates/" . $value["config"]["folder_name"] . "/template_info/template_img.png"))) { ?>
                             <img src="<?php echo config_url::BASE("/admin/template_loader/" . $value["config"]["folder_name"] . "/template_info/template_img.png"); ?>">
                         <?php } else { ?>
                             <img src="<?php echo config_url::BASE("/admin_files/template_loader/template_img.png"); ?>">
@@ -104,7 +104,7 @@
                                                 <input class="btn btn-block" name="activate" type="submit" value="Activate">
                                                 <input type="hidden" name="dir" value="<?php echo $value["config"]["folder_name"]; ?>">
                                             </form>
-                                            <?php if ( extension_loaded("zip") && count(scandir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $value["config"]["folder_name"]))) > 2 ) { ?>
+                                            <?php if ( extension_loaded("zip") && count(scandir(config_dir::BASE("/templates/" . $value["config"]["folder_name"]))) > 2 ) { ?>
                                                 <div class="col-1">
                                                     <a href="<?php echo config_url::BASE("/admin_submit/template_loader/download_template/" . $value["config"]["folder_name"] . "/" . $value["config"]["folder_name"] . ".zip"); ?>" class="btn btn-block">
                                                         Download (<?php echo $value["config"]["tem_name"]; ?>)

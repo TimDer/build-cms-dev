@@ -88,8 +88,8 @@ class add_page_loaderBack {
         $index_the_template = files::findFiles_toSingleArray(
             self::loop_template_array(
                 files::findFiles(
-                    config_dir::BUILD_CMS_SYSTEM(
-                        "/view/templates/" . templateLoader::$template_dir
+                    config_dir::BASE(
+                        "/templates/" . templateLoader::$template_dir
                     )
                 )
             )

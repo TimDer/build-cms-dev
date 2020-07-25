@@ -40,9 +40,9 @@ routes::set("/admin_submit/template_loader/delete_template", function () {
         load_filesController::load_file("/build_cms_system/www-root/admin/template_loader/select_template", "404 not found");
     }, "user_id", "admin");
     routes::set("/admin/template_loader", function () {
-        load_filesController::load_file("/build_cms_system/view/templates", "404 not found");
+        load_filesController::load_file("/templates", "404 not found");
     }, "user_id", "admin");
     routes::set("/template", function () {
-        load_filesController::load_file("/build_cms_system/view/templates/" . templateLoader::$template_dir . "/www-root", "404 not found");
+        load_filesController::load_file("/templates/" . templateLoader::$template_dir . "/www-root", "404 not found");
     });
 /* ============================== /load files ============================== */

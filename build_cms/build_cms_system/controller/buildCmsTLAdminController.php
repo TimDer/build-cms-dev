@@ -2,13 +2,13 @@
 
 class buildCmsTLAdminController extends controller {
     public static function templateManager() {
-        $templates_dir_array = scandir( config_dir::BUILD_CMS_SYSTEM( "/view/templates" ) );
+        $templates_dir_array = scandir( config_dir::BASE("/templates" ) );
 
         $id_incrementer = 1;
         $config_data = array();
         foreach ($templates_dir_array AS $template_dir) {
             if ( $template_dir !== "." && $template_dir !== ".." ) {
-                $template_infoDir = config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/template_info");
+                $template_infoDir = config_dir::BASE("/templates/" . $template_dir . "/template_info");
                 //$config_file = json_decode(file_get_contents($template_infoDir . "/general.json"));
                 $config_file = $template_infoDir . "/general.json";
 
@@ -87,16 +87,16 @@ class buildCmsTLAdminController extends controller {
                 else {
                     $folder_name = $zip_name;
                 }
-                while (is_dir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $folder_name))) {
+                while (is_dir(config_dir::BASE("/templates/" . $folder_name))) {
                     $randomString = users::create_password_salt(5, 5);
                     if (!is_dir($folder_name . "_" . $randomString)) {
                         $folder_name = $folder_name . "_" . $randomString;
                     }
                 }
-                mkdir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $folder_name), 775);
+                mkdir(config_dir::BASE("/templates/" . $folder_name), 775);
                 files::copy_dir_contents(
                     config_dir::BUILD_CMS_SYSTEM("/data/install_template/unzip"),
-                    config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $folder_name),
+                    config_dir::BASE("/templates/" . $folder_name),
                     $index_unziped_dir
                 );
                 header("Location: " . config_url::BASE("/admin_submit/template_loader/delete_unzip_folder"));
@@ -116,7 +116,7 @@ class buildCmsTLAdminController extends controller {
         }
     }
     public static function delete_unzip_dir() {
-        config_dir::deleteDirectory("/data/install_template/unzip");
+        config_dir::deleteDirectory("/build_cms_system/data/install_template/unzip");
         header("Location: " . config_url::BASE("/admin/settings/template_loader"));
     }
 
@@ -140,7 +140,7 @@ class buildCmsTLAdminController extends controller {
 
             $zipName        = user_url::$new_uri[1];
             $folderName     = user_url::$new_uri[0];
-            $templatePath   = config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $folderName);
+            $templatePath   = config_dir::BASE("/templates/" . $folderName);
             $destination    = config_dir::BUILD_CMS_SYSTEM("/data/download_zip");
             
             files::createZipFile(
@@ -161,9 +161,9 @@ class buildCmsTLAdminController extends controller {
         $post = user_url::$post_var;
 
         $template_dir   = preg_replace("/ /", "_", $post["template_dir"]);
-        while (is_dir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir))) {
+        while (is_dir(config_dir::BASE("/templates/" . $template_dir))) {
             $randomString = users::create_password_salt(5, 5);
-            if (!is_dir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "_" . $randomString))) {
+            if (!is_dir(config_dir::BASE("/templates/" . $template_dir . "_" . $randomString))) {
                 $template_dir = $template_dir . "_" . $randomString;
             }
         }
@@ -178,32 +178,32 @@ class buildCmsTLAdminController extends controller {
         ), JSON_PRETTY_PRINT);
 
         // create template folder
-        mkdir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir), 775);
         // create info folder
-        mkdir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/template_info"), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir . "/template_info"), 775);
 
         // create general.json
-        file_put_contents(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/template_info/general.json"), $json_array);
+        file_put_contents(config_dir::BASE("/templates/" . $template_dir . "/template_info/general.json"), $json_array);
 
         // create info.txt
-        $info_file = fopen(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/template_info/info.txt"), "w");
+        $info_file = fopen(config_dir::BASE("/templates/" . $template_dir . "/template_info/info.txt"), "w");
         fwrite($info_file, $Description);
         fclose($info_file);
 
         // create license.txt
-        $license_file = fopen(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/template_info/license.txt"), "w");
+        $license_file = fopen(config_dir::BASE("/templates/" . $template_dir . "/template_info/license.txt"), "w");
         fwrite($license_file, $license);
         fclose($license_file);
 
         // create index.php, header.php, footer.php, content.php and functions.php
-        files::create_file(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/index.php"));
-        files::create_file(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/header.php"));
-        files::create_file(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/footer.php"));
-        files::create_file(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/content.php"));
-        files::create_file(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/functions.php"));
+        files::create_file(config_dir::BASE("/templates/" . $template_dir . "/index.php"));
+        files::create_file(config_dir::BASE("/templates/" . $template_dir . "/header.php"));
+        files::create_file(config_dir::BASE("/templates/" . $template_dir . "/footer.php"));
+        files::create_file(config_dir::BASE("/templates/" . $template_dir . "/content.php"));
+        files::create_file(config_dir::BASE("/templates/" . $template_dir . "/functions.php"));
 
         // create www-root dir
-        mkdir(config_dir::BUILD_CMS_SYSTEM("/view/templates/" . $template_dir . "/www-root"), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir . "/www-root"), 775);
 
         // Activate template
         if (isset($post["activate"])) {
@@ -221,7 +221,7 @@ class buildCmsTLAdminController extends controller {
             echo "cannot";
         }
         else {
-            config_dir::deleteDirectory( "/view/templates/" . user_url::$new_uri[0] );
+            config_dir::deleteDirectory( "/templates/" . user_url::$new_uri[0] );
             echo "deleted";
         }
     }
