@@ -79,14 +79,14 @@ class pluginsController extends controller {
                     }
                 }
                 else {
-                    config_dir::deleteDirectory("/data/plugin_unzip");
+                    config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
                     unlink( $upload_destination . "/" . $fileResult );
                     header("Location: " . config_url::BASE("/admin/plugins?is_installed=" . $get_json["name"]));
                     die();
                 }
             }
 
-            config_dir::deleteDirectory("/data/plugin_unzip");
+            config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
             unlink( $upload_destination . "/" . $fileResult );
             $get_var = (empty($plugin_name)) ? "" : "?installed=" . $plugin_name;
             header("Location: " . config_url::BASE("/admin/plugins" . $get_var));
