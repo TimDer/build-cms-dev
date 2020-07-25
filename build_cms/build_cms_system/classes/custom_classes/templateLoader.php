@@ -5,7 +5,7 @@ class templateLoader {
     public static $template_file    = "index.php";
 
     public static function call_template_definer() {
-        $dir_to_file = config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/define.php");
+        $dir_to_file = config_dir::BASE("/templates/" . self::$template_dir . "/define.php");
         if (file_exists($dir_to_file)) {
             require $dir_to_file;
         }
@@ -13,7 +13,7 @@ class templateLoader {
 
     public static function set_template_file($template = "") {
         self::set_template_base_dir();
-        if (!empty($template) && file_exists( config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/" . $template . "_template.php") )) {
+        if (!empty($template) && file_exists( config_dir::BASE("/templates/" . self::$template_dir . "/" . $template . "_template.php") )) {
             self::$template_file = $template . "_template.php";
         }
     }
@@ -31,32 +31,32 @@ class templateLoader {
     }
 
     public static function base_template_dir($dir) {
-        return config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . $dir);
+        return config_dir::BASE("/templates/" . self::$template_dir . $dir);
     }
 
     public static function get_header($header_file = "") {
         if (empty($header_file)) {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/header.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/header.php");
         }
         else {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/" . $header_file . "_header.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/" . $header_file . "_header.php");
         }
         
     }
     public static function get_content($content_file = "") {
         if (empty($content_file)) {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/content.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/content.php");
         }
         else {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/" . $content_file . "_content.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/" . $content_file . "_content.php");
         }
     }
     public static function get_footer($footer_file = "") {
         if (empty($footer_file)) {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/footer.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/footer.php");
         }
         else {
-            require config_dir::BUILD_CMS_SYSTEM("/view/templates/" . self::$template_dir . "/" . $footer_file . "_footer.php");
+            require config_dir::BASE("/templates/" . self::$template_dir . "/" . $footer_file . "_footer.php");
         }
     }
 
