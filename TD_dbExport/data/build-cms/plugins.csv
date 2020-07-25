@@ -1,5 +1,4 @@
 pluginID,name,directory_name,description
-8,Media,build_cms_media,"This is the default media plugin built by the Build_CMS foundation"
 9,"Image slideshow",build_cms_image_slideshow,"This is the default image slideshow plugin built by the Build_CMS foundation"
 10,"Custom CSS",build_cms_custom_css,"This is the default custom css plugin built by the Build_CMS foundation"
 11,"Contact Form",build_cms_contact_form,"This is the default contact form plugin built by the Build_CMS foundation"
