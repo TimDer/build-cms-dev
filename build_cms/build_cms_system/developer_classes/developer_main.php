@@ -6,17 +6,17 @@ class developer_main {
         "new-plugin",
         "install-plugin",
         "uninstall-plugin",
-
-        // compilers
         "compile-plugin",
 
         // config
         "re-config",
+        "re-config-sys",
 
         // history
         "reset-history"
     );
 
+    // ============================== plugin ==============================
     public static function new_plugin($mode = "cli") {
         $plugin_create_dir = (in_array("-s", $GLOBALS["commandToArgv"])) ? "build_cms_system" . DIRECTORY_SEPARATOR . "system" : "plugins";
         
@@ -121,51 +121,54 @@ class developer_main {
         }
     }
 
-    public static function re_config($mode = "cli") {
-        if ($mode === "cli") {
-            if (file_exists(config_dir::BUILD_CMS_SYSTEM("/data/config.json"))) {
-                $GLOBALS["config"] = json_decode(file_get_contents(config_dir::BASE("/config.json")), true);
-            }
-            else {
-                $GLOBALS["config"] = array(
-                    "useHttps"                  => false,
-                    "domainDir"                 => "",
-                    "displayUntrustedDomain"    => true,
-                    "TrustedDomains"            => array(),
-                    "DB_servername"             => "",
-                    "DB_username"               => "",
-                    "DB_password"               => "",
-                    "DB_dbname"                 => "",
-                    "call_plugin_definer"       => true,
-                    "call_plugin_routes"        => true,
-                    "dev_mode_on"               => false,
-                    "cms_version"               => ""
-                );
-            }
+    public static function uninstall_plugin($mode = "cli") {
+        if (!in_array("-y", $GLOBALS["commandToArgv"]) && isset($GLOBALS["commandToArgv"][1])) {
+            $pathToFileArray = explode("/", $GLOBALS["commandToArgv"][1]);
+            $file = end($pathToFileArray);
+            $are_you_sure = strtolower(readline('Are you sure you want to delete "' . $file . '" (Default: No): '));
+        }
+        elseif (in_array("-y", $GLOBALS["commandToArgv"]) && isset($GLOBALS["commandToArgv"][1])) {
+            $are_you_sure = "yes";
+        }
+        else {
+            $are_you_sure = "no";
+        }
 
-            $argument1 = (count($GLOBALS["commandToArgv"]) > 1 && !in_array("-r", $GLOBALS["commandToArgv"]));
-            $argument2 = (count($GLOBALS["commandToArgv"]) > 2 &&  in_array("-r", $GLOBALS["commandToArgv"]));
-            if ( $argument1 || $argument2 ) {
-                $argv_new = $GLOBALS["commandToArgv"];
-                array_shift($argv_new);
-                
-                foreach ($argv_new AS $command) {
-                    if (in_array($command, developer_reconfig::$argv_accepted_array)) {
-                        call_user_func("developer_reconfig::" . preg_replace("/-/", "_", $command));
+        if ($are_you_sure === "yes") {
+            if (isset($GLOBALS["commandToArgv"][1])) {
+                $delete_from_dir = (in_array("-s", $GLOBALS["commandToArgv"])) ? "build_cms_system" . DIRECTORY_SEPARATOR . "system" : "plugins";
+
+                if (is_dir(config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]))) {
+                    require config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
+                    config_dir::deleteDirectory("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]);
+                    if (in_array("-s", $GLOBALS["commandToArgv"])) {
+                        $config = config::get_config();
+
+                        foreach ($config["load_system_plugins"] AS $rm_key => $rm_value) {
+                            if ($rm_value === $GLOBALS["commandToArgv"][1]) {
+                                unset($config["load_system_plugins"][$rm_key]);
+                            }
+                        }
+
+                        file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($config, (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
+                        config::reload_config();
+                    }
+                    if ($mode === "cli") {
+                        echo "\nThe plugin has been successfully deleted\n\n";
+                    }
+                    elseif ($mode === "web") {
+                        return true;
+                    }
+                }
+                else {
+                    if ($mode === "cli") {
+                        echo "\n*** Plugin not found ***\n\n";
+                    }
+                    elseif ($mode === "web") {
+                        return false;
                     }
                 }
             }
-            else {
-                $loop_array = developer_reconfig::$argv_accepted_array;
-                unset($loop_array["database_all"]);
-                foreach ($loop_array AS $command) {
-                    call_user_func("developer_reconfig::" . preg_replace("/-/", "_", $command));
-                }
-            }
-
-            file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($GLOBALS["config"], (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
-
-            config::reload_config();
         }
     }
 
@@ -212,43 +215,120 @@ class developer_main {
             }
         }
     }
+    // ============================== /plugin ==============================
 
-    public static function uninstall_plugin($mode = "cli") {
-        if (!in_array("-y", $GLOBALS["commandToArgv"]) && isset($GLOBALS["commandToArgv"][1])) {
-            $pathToFileArray = explode("/", $GLOBALS["commandToArgv"][1]);
-            $file = end($pathToFileArray);
-            $are_you_sure = strtolower(readline('Are you sure you want to delete "' . $file . '" (Default: No): '));
-        }
-        elseif (in_array("-y", $GLOBALS["commandToArgv"]) && isset($GLOBALS["commandToArgv"][1])) {
-            $are_you_sure = "yes";
-        }
-        else {
-            $are_you_sure = "no";
-        }
+    // ============================== Other ==============================
+    public static function re_config($mode = "cli") {
+        if ($mode === "cli") {
+            if (file_exists(config_dir::BUILD_CMS_SYSTEM("/data/config.json"))) {
+                $GLOBALS["config"] = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json")), true);
+            }
+            else {
+                $GLOBALS["config"] = array(
+                    "useHttps"                  => false,
+                    "domainDir"                 => "",
+                    "displayUntrustedDomain"    => true,
+                    "TrustedDomains"            => array(),
+                    "DB_servername"             => "",
+                    "DB_username"               => "",
+                    "DB_password"               => "",
+                    "DB_dbname"                 => "",
+                    "call_plugin_definer"       => true,
+                    "call_plugin_routes"        => true,
+                    "dev_mode_on"               => false,
+                    "cms_version"               => ""
+                );
+            }
 
-        if ($are_you_sure === "yes") {
-            if (isset($GLOBALS["commandToArgv"][1])) {
-                $delete_from_dir = (in_array("-s", $GLOBALS["commandToArgv"])) ? "build_cms_system" . DIRECTORY_SEPARATOR . "system" : "plugins";
-
-                if (is_dir(config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]))) {
-                    require config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
-                    config_dir::deleteDirectory("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]);
-                    if ($mode === "cli") {
-                        echo "\nThe plugin has been successfully deleted\n\n";
-                    }
-                    elseif ($mode === "web") {
-                        return true;
-                    }
-                }
-                else {
-                    if ($mode === "cli") {
-                        echo "\n*** Plugin not found ***\n\n";
-                    }
-                    elseif ($mode === "web") {
-                        return false;
+            $argument1 = (count($GLOBALS["commandToArgv"]) > 1 && !in_array("-r", $GLOBALS["commandToArgv"]));
+            $argument2 = (count($GLOBALS["commandToArgv"]) > 2 &&  in_array("-r", $GLOBALS["commandToArgv"]));
+            if ( $argument1 || $argument2 ) {
+                $argv_new = $GLOBALS["commandToArgv"];
+                array_shift($argv_new);
+                
+                foreach ($argv_new AS $command) {
+                    if (in_array($command, developer_reconfig::$argv_accepted_array)) {
+                        call_user_func("developer_reconfig::" . preg_replace("/-/", "_", $command));
                     }
                 }
             }
+            else {
+                $loop_array = developer_reconfig::$argv_accepted_array;
+                unset($loop_array["database_all"]);
+                foreach ($loop_array AS $command) {
+                    call_user_func("developer_reconfig::" . preg_replace("/-/", "_", $command));
+                }
+            }
+
+            file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($GLOBALS["config"], (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
+
+            config::reload_config();
+        }
+    }
+
+    public static function re_config_sys($mode = "cli") {
+        if ($mode === "cli") {
+            users::is_developer(function () {
+                $GLOBALS["config"] = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json")), true);
+
+                if (!isset($GLOBALS["config"]["load_system_plugins"])) {
+                    $GLOBALS["config"]["load_system_plugins"] = array();
+                }
+
+                $system_dir = scandir(config_dir::BUILD_CMS_SYSTEM("/system"));
+
+                // remove ".", ".." and ".dirPlaceholder"
+                foreach ($system_dir AS $remove_key => $remove_value) {
+                    if ($remove_value === "." || $remove_value === ".." || $remove_value === ".dirPlaceholder") {
+                        unset($system_dir[$remove_key]);
+                    }
+                }
+                $system_dir = array_values($system_dir);
+
+                // configure system-plugins
+                $higher_number  = count($system_dir) * 7;
+                $array_amount   = (count($system_dir) - 1);
+                $used_number    = array();
+                $load_system_plugins = array();
+                foreach ($system_dir AS $configure_key => $configure_value) {
+                    echo "\n";
+                    while ($higher_number > $array_amount) {
+                        $number = readline("Select a number for [" . $configure_value . "]: ");
+
+                        if (is_numeric($number)) {
+                            if (!in_array($number, $used_number)) {
+                                if ((int)$number <= $array_amount && (int)$number >= 0) {
+                                    $load_system_plugins[(int)$number] = $configure_value;
+                                    $used_number[] = $number;
+                                    $higher_number = 0;
+                                }
+                                else {
+                                    echo "\nYour number has to be equal or greater than 0 and lower or equal to: " . $array_amount . "\n\n";
+                                }
+                            }
+                            else {
+                                echo "You have already used that number\n";
+                            }
+                        }
+                        else {
+                            echo "Numbers only\n";
+                        }
+                    }
+                    $higher_number = count($system_dir) * 7;
+                }
+                
+                // Array to correct order
+                $return_array = array();
+                for ($array_key_return = 0; $array_key_return <= $array_amount; $array_key_return++) { 
+                    $return_array[$array_key_return] = $load_system_plugins[$array_key_return];
+                }
+                $GLOBALS["config"]["load_system_plugins"] = $return_array;
+
+                file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($GLOBALS["config"], (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
+                config::reload_config();
+            }, function () {
+                echo "\n*** You have to enable developer mode in order to configure the system-plugins ***\n\n";
+            });
         }
     }
 
@@ -262,6 +342,7 @@ class developer_main {
             }
         }
     }
+    // ============================== /Other ==============================
 
     // ============================== help ==============================
     public static function usage() {
