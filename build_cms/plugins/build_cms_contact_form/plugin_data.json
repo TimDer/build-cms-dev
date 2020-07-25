@@ -1,5 +1,6 @@
 {
     "name": "Contact Form",
     "directory_name": "build_cms_contact_form",
-    "description": "This is the default contact form plugin built by the Build_CMS foundation"
+    "description": "This is the default contact form plugin built by the Build_CMS foundation",
+    "version": "1.0"
 }
