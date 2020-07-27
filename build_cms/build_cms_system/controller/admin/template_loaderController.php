@@ -8,12 +8,10 @@ class template_loaderController extends controller {
     
     public static function get_template_view() {
         $get_template_loader = database::select(
-            "SELECT `plugins`.`directory_name` FROM `plugins`
-            INNER JOIN `settings` ON `plugins`.pluginID = `settings`.`tamplateLoaderID`
-            WHERE `plugins`.`pluginID` = `settings`.`tamplateLoaderID`"
+            "SELECT `tamplateLoaderID` FROM `settings`"
         )[0];
-        if (!empty($get_template_loader["directory_name"])) {
-            require config_dir::BASE("/plugins/" . $get_template_loader["directory_name"] . "/index.php");
+        if (!empty($get_template_loader["tamplateLoaderID"])) {
+            require config_dir::BASE($get_template_loader["tamplateLoaderID"]);
         }
         else {
             buildCmsTemplateLoaderController::get_template();

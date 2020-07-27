@@ -156,16 +156,15 @@ class developer_main {
                     require config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
                     config_dir::deleteDirectory("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]);
                     if (in_array("-s", $GLOBALS["commandToArgv"])) {
-                        $config = config::get_config();
+                        $config = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json")), true);
 
-                        foreach ($config["load_system_plugins"] AS $rm_key => $rm_value) {
-                            if ($rm_value === $GLOBALS["commandToArgv"][1]) {
-                                unset($config["load_system_plugins"][$rm_key]);
+                        foreach ($config AS $rm_key => $rm_value) {
+                            if ($rm_value["sys_plugin_dir_name"] === $GLOBALS["commandToArgv"][1]) {
+                                unset($config[$rm_key]);
                             }
                         }
 
-                        file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($config, (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
-                        config::reload_config();
+                        file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json"), json_encode($config, (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
                     }
                     if ($mode === "cli") {
                         echo "\nThe plugin has been successfully deleted\n\n";
@@ -339,7 +338,7 @@ class developer_main {
                 $array_amount   = (count($system_dir) - 1);
                 $used_number    = array();
                 $load_system_plugins = array();
-                foreach ($system_dir AS $configure_key => $configure_value) {
+                foreach ($system_dir AS $configure_value) {
                     echo "\n";
                     while ($higher_number > $array_amount) {
                         $number = readline("Select a number for [" . $configure_value . "]: ");
@@ -347,7 +346,13 @@ class developer_main {
                         if (is_numeric($number)) {
                             if (!in_array($number, $used_number)) {
                                 if ((int)$number <= $array_amount && (int)$number >= 0) {
-                                    $load_system_plugins[(int)$number] = $configure_value;
+                                    $load_define = (readline('do you want to load the defender of "' . $configure_value . '" (default: yes): ') !== "no") ? true : false;
+                                    $load_routes = (readline('do you want to load the routes of "' . $configure_value . '" (default: yes): ') !== "no") ? true : false;
+                                    $load_system_plugins[(int)$number] = array(
+                                        "sys_plugin_dir_name" => $configure_value,
+                                        "load_define" => $load_define,
+                                        "load_routes" => $load_routes
+                                    );
                                     $used_number[] = $number;
                                     $higher_number = 0;
                                 }

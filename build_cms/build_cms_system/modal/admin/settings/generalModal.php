@@ -14,11 +14,6 @@ class generalModal {
     public static $membership = "";
 
     // template loader
-    public static $templateLoader = array(
-        array(
-            "id" => 0,
-            "displayName" => "Load built in templateloader"
-        )
-    );
+    public static $templateLoader = array();
     public static $templateLoaderSelectedID = 0;
 }

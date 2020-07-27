@@ -118,13 +118,13 @@ class plugins {
         $load_sys = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json")), true);
 
         foreach ($load_sys AS $dir) {
-            $define = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir . "/define.php");
-            $routes = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir . "/routes.php");
+            $define = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir["sys_plugin_dir_name"] . "/define.php");
+            $routes = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir["sys_plugin_dir_name"] . "/routes.php");
 
-            if (file_exists($define)) {
+            if (file_exists($define) && $dir["load_define"]) {
                 require $define;
             }
-            if (file_exists($routes)) {
+            if (file_exists($routes) && $dir["load_routes"]) {
                 require $routes;
             }
         }
