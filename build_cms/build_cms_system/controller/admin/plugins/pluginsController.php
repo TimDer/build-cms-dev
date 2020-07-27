@@ -57,6 +57,7 @@ class pluginsController extends controller {
                 $get_var = "?is_installed=" . $install_plugin["name"];
             }
 
+            config_dir::deleteDirectory("/build_cms_system/data/plugin_upload");
             header("Location: " . config_url::BASE("/admin/plugins" . $get_var));
         }
         elseif (isset($fileResult["name"])) {
