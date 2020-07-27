@@ -115,7 +115,7 @@ class plugins {
     }
 
     public static function call_plugins() {
-        $load_sys = config::get_config()["load_system_plugins"];
+        $load_sys = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json")), true);
 
         foreach ($load_sys AS $dir) {
             $define = config_dir::BUILD_CMS_SYSTEM("/system/" . $dir . "/define.php");

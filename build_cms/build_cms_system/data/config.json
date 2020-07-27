@@ -13,8 +13,5 @@
     "call_plugin_definer": true,
     "call_plugin_routes": true,
     "dev_mode_on": true,
-    "cms_version": "1.0",
-    "load_system_plugins": [
-        "build_cms_media"
-    ]
+    "cms_version": "1.0"
 }
