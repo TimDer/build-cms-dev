@@ -1,0 +1,6 @@
+{
+    "name": "Build CMS page builder",
+    "directory_name": "build_cms_page_builder",
+    "description": "This is the default page builder of Build-CMS",
+    "version": "1.0"
+}
