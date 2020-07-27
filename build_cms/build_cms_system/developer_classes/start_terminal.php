@@ -12,6 +12,7 @@ class start_terminal {
             echo "\n";
         }
         else {
+            self::get_json();
             self::open_terminal();
             self::run_terminal();
         }
@@ -28,7 +29,10 @@ class start_terminal {
             }
         }
 
-        if (in_array($argv_array[0], developer_main::$argv_accepted_array)) {
+        if (in_array("-s", $argv_array)) {
+            return '"-s" Can only be used in cli mode';
+        }
+        elseif (in_array($argv_array[0], developer_main::$argv_accepted_array)) {
             $GLOBALS["commandToArgv"] = $argv_array;
             return call_user_func("developer_main::" . preg_replace("/-/", "_", $argv_array[0]), "web");
         }
@@ -101,7 +105,6 @@ class start_terminal {
     }
 
     private static function run_terminal() {
-        self::get_json();
         while (self::$terminal_running) {
             echo "\n";
             $command = readline("Developer command > ");
