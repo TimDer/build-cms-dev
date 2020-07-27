@@ -26,7 +26,7 @@ function auto_select_a_dir($dir, $file, $return = false) {
         }
 
         // select the file
-        if (is_dir($dir . "/" . $item)) {
+        if (is_dir($dir . "/" . $item) && !file_exists($dir . "/" . $item . "/.noAutoloader")) {
             $return = auto_select_a_dir($dir . "/" . $item, $file, $return);
         }
     }
