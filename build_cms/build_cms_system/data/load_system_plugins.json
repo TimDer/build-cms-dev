@@ -1,1 +1,1 @@
-[{"sys_plugin_dir_name":"build_cms_media","load_define":true,"load_routes":true}]
+[{"sys_plugin_dir_name":"build_cms_page_builder","load_define":true,"load_routes":true},{"sys_plugin_dir_name":"build_cms_media","load_define":true,"load_routes":true}]
