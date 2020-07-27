@@ -34,12 +34,12 @@
             <tbody>
                 <?php foreach (pluginsModal::$plugins_array AS $plugins) { ?>
                     <tr>
-                        <td><?php echo $plugins["name"] ?></td>
-                        <td><?php echo $plugins["description"] ?></td>
+                        <td><?php echo $plugins["json_file"]["name"] ?></td>
+                        <td><?php echo $plugins["json_file"]["description"] ?></td>
                         <td>
-                            <button delete_id="<?php echo $plugins["pluginID"]; ?>" class="delete_btn plugin_btn">Delete</button>
+                            <button delete_dir="<?php echo $plugins["json_file"]["directory_name"]; ?>" class="delete_btn plugin_btn">Delete</button>
                             <?php if (users::is_developer()): ?>
-                                / <a href="<?php echo config_url::BASE("/admin_submit/plugins/download/" . $plugins["directory_name"] . ".bcpi"); ?>" class="create_installer_btn plugin_btn">Create-installer (<?php echo $plugins["name"] ?>)</a>
+                                / <a href="<?php echo config_url::BASE("/admin_submit/plugins/download/" . $plugins["json_file"]["directory_name"] . ".bcpi"); ?>" class="create_installer_btn plugin_btn">Create-installer (<?php echo $plugins["json_file"]["name"] ?>)</a>
                             <?php endif; ?>
                         </td>
                     </tr>

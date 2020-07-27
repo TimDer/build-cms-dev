@@ -11,7 +11,7 @@ $('#no_space_allowed').on('keypress', function(e) {
 
 $(".delete_btn").click(function () {
     var delete_btn = $(this);
-    var id = delete_btn.attr("delete_id");
+    var id = delete_btn.attr("delete_dir");
 
     if (warning_message("Solve this sum in order to delete this plugin", "Are you sure you want to delete this plugin")) {
         return;
