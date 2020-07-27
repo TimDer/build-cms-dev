@@ -2,7 +2,7 @@
 
 class pluginsController extends controller {
     public static function get_plugins_view() {
-        pluginsModal::$plugins_array = database::select("SELECT * FROM `plugins` ORDER BY `name`");
+        pluginsModal::$plugins_array = start_terminal::web_terminal("list-plugin");
 
         $get_var = user_url::$get_var;
         if (isset($get_var["install_error"])) {
@@ -29,7 +29,6 @@ class pluginsController extends controller {
 
     public static function install_plugin() {
         $upload_destination     = config_dir::BUILD_CMS_SYSTEM("/data/plugin_upload");
-        $install_destination    = config_dir::BASE("/plugins");
 
         // Data dir check
         if (!is_dir( config_dir::BUILD_CMS_SYSTEM("/data") )) {
@@ -42,53 +41,22 @@ class pluginsController extends controller {
         $fileResult = files::upload_to_dir(
             $upload_destination,
             $_FILES['file'],
-            array('bcpi')
+            array('bcpi'),
+            "install"
         );
 
         if (is_string($fileResult)) {
-            // Create unzip dir
-            $unzip_dir = config_dir::BUILD_CMS_SYSTEM("/data/plugin_unzip");
-            mkdir( $unzip_dir, 775 );
-            $unzip = files::unzip(
-                new ZipArchive(),
-                $upload_destination . "/" . $fileResult,
-                $unzip_dir
-            );
+            $install_plugin = start_terminal::web_terminal("install-plugin " . realpath($upload_destination . DIRECTORY_SEPARATOR . $fileResult));
 
-            if ($unzip) {
-                $index_new_plugin_folder = files::findFiles( $unzip_dir );
+            unlink( $upload_destination . "/" . $fileResult );
 
-                $get_json = json_decode( file_get_contents($unzip_dir . "/plugin_data.json"), true );
-
-                if (!is_dir( config_dir::BASE("/plugins/" . $get_json["directory_name"]) )) {
-                    mkdir( config_dir::BASE("/plugins/" . $get_json["directory_name"]), 775 );
-                    files::copy_dir_contents(
-                        $unzip_dir,
-                        $install_destination . "/" . $get_json["directory_name"],
-                        $index_new_plugin_folder
-                    );
-
-                    $plugin_name        = $get_json["name"];
-                    $plugin_dir         = $get_json["directory_name"];
-                    $plugin_description = $get_json["description"];
-
-                    database::query("INSERT INTO `plugins` (`name`, `directory_name`, `description`) VALUES ('$plugin_name', '$plugin_dir', '$plugin_description')");
-                    $install_file = $install_destination . "/" . $plugin_dir . "/scripts/install.php";
-                    if ($install_file) {
-                        require $install_file;
-                    }
-                }
-                else {
-                    config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
-                    unlink( $upload_destination . "/" . $fileResult );
-                    header("Location: " . config_url::BASE("/admin/plugins?is_installed=" . $get_json["name"]));
-                    die();
-                }
+            if ($install_plugin["error_handler"]) {
+                $get_var = (empty($plugin_name)) ? "" : "?installed=" . $install_plugin["name"];
+            }
+            else {
+                $get_var = "?is_installed=" . $install_plugin["name"];
             }
 
-            config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
-            unlink( $upload_destination . "/" . $fileResult );
-            $get_var = (empty($plugin_name)) ? "" : "?installed=" . $plugin_name;
             header("Location: " . config_url::BASE("/admin/plugins" . $get_var));
         }
         elseif (isset($fileResult["name"])) {
@@ -102,18 +70,9 @@ class pluginsController extends controller {
     }
 
     public static function delete_plugin() {
-        $id = user_url::$new_uri[0];
+        $dir_name = user_url::$new_uri[0];
         
-        $sql = database::select("SELECT `directory_name` FROM `plugins` WHERE `pluginID`='$id'");
-        database::query("DELETE FROM `plugins` WHERE `pluginID`='$id'");
-
-        // run plugin Uninstaller
-        $delete_script = config_dir::BASE("/plugins/" . $sql[0]["directory_name"] . "/scripts/delete.php");
-        if (file_exists($delete_script)) {
-            require $delete_script;
-        }
-
-        config_dir::deleteDirectory("/plugins/" . $sql[0]["directory_name"]);
+        start_terminal::web_terminal("uninstall-plugin " . $dir_name);
     }
 
     public static function download_plugin() {
@@ -126,42 +85,17 @@ class pluginsController extends controller {
         $dir_name = mysqli_real_escape_string( database::$conn, implode(".", $file_with_ext_array) );
 
         // Dirs
-        $filePath = config_dir::BASE("/plugins/" . $dir_name);
-        $destination = config_dir::BUILD_CMS_SYSTEM("/data/plugin_download");
+        $destination = realpath(config_dir::BUILD_CMS_SYSTEM("/data/developer/compile_data"));
+        $command_data = start_terminal::web_terminal("compile-plugin $dir_name");
 
-        if (is_dir( $filePath )) {
-            // Data dir check
-            if (!is_dir( config_dir::BUILD_CMS_SYSTEM("/data") )) {
-                mkdir( config_dir::BUILD_CMS_SYSTEM("/data") );
-            }
-            if (!is_dir( $destination )) {
-                mkdir( $destination );
-            }
-
-            // get json data
-            $plugin_database = database::select("SELECT `name`, `directory_name`, `description` FROM `plugins` WHERE `directory_name`='$dir_name'")[0];
-            $json_plugin = json_encode($plugin_database, JSON_PRETTY_PRINT);
-
-            // json to file
-            $json_put_file = config_dir::BASE("/plugins/" . $dir_name . "/plugin_data.json");
-            file_put_contents($json_put_file, $json_plugin);
-
-            // Create zip file
-            files::createZipFile(
-                $filePath,
-                files::findFiles( $filePath ),
-                $file_name,
-                $destination,
-                new ZipArchive()
-            );
-
-            // Delete json file
-            unlink( $json_put_file );
-
+        if ($command_data["error_handler"]) {
             // echo zip file
             header("Content-Type: application/zip");
-            echo file_get_contents( $destination . DIRECTORY_SEPARATOR . $file_name );
-            unlink( $destination . DIRECTORY_SEPARATOR . $file_name );
+            echo file_get_contents( $destination . DIRECTORY_SEPARATOR . $command_data["fileName"] );
+            unlink( $destination . DIRECTORY_SEPARATOR . $command_data["fileName"] );
+        }
+        else {
+            header("Location: " . config_url::BASE("/admin/plugins"));
         }
     }
 }
