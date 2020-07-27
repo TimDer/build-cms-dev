@@ -46,7 +46,7 @@
                 <td class="option">
                     <select name="set-a-template-loader">
                         <?php foreach (generalModal::$templateLoader AS $templateLoader) { ?>
-                            <?php if (generalModal::$templateLoaderSelectedID === (int)$templateLoader["id"]) { ?>
+                            <?php if (generalModal::$templateLoaderSelectedID === $templateLoader["id"]) { ?>
                                 <option value="<?php echo $templateLoader["id"] ?>" selected><?php echo $templateLoader["displayName"] ?></option>
                             <?php } else { ?>
                                 <option value="<?php echo $templateLoader["id"] ?>"><?php echo $templateLoader["displayName"] ?></option>

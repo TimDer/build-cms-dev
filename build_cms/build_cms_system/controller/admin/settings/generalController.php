@@ -22,24 +22,40 @@ class generalController extends controller {
 
     /* ============================== view ============================== */
         public static function get_general() {
+            $all_plugins_array = array(
+                array(
+                    "id" => 0,
+                    "displayName" => "Use built in templateloader"
+                )
+            );
+
             $pluginsDir = scandir( config_dir::BASE("/plugins") );
             foreach ($pluginsDir AS $plugin) {
-                if (file_exists( config_dir::BASE("/plugins/" . $plugin . "/index.php") )) {
-                    $sqlDataPlugins = database::select("SELECT `pluginID` AS `id`, `name` FROM `plugins` WHERE `directory_name`='$plugin'")[0];
-                    generalModal::$templateLoader[] = array(
-                        "id" => $sqlDataPlugins["id"],
-                        "displayName" => $sqlDataPlugins["name"]
+                if (file_exists( config_dir::BASE("/plugins/" . $plugin . "/index.php") ) && ($plugin !== ".dirPlaceholder" || $plugin !== "." || $plugin !== "..")) {
+                    $all_plugins_array[] = array(
+                        "id" => "/plugins/" . $plugin . "/index.php",
+                        "displayName" => $plugin
                     );
-                    $sqlDataSettings = database::select("SELECT `tamplateLoaderID` AS `id` FROM settings")[0];
-                    generalModal::$templateLoaderSelectedID = (int)$sqlDataSettings["id"];
                 }
             }
 
-            //self::form_data();
-            $form_data = database::select("SELECT `sidetitle`, `sideslogan`, `membership`, `new_user_default_role` FROM `settings`")[0];
+            $systemDir = scandir(config_dir::BUILD_CMS_SYSTEM("/system"));
+            foreach ($systemDir AS $sys_plugin) {
+                if (file_exists( config_dir::BUILD_CMS_SYSTEM("/system/" . $sys_plugin . "/index.php") ) && ($sys_plugin !== ".dirPlaceholder" || $sys_plugin !== "." || $sys_plugin !== "..")) {
+                    $all_plugins_array[] = array(
+                        "id" => "/build_cms_system/system/" . $sys_plugin . "/index.php",
+                        "displayName" => $sys_plugin
+                    );
+                }
+            }
+
+            generalModal::$templateLoader = $all_plugins_array;
+
+            $form_data = database::select("SELECT `sidetitle`, `sideslogan`, `membership`, `new_user_default_role`, `tamplateLoaderID` FROM `settings`")[0];
             // form data
-            generalModal::$sidetitle    = $form_data["sidetitle"];
-            generalModal::$sideslogan   = $form_data["sideslogan"];
+            generalModal::$sidetitle                = $form_data["sidetitle"];
+            generalModal::$sideslogan               = $form_data["sideslogan"];
+            generalModal::$templateLoaderSelectedID = $form_data["tamplateLoaderID"];
 
             // membership
             if ( (int)$form_data["membership"] === 0 ) {
