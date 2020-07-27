@@ -101,16 +101,6 @@ CREATE TABLE `page_wysiwyg` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 ALTER TABLE `page_wysiwyg` ADD PRIMARY KEY (`id`);
 
--- plugins
-CREATE TABLE `plugins` (
-  `pluginID` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  `directory_name` varchar(256) NOT NULL,
-  `description` varchar(500) NOT NULL,
-  PRIMARY KEY (`pluginID`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
-ALTER TABLE `plugins` ADD PRIMARY KEY (`pluginID`);
-
 -- settings
 CREATE TABLE `settings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -118,7 +108,7 @@ CREATE TABLE `settings` (
   `sideslogan` varchar(6000) NOT NULL,
   `membership` int(1) NOT NULL,
   `new_user_default_role` varchar(20) NOT NULL,
-  `tamplateLoaderID` bigint(20) NOT NULL,
+  `tamplateLoaderID` varchar(20000) NOT NULL,
   `cms_version` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
