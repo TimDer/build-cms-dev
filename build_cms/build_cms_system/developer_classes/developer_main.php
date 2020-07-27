@@ -7,6 +7,7 @@ class developer_main {
         "install-plugin",
         "uninstall-plugin",
         "compile-plugin",
+        "list-plugin",
 
         // config
         "re-config",
@@ -35,7 +36,9 @@ class developer_main {
 
         $plugin_dir = preg_replace("/ /", "_", $plugin_dir);
 
-        if ( (!empty($plugin_name) && !empty($plugin_dir) && !empty($plugin_description)) || (in_array("-s", $GLOBALS["commandToArgv"])) ) {
+        $plugin_exists = is_dir(config_dir::BASE(DIRECTORY_SEPARATOR . $plugin_create_dir . DIRECTORY_SEPARATOR . $plugin_dir));
+
+        if ( (!empty($plugin_name) && !empty($plugin_dir) && !empty($plugin_description)) && !empty($plugin_version) && !($plugin_exists) ) {
             plugins::create_plugin_folder($plugin_dir, $plugin_create_dir);
             $json_put_file = config_dir::BASE("/" . $plugin_create_dir . "/" . $plugin_dir . "/plugin_data.json");
             $json_plugin = json_encode(array(
@@ -53,12 +56,17 @@ class developer_main {
                 return true;
             }
         }
-        else {
+        elseif (!empty($plugin_dir) && $plugin_exists) {
             if ($mode === "cli") {
-                echo "\n*** Make sure to enter all fields ***\n\n";
+                echo "\n*** A plugin with that directory name already exists ***\n\n";
             }
             else {
                 return false;
+            }
+        }
+        else {
+            if ($mode === "cli") {
+                echo "\n*** Make sure to enter all fields ***\n\n";
             }
         }
     }
@@ -90,7 +98,7 @@ class developer_main {
 
                     // plugin installer
                     $install_file = realpath(config_dir::BASE("/" . $install_dir . "/" . $get_json["directory_name"] . "/scripts/install.php"));
-                    if ($install_file) {
+                    if (file_exists($install_file)) {
                         require $install_file;
                     }
 
@@ -99,7 +107,10 @@ class developer_main {
                         echo "\nThe plugin has been installed successfully\n\n";
                     }
                     else {
-                        return true;
+                        return array(
+                            "error_handler" => true,
+                            "json" => $get_json
+                        );
                     }
                 }
                 else {
@@ -108,7 +119,10 @@ class developer_main {
                         echo "\nThe plugin has already been installed\n\n";
                     }
                     else {
-                        return false;
+                        return array(
+                            "error_handler" => false,
+                            "json" => $get_json
+                        );
                     }
                 }
             }
@@ -200,7 +214,7 @@ class developer_main {
                 }
                 elseif ($mode === "web") {
                     return array(
-                        true,
+                        "error_handler" => true,
                         "fileName" => $dir_name. "." . $file_number . ".bcpi"
                     );
                 }
@@ -210,9 +224,50 @@ class developer_main {
                     echo "\n*** Plugin not found ***\n\n";
                 }
                 elseif ($mode === "web") {
-                    return false;
+                    return array(
+                        "error_handler" => false
+                    );
                 }
             }
+        }
+    }
+
+    public static function list_plugin($mode = "cli") {
+        // set base dir
+        $plugin_installation_dir = (in_array("-s", $GLOBALS["commandToArgv"])) ? "build_cms_system" . DIRECTORY_SEPARATOR . "system" : "plugins";
+        $base_dir = config_dir::BASE(DIRECTORY_SEPARATOR . $plugin_installation_dir);
+
+        // remove ".", ".." and ".dirPlaceholder"
+        $plugins_dir_array = scandir($base_dir);
+        foreach ($plugins_dir_array AS $plugin_key => $plugin_value) {
+            if ($plugin_value === "." || $plugin_value === ".." || $plugin_value === ".dirPlaceholder") {
+                unset($plugins_dir_array[$plugin_key]);
+            }
+        }
+        $plugins_dir_array = array_values($plugins_dir_array);
+
+        if ($mode === "cli") {
+            echo "\n";
+            foreach ($plugins_dir_array AS $plugin) {
+                echo "$plugin\n";
+            }
+        }
+        elseif ($mode === "web") {
+            //return $plugins_dir_array;
+            $return_array = array();
+
+            foreach ($plugins_dir_array AS $return_value) {
+                $plugin_dir = $base_dir . DIRECTORY_SEPARATOR . $return_value . DIRECTORY_SEPARATOR . "plugin_data.json";
+
+                if (file_exists($plugin_dir)) {
+                    $return_array[$return_value] = array(
+                        "current_dir_name" => $return_value,
+                        "json_file" => json_decode(file_get_contents($plugin_dir), true)
+                    );
+                }
+            }
+
+            return $return_array;
         }
     }
     // ============================== /plugin ==============================
@@ -269,12 +324,6 @@ class developer_main {
     public static function re_config_sys($mode = "cli") {
         if ($mode === "cli") {
             users::is_developer(function () {
-                $GLOBALS["config"] = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json")), true);
-
-                if (!isset($GLOBALS["config"]["load_system_plugins"])) {
-                    $GLOBALS["config"]["load_system_plugins"] = array();
-                }
-
                 $system_dir = scandir(config_dir::BUILD_CMS_SYSTEM("/system"));
 
                 // remove ".", ".." and ".dirPlaceholder"
@@ -322,10 +371,8 @@ class developer_main {
                 for ($array_key_return = 0; $array_key_return <= $array_amount; $array_key_return++) { 
                     $return_array[$array_key_return] = $load_system_plugins[$array_key_return];
                 }
-                $GLOBALS["config"]["load_system_plugins"] = $return_array;
 
-                file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/config.json"), json_encode($GLOBALS["config"], (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
-                config::reload_config();
+                file_put_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json"), json_encode($return_array, (in_array("-r", $GLOBALS["commandToArgv"])) ? JSON_PRETTY_PRINT : 0 ));
             }, function () {
                 echo "\n*** You have to enable developer mode in order to configure the system-plugins ***\n\n";
             });
@@ -353,6 +400,7 @@ class developer_main {
         echo "   install-plugin </path/to/file.bcpi> --> Installs a plugin from a bcpi file\n\n";
         echo "   uninstall-plugin <dir_name> ----------> Used to uninstall a plugin\n\n";
         echo "   compile-plugin <dir_name> ------------> Used to compile a plugin\n\n";
+        echo "   list-plugin --------------------------> Creates a list of all installed plugins\n\n";
         echo "   re-config ----------------------------> Reconfiguare your installation\n";
         echo "             <https>                 <domainDir>\n";
         echo "             <Domain-check>          <trusted-domain-add>\n";
@@ -361,6 +409,7 @@ class developer_main {
         echo "             <DB-db>                 <DB>\n";
         echo "             <call-pd>               <call-pr>\n";
         echo "             <dev-mode>              <cms-version>\n\n";
+        echo "   re-config-sys ------------------------> Reconfiguares system-plugins\n\n";
         echo "   reset-history ------------------------> Reset the command history of this terminal\n\n";
 
         // middel line
