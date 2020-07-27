@@ -78,7 +78,7 @@ class load_pageSubController extends controller {
         $sql        = database::select("SELECT `data` FROM `page_wysiwyg` WHERE `page_id`='$page_id' AND `block_id`='$block_id'")[0];
         pageBuilder_loadWysiwygSubModal::$block_id    = $block_id;
         pageBuilder_loadWysiwygSubModal::$sql_data    = $sql["data"];
-        self::getView("/admin/page/add/load_blocks/wysiwyg.php");
+        self::getView("/add/load_blocks/wysiwyg.php", __DIR__);
     }
 
     private static function load_plain_text($data) {
@@ -87,7 +87,7 @@ class load_pageSubController extends controller {
         $sql        = database::select("SELECT `data` FROM `page_plain_text` WHERE `page_id`='$page_id' AND `block_id`='$block_id'")[0];
         pageBuilder_loadPlainTextSubModal::$block_id    = $block_id;
         pageBuilder_loadPlainTextSubModal::$sql_data    = $sql["data"];
-        self::getView("/admin/page/add/load_blocks/plain_text.php");
+        self::getView("/add/load_blocks/plain_text.php", __DIR__);
     }
 
     private static function load_subcategories($data) {
@@ -111,7 +111,7 @@ class load_pageSubController extends controller {
             pageBuilder_loadSubcategoriesSubModal::$latest = " selected";
         }
 
-        self::getView("/admin/page/add/load_blocks/subcategories.php");
+        self::getView("/add/load_blocks/subcategories.php", __DIR__);
     }
 
     private static function load_create_columns($data) {
@@ -127,7 +127,7 @@ class load_pageSubController extends controller {
             pageBuilder_loadCreateColumnsSubModal::$create_columns_number++;
         }
 
-        self::getView("/admin/page/add/load_blocks/create_columns.php");
+        self::getView("/add/load_blocks/create_columns.php", __DIR__);
     }
     /* ============================== /Built In blocks ============================== */
 }

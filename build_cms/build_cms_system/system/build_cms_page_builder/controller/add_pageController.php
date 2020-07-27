@@ -3,8 +3,8 @@
 class add_pageController extends controller {
     public static function get_add_page() {
         // set head and footer files
-        self::set_head("/admin/page/add/head.php");
-        self::set_footer("/admin/page/add/footer.php");
+        self::set_head("/add/head.php", __DIR__);
+        self::set_footer("/add/footer.php", __DIR__);
 
         if (!empty(page_functions::$custom_page_js_footer)) {
             foreach (page_functions::$custom_page_js_footer AS $footer) {
@@ -28,6 +28,6 @@ class add_pageController extends controller {
         add_page_loaderBack::set_template_array();
 
         // load view
-        self::getAdminTemplateView("/admin/page/add/add-page.php");
+        self::getAdminTemplateView("/add/add-page.php", __DIR__);
     }
 }
