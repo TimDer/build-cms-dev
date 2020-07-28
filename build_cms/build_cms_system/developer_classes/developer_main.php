@@ -8,6 +8,8 @@ class developer_main {
         "uninstall-plugin",
         "compile-plugin",
         "list-plugin",
+        "move-plugin-sys",
+        "move-plugin",
 
         // config
         "re-config",
@@ -252,7 +254,6 @@ class developer_main {
             }
         }
         elseif ($mode === "web") {
-            //return $plugins_dir_array;
             $return_array = array();
 
             foreach ($plugins_dir_array AS $return_value) {
@@ -267,6 +268,72 @@ class developer_main {
             }
 
             return $return_array;
+        }
+    }
+
+    public static function move_plugin_sys($mode = "cli") {
+        if ($mode === "cli" && users::is_developer() && isset($GLOBALS["commandToArgv"][1])) {
+            if (in_array("-y", $GLOBALS["commandToArgv"])) {
+                $are_you_sure = true;
+            }
+            else {
+                $yes_no = readline("Are you sure you wish to move the plugin to the system (default: no): ");
+                $are_you_sure = (strtolower($yes_no) !== "yes") ? false : true;
+            }
+
+            $dir_source = config_dir::BASE("/plugins/" . $GLOBALS["commandToArgv"][1]);
+            $dir_destination = config_dir::BUILD_CMS_SYSTEM("/system/" . $GLOBALS["commandToArgv"][1]);
+            if ($are_you_sure && !is_dir($dir_destination)) {
+                mkdir($dir_destination);
+            }
+            
+            if ($are_you_sure) {
+                files::copy_dir_contents(
+                    $dir_source,
+                    $dir_destination,
+                    files::findFiles($dir_source)
+                );
+                config_dir::deleteDirectory("/plugins/" . $GLOBALS["commandToArgv"][1]);
+            }
+        }
+        elseif ($mode === "cli" && !users::is_developer()) {
+            echo "\n*** You have to enable developer mode in order to use this command ***\n\n";
+        }
+        elseif ($mode === "cli" && !isset($GLOBALS["commandToArgv"][1])) {
+            self::usage();
+        }
+    }
+
+    public static function move_plugin($mode = "cli") {
+        if ($mode === "cli" && users::is_developer() && isset($GLOBALS["commandToArgv"][1])) {
+            if (in_array("-y", $GLOBALS["commandToArgv"])) {
+                $are_you_sure = true;
+            }
+            else {
+                $yes_no = readline("Are you sure you wish to move the system-plugin to the plugins folder (default: no): ");
+                $are_you_sure = (strtolower($yes_no) !== "yes") ? false : true;
+            }
+
+            $dir_source = config_dir::BUILD_CMS_SYSTEM("/system/" . $GLOBALS["commandToArgv"][1]);
+            $dir_destination = config_dir::BASE("/plugins/" . $GLOBALS["commandToArgv"][1]);
+            if ($are_you_sure && !is_dir($dir_destination)) {
+                mkdir($dir_destination);
+            }
+            
+            if ($are_you_sure) {
+                files::copy_dir_contents(
+                    $dir_source,
+                    $dir_destination,
+                    files::findFiles($dir_source)
+                );
+                config_dir::deleteDirectory("/build_cms_system/system/" . $GLOBALS["commandToArgv"][1]);
+            }
+        }
+        elseif ($mode === "cli" && !users::is_developer()) {
+            echo "\n*** You have to enable developer mode in order to use this command ***\n\n";
+        }
+        elseif ($mode === "cli" && !isset($GLOBALS["commandToArgv"][1])) {
+            self::usage();
         }
     }
     // ============================== /plugin ==============================
@@ -399,13 +466,15 @@ class developer_main {
     // ============================== help ==============================
     public static function usage() {
         // commands
-        echo "commands:\n\n";
-        echo "   help ---------------------------------> Manual to the developer tool\n\n";
-        echo "   new-plugin ---------------------------> Creates a new plugin\n\n";
-        echo "   install-plugin </path/to/file.bcpi> --> Installs a plugin from a bcpi file\n\n";
-        echo "   uninstall-plugin <dir_name> ----------> Used to uninstall a plugin\n\n";
-        echo "   compile-plugin <dir_name> ------------> Used to compile a plugin\n\n";
-        echo "   list-plugin --------------------------> Creates a list of all installed plugins\n\n";
+        echo "commands:\n";
+        echo "   help ---------------------------------> Manual to the developer tool\n";
+        echo "   new-plugin ---------------------------> Creates a new plugin\n";
+        echo "   install-plugin </path/to/file.bcpi> --> Installs a plugin from a bcpi file\n";
+        echo "   uninstall-plugin <dir_name> ----------> Used to uninstall a plugin\n";
+        echo "   compile-plugin <dir_name> ------------> Used to compile a plugin\n";
+        echo "   list-plugin --------------------------> Creates a list of all installed plugins\n";
+        echo "   move-plugin-sys <dir_name> -----------> Moves a plugin from the plugin folder to the system\n";
+        echo "   move-plugin <dir_name> ---------------> Moves a system-plugin from the system to the plugin folder\n";
         echo "   re-config ----------------------------> Reconfiguare your installation\n";
         echo "             <https>                 <domainDir>\n";
         echo "             <Domain-check>          <trusted-domain-add>\n";
@@ -413,18 +482,18 @@ class developer_main {
         echo "             <DB-user>               <DB-pass>\n";
         echo "             <DB-db>                 <DB>\n";
         echo "             <call-pd>               <call-pr>\n";
-        echo "             <dev-mode>              <cms-version>\n\n";
-        echo "   re-config-sys ------------------------> Reconfiguares system-plugins\n\n";
-        echo "   reset-history ------------------------> Reset the command history of this terminal\n\n";
+        echo "             <dev-mode>              <cms-version>\n";
+        echo "   re-config-sys ------------------------> Reconfiguares system-plugins\n";
+        echo "   reset-history ------------------------> Reset the command history of this terminal\n";
 
         // middel line
-        echo "----------------------------------------------------------\n";
+        echo "-----------------------------------------------------------------------------------------------------\n";
 
         // arguments
-        echo "arguments:\n\n";
-        echo "   -r ------------> 'readable' Makes json files readable\n\n";
-        echo "   -s ------------> 'system'   Used to make changes to the system\n\n";
-        echo "   -y ------------> 'yes'      Used to bypass 'are you sure' messages\n\n";
+        echo "arguments:\n";
+        echo "   -r ------------> 'readable' Makes json files readable\n";
+        echo "   -s ------------> 'system'   Used to make changes to the system\n";
+        echo "   -y ------------> 'yes'      Used to bypass 'are you sure' messages\n";
         echo "   -h & --help ---> 'help'     This is the same as the help command\n";
     }
 }
