@@ -60,38 +60,22 @@ class templateLoader {
         }
     }
 
-    public static function set_building_blocks_area($id, $display_name = "", $css_display = "none") {
-        plugins::set_building_blocks_area($id, $display_name, $css_display);
-    }
-
     private static $set_default_head = array();
     public static function set_default_head($function) {
         self::$set_default_head[] = $function;
     }
 
-    public static function load_default_head($charset, $page_builder = true) {
+    public static function load_default_head($charset, $array_to_function = array()) {
         $return = "";
 
         $return .= "<meta charset='" . $charset . "'>";
         $return .= "<base href='" . config_url::BASE("/") . "'>";
 
-        if ($page_builder !== false) {
-            if (user_url::uri_string() !== "/" && user_url::uri_string() !== "") {
-                $page_css = "?page=" . user_url::uri_string();
-            }
-            else {
-                $page_css = "";
-            }
-            $return .= '<link rel="stylesheet" href="' . config_url::BASE("/files/page_builder/load_blocks.css" . ( (is_bool($page_builder)) ? $page_css : "?page_id=" . $page_builder) ) . '">';
-        }
-
         foreach (self::$set_default_head AS $head) {
             if (is_callable($head)) {
-                $return .= $head();
+                $return .= $head($array_to_function);
             }
         }
-
-        $return .= page_builder_template_loader::get_seo();
 
         return $return;
     }

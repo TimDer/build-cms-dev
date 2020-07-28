@@ -1,6 +1,6 @@
 <?php
 
-class page_builder_template_loader {
+class build_cms_page_builder_template_loader {
     /* ============================== set template ============================== */
     public static function set_template() {
         self::get_page(array(
@@ -29,10 +29,10 @@ class page_builder_template_loader {
             $error_404 = "404 error";
         }
 
-        page_functions::set_load_block_template_function("wysiwyg", function ($data) { self::load_wysiwyg($data); });
-        page_functions::set_load_block_template_function("plain_text", function ($data) { self::load_plain_text($data); });
-        page_functions::set_load_block_template_function("create_columns", function ($data, $error_404) { self::load_create_columns($data, $error_404); });
-        page_functions::set_load_block_template_function("subcategories", function ($data, $error_404) { self::load_subcategories($data, $error_404); });
+        build_cms_page_builder_page_functions::set_load_block_template_function("wysiwyg", function ($data) { self::load_wysiwyg($data); });
+        build_cms_page_builder_page_functions::set_load_block_template_function("plain_text", function ($data) { self::load_plain_text($data); });
+        build_cms_page_builder_page_functions::set_load_block_template_function("create_columns", function ($data, $error_404) { self::load_create_columns($data, $error_404); });
+        build_cms_page_builder_page_functions::set_load_block_template_function("subcategories", function ($data, $error_404) { self::load_subcategories($data, $error_404); });
 
         if (is_array($page_array)) {
             if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"]) && isset($page_array["choose_template"])) {
@@ -142,9 +142,9 @@ class page_builder_template_loader {
 
             if (is_array($blocks_array)) {
                 foreach ($blocks_array AS $block) {
-                    if (isset(page_functions::$set_load_block_template_functions[$block["block_type"]])) {
+                    if (isset(build_cms_page_builder_page_functions::$set_load_block_template_functions[$block["block_type"]])) {
                         echo '<div class="block_' . $block["id"] . '">';
-                        page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block, $error_404);
+                        build_cms_page_builder_page_functions::$set_load_block_template_functions[$block["block_type"]]->__invoke($block, $error_404);
                         echo "</div>";
                     }
                 }
@@ -215,10 +215,10 @@ class page_builder_template_loader {
     /* ============================== load css (blocks) ============================== */
 
     public static function load_css($page, $sub_pages) {
-        page_functions::set_load_blocks_css_function("wysiwyg", function ($block) { self::load_wysiwyg_css($block); });
-        page_functions::set_load_blocks_css_function("plain_text", function ($block) { self::load_plain_text_css($block); });
-        page_functions::set_load_blocks_css_function("create_columns", function ($block) { self::load_create_columns_css($block); });
-        page_functions::set_load_blocks_css_function("subcategories", function ($block) { self::load_subcategories_css($block); });
+        build_cms_page_builder_page_functions::set_load_blocks_css_function("wysiwyg", function ($block) { self::load_wysiwyg_css($block); });
+        build_cms_page_builder_page_functions::set_load_blocks_css_function("plain_text", function ($block) { self::load_plain_text_css($block); });
+        build_cms_page_builder_page_functions::set_load_blocks_css_function("create_columns", function ($block) { self::load_create_columns_css($block); });
+        build_cms_page_builder_page_functions::set_load_blocks_css_function("subcategories", function ($block) { self::load_subcategories_css($block); });
 
         if (isset($page["page_id"])) {
             $page = (int)$page["page_id"];
@@ -247,7 +247,7 @@ class page_builder_template_loader {
 
         $page_id = $page_array["id"];
         
-        $building_blocks_areas = plugins::$building_blocks_area;
+        $building_blocks_areas = build_cms_page_builder_template_loader::$building_blocks_area;
         if ($sub_pages) {
             unset($building_blocks_areas["category-info"]);
         }
@@ -272,8 +272,8 @@ class page_builder_template_loader {
 
         if (is_array($css_query)) {
             foreach ($css_query AS $block) {
-                if (isset(page_functions::$set_load_blocks_css_functions[$block["block_type"]])) {
-                    page_functions::$set_load_blocks_css_functions[$block["block_type"]]->__invoke($block);
+                if (isset(build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]])) {
+                    build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]]->__invoke($block);
                 }
             }
         }
@@ -357,7 +357,7 @@ class page_builder_template_loader {
 
     /* ============================== /load css (blocks) ============================== */
 
-    /* ============================== Load SEO ============================== */
+    /* ============================== Other ============================== */
 
     public static function get_seo() {
         if (user_url::uri_string() !== "/") {
@@ -406,5 +406,25 @@ class page_builder_template_loader {
         }
     }
 
-    /* ============================== /Load SEO ============================== */
+    public static $building_blocks_area = array();
+    /*
+    Example: building_blocks_area
+    array(
+        "id" => array(
+            "name" => "value",
+            "display_name" => "value",
+            "css_display" => "value"
+        )
+    )
+    */
+
+    public static function set_building_blocks_area($id, $display_name = "", $css_display = "none") {
+        self::$building_blocks_area[$id] = array(
+            "name" => $id,
+            "display_name" => $display_name,
+            "css_display" => $css_display
+        );
+    }
+
+    /* ============================== /Other ============================== */
 }

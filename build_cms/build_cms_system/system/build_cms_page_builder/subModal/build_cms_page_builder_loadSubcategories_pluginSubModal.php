@@ -1,6 +1,6 @@
 <?php
 
-class pageBuilder_loadSubcategoriesSubModal {
+class build_cms_page_builder_loadSubcategories_pluginSubModal {
     public static $block_id     = "";
 
     // inputs

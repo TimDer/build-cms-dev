@@ -53,17 +53,11 @@ class config {
         // query the template folder name from the database
         templateLoader::set_template_base_dir();
 
-        // set template (page builder)
-        page_builder_template_loader::set_template();
-
         // call plugin definer and routes
         plugins::call_plugins();
 
         // call template definer
         templateLoader::call_template_definer();
-
-        // set default page builder areas
-        plugins::set_building_blocks_area("category-info", "Category info");
 
         // set template loader link in settings menu
         plugins::set_submenu_item("system-settings", "Templates", "/admin/settings/template_loader", "admin");

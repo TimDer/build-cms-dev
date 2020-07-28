@@ -29,18 +29,6 @@ class plugins {
         )
     );
     */
-    public static $building_blocks_area = array();
-    /*
-    Example: building_blocks_area
-    array(
-        "id" => array(
-            "name" => "value",
-            "display_name" => "value",
-            "css_display" => "value"
-        )
-    )
-    */
-
 
     public static function create_plugin_folder($plugin_dir, $plugins_install_dir = "plugins") {
         if ( !is_dir( config_dir::BASE("/$plugins_install_dir/" . $plugin_dir) ) ) {
@@ -189,13 +177,5 @@ class plugins {
             );
         }
         self::$set_dashboard_widget_loginCheck = false;
-    }
-    
-    public static function set_building_blocks_area($id, $display_name = "", $css_display = "none") {
-        self::$building_blocks_area[$id] = array(
-            "name" => $id,
-            "display_name" => $display_name,
-            "css_display" => $css_display
-        );
     }
 }
