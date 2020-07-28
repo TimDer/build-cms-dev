@@ -1,6 +1,6 @@
 <?php
 
-class edit_pageSubController extends controller {
+class build_cms_page_builder_edit_page_pluginSubController extends controller {
     private static $get_pages_table_return;
     public static function get_pages_table() {
         user_session::check_session("user_id", function () {

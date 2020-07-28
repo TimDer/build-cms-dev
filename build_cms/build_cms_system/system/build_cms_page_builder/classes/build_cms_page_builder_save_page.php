@@ -1,6 +1,6 @@
 <?php
 
-class save_page {
+class build_cms_page_builder_save_page {
     // save / add blocks
     public static function save_blocks($blocks_array, $building_blocks_area, $page_id, $create_columns_block = true) {
         foreach ($blocks_array as $key => $value) {
@@ -9,7 +9,7 @@ class save_page {
             $block_type = $value['block_type'];
             // add
             if ($value["block_status"] === "new") {
-                if (isset(page_functions::$insert_block_functions[$value["block_type"]])) {
+                if (isset(build_cms_page_builder_page_functions::$insert_block_functions[$value["block_type"]])) {
                     database::query("INSERT INTO `page_blocks` (`page_id`,
                                                                 `block_type`,
                                                                 `block_id`,
@@ -21,11 +21,11 @@ class save_page {
                                                                 '$building_blocks_area',
                                                                 '$the_order')");
                     $database_block_id = database::$conn->insert_id;
-                    page_functions::$insert_block_functions[$value["block_type"]]->__invoke($value, $page_id, $database_block_id, $building_blocks_area);
+                    build_cms_page_builder_page_functions::$insert_block_functions[$value["block_type"]]->__invoke($value, $page_id, $database_block_id, $building_blocks_area);
                 }
             }
             elseif ($value["block_status"] === "saved") {
-                if (isset(page_functions::$update_block_functions[$value["block_type"]])) {
+                if (isset(build_cms_page_builder_page_functions::$update_block_functions[$value["block_type"]])) {
                     database::query("UPDATE `page_blocks` SET `page_id`='$page_id',
                                                     `block_type`='$block_type',
                                                     `block_id`='$block_id',
@@ -33,7 +33,7 @@ class save_page {
                                                     `the_order`='$the_order'
                                                     WHERE `page_id`='$page_id' AND `block_id`='$block_id'");
                     $database_block_id = database::select("SELECT `id` FROM `page_blocks` WHERE `page_id`='$page_id' AND `block_id`='$block_id'");
-                    page_functions::$update_block_functions[$value["block_type"]]->__invoke($value, $page_id, $database_block_id, $building_blocks_area);
+                    build_cms_page_builder_page_functions::$update_block_functions[$value["block_type"]]->__invoke($value, $page_id, $database_block_id, $building_blocks_area);
                 }
             }
         }
@@ -325,7 +325,7 @@ class save_page {
             database::query("DELETE FROM `page_cc_block` WHERE `block_id`='$block_id' AND `page_id`='$page_id'");
         }
         else {
-            page_functions::$delete_block_functions[$block_array["block_type"]]->__invoke($block_array, $page_id);
+            build_cms_page_builder_page_functions::$delete_block_functions[$block_array["block_type"]]->__invoke($block_array, $page_id);
         }
         
         database::query("DELETE FROM `page_blocks` WHERE `page_id`='$page_id' AND `block_id`='$block_id'");

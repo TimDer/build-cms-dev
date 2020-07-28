@@ -1,6 +1,6 @@
 <?php
 
-class edit_pageController extends controller {
+class build_cms_page_builder_edit_page_pluginController extends controller {
     public static function get_select_page() {
         // set head and footer files
         self::set_head("/edit/head.php", __DIR__);

@@ -1,26 +1,26 @@
 <?php
 
-class save_pageController extends controller {
+class build_cms_page_builder_save_pageController extends controller {
     /* ============================== save page ============================== */
-    public static function save_pages() {
+    public static function build_cms_page_builder_save_pages() {
         // Save the basics and get the page id
-        $page_id = save_page::basics(user_url::$post_var["system_area"]["basics"]["data"]);
+        $page_id = build_cms_page_builder_save_page::basics(user_url::$post_var["system_area"]["basics"]["data"]);
 
         // building-blocks
         if (isset(user_url::$post_var["system_area"]["page_builder"]["data"]["building-blocks"])) {
             foreach (user_url::$post_var["system_area"]["page_builder"]["data"]["building-blocks"] AS $building_blocks_key => $building_blocks_value) {
-                save_page::save_blocks($building_blocks_value, (string)$building_blocks_key, $page_id);
+                build_cms_page_builder_save_page::save_blocks($building_blocks_value, (string)$building_blocks_key, $page_id);
             }
         }
 
         if (isset(user_url::$post_var["system_area"]["page_builder"]["data"]["del_blocks_array"])) {
-            save_page::delete_blocks(user_url::$post_var["system_area"]["page_builder"]["data"]["del_blocks_array"], $page_id);
+            build_cms_page_builder_save_page::delete_blocks(user_url::$post_var["system_area"]["page_builder"]["data"]["del_blocks_array"], $page_id);
         }
 
         if (isset(user_url::$post_var["custom_area"])) {
             foreach (user_url::$post_var["custom_area"] AS $custom_area) {
-                if (isset(page_functions::$save_custom_area[$custom_area["area_name"]])) {
-                    page_functions::$save_custom_area[$custom_area["area_name"]]->__invoke($custom_area["data"], $page_id);
+                if (isset(build_cms_page_builder_page_functions::$save_custom_area[$custom_area["area_name"]])) {
+                    build_cms_page_builder_page_functions::$save_custom_area[$custom_area["area_name"]]->__invoke($custom_area["data"], $page_id);
                 }
             }
         }
@@ -47,8 +47,8 @@ class save_pageController extends controller {
         database::query("DELETE FROM `page_sub_cat` WHERE page_id='$page_id'");
         database::query("DELETE FROM `page_wysiwyg` WHERE page_id='$page_id'");
 
-        if ( isset(page_functions::$delete_page_functions) ) {
-            foreach (page_functions::$delete_page_functions AS $delete) {
+        if ( isset(build_cms_page_builder_page_functions::$delete_build_cms_page_builder_page_functions) ) {
+            foreach (build_cms_page_builder_page_functions::$delete_build_cms_page_builder_page_functions AS $delete) {
                 $delete->__invoke($page_id);
             }
         }

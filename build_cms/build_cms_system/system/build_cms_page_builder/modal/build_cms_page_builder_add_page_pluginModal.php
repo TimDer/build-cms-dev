@@ -1,6 +1,6 @@
 <?php
 
-class add_pageModal {
+class build_cms_page_builder_add_page_pluginModal {
     // page id
     public static $page_id = "new";
     // highest block id

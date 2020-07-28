@@ -11,15 +11,15 @@
         </div>
 
         <div class="title">
-            <h1 id="build_cms-page_title"><?php echo add_pageModal::$edit_page_name; ?></h1>
+            <h1 id="build_cms-page_title"><?php echo build_cms_page_builder_add_page_pluginModal::$edit_page_name; ?></h1>
         </div>
 
-        <input type="hidden" value="<?php echo add_pageModal::$highest_block_id; ?>" id="block_id_start">
+        <input type="hidden" value="<?php echo build_cms_page_builder_add_page_pluginModal::$highest_block_id; ?>" id="block_id_start">
 
         <div class="page-content">
             <div class="build">
                 <div class="all_building_blocks_area">
-                    <?php foreach (plugins::$building_blocks_area AS $building_blocks_area) { ?>
+                    <?php foreach (build_cms_page_builder_template_loader::$building_blocks_area AS $building_blocks_area) { ?>
                         <div class="building-blocks-area-container">
                             <div class="header">
                                 <?php if ( !empty($building_blocks_area["display_name"]) ): ?>
@@ -30,16 +30,16 @@
                             </div>
                             <div class="content" style="display: <?php echo $building_blocks_area["css_display"]; ?>">
                                 <div class="sortable-building-blocks" building_blocks_area="<?php echo $building_blocks_area["name"]; ?>">
-                                    <?php load_pageSubController::load_blocks($building_blocks_area["name"]); ?>
+                                    <?php build_cms_page_builder_load_page_pluginSubController::load_blocks($building_blocks_area["name"]); ?>
                                 </div>
                             </div>
                         </div>
                     <?php } ?>
                 </div>
                 <div class="build_custom_area">
-                    <?php foreach (page_functions::$build_custom_area AS $area) { ?>
+                    <?php foreach (build_cms_page_builder_page_functions::$build_custom_area AS $area) { ?>
                         <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                            <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
+                            <?php $area["function"]->__invoke(build_cms_page_builder_add_page_pluginModal::$page_id); ?>
                         </div>
                     <?php } ?>
                 </div>
@@ -49,31 +49,31 @@
                 <div class="general">
                     <h2>General:</h2>
                     <p>Pagename:</p>
-                    <input type="text" name="pagename" value="<?php echo add_pageModal::$page_name_imput; ?>">
+                    <input type="text" name="pagename" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_name_imput; ?>">
                     <p>URL name</p>
-                    <input type="text" name="url" value="<?php echo add_pageModal::$page_url_imput; ?>">
+                    <input type="text" name="url" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_url_imput; ?>">
                     <p>Status</p>
                     <select name="status">
-                        <option value="not-published"<?php echo add_pageModal::$status_not_published; ?>>Not published</option>
-                        <option value="published"<?php echo add_pageModal::$status_published; ?>>Published</option>
+                        <option value="not-published"<?php echo build_cms_page_builder_add_page_pluginModal::$status_not_published; ?>>Not published</option>
+                        <option value="published"<?php echo build_cms_page_builder_add_page_pluginModal::$status_published; ?>>Published</option>
                     </select>
 
                     <p>Choose a template</p>
                     <select name="choose_template">
-                        <option value="default"<?php echo add_pageModal::$default_template; ?>>Default</option>
-                        <?php foreach (add_pageModal::$index_the_template AS $template_file): ?>
+                        <option value="default"<?php echo build_cms_page_builder_add_page_pluginModal::$default_template; ?>>Default</option>
+                        <?php foreach (build_cms_page_builder_add_page_pluginModal::$index_the_template AS $template_file): ?>
                             <option value="<?php echo $template_file["template"]; ?>"<?php echo $template_file["active"]; ?>>
                                 <?php echo $template_file["template"]; ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
 
-                    <p>Homepage: <input type="checkbox" name="homepage" <?php echo add_pageModal::$page_home; ?>></p>
+                    <p>Homepage: <input type="checkbox" name="homepage" <?php echo build_cms_page_builder_add_page_pluginModal::$page_home; ?>></p>
 
                     <input type="submit" value="Save" id="add_btn">
 
-                    <input type="hidden" name="page_id" value="<?php echo add_pageModal::$page_id; ?>">
-                    <input type="hidden" name="time_stamp" value="<?php echo add_pageModal::$time_stamp; ?>">
+                    <input type="hidden" name="page_id" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_id; ?>">
+                    <input type="hidden" name="time_stamp" value="<?php echo build_cms_page_builder_add_page_pluginModal::$time_stamp; ?>">
                 </div>
                 <!-- ============================== /general ============================== -->
 
@@ -83,7 +83,7 @@
                         All building blocks
                     </div>
                     <div class="content">
-                        <?php foreach (page_functions::$define_block AS $define_block) { ?>
+                        <?php foreach (build_cms_page_builder_page_functions::$define_block AS $define_block) { ?>
                             <div class="create_block" block_type="<?php echo $define_block["name"]; ?>">
                                 <?php echo $define_block["display_name"] ?>
                             </div>
@@ -99,10 +99,10 @@
                     </div>
                     <div class="content" id="page-category">
                         <div class="category_container">
-                            <input type="radio" name="page_category" id="root" value="" <?php echo add_pageSubController::select_root_category(); ?>><label for="root">Root</label>
+                            <input type="radio" name="page_category" id="root" value="" <?php echo build_cms_page_builder_add_page_pluginSubController::select_root_category(); ?>><label for="root">Root</label>
                         </div>
                         <hr>
-                        <?php echo add_pageSubController::get_category(); ?>
+                        <?php echo build_cms_page_builder_add_page_pluginSubController::get_category(); ?>
                     </div>
                 </div>
                 <!-- ============================== /category ============================== -->
@@ -114,22 +114,22 @@
                     </div>
                     <div class="content">
                         <p>Page title</p>
-                        <input type="text" name="pagetitle" value="<?php echo add_pageModal::$seo_pagetitle; ?>">
+                        <input type="text" name="pagetitle" value="<?php echo build_cms_page_builder_add_page_pluginModal::$seo_pagetitle; ?>">
                         <p>Author</p>
-                        <input type="text" name="author" value="<?php echo add_pageModal::$seo_author; ?>">
+                        <input type="text" name="author" value="<?php echo build_cms_page_builder_add_page_pluginModal::$seo_author; ?>">
                         <p>Keywords</p>
-                        <input type="text" name="keywords" value="<?php echo add_pageModal::$seo_keywords; ?>">
+                        <input type="text" name="keywords" value="<?php echo build_cms_page_builder_add_page_pluginModal::$seo_keywords; ?>">
                         <p>Description</p>
-                        <input type="text" name="description" value="<?php echo add_pageModal::$seo_description; ?>">
+                        <input type="text" name="description" value="<?php echo build_cms_page_builder_add_page_pluginModal::$seo_description; ?>">
                     </div>
                 </div>
                 <!-- ============================== /SEO ============================== -->
 
                 <!-- ============================== sidebar custom area ============================== -->
                 <div class="sidebar_custom_area">
-                    <?php foreach (page_functions::$sidebar_custom_area AS $area) { ?>
+                    <?php foreach (build_cms_page_builder_page_functions::$sidebar_custom_area AS $area) { ?>
                         <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                            <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
+                            <?php $area["function"]->__invoke(build_cms_page_builder_add_page_pluginModal::$page_id); ?>
                         </div>
                     <?php } ?>
                 </div>
@@ -146,9 +146,9 @@
         <!-- ============================== bottom custom area ============================== -->
 
             <div class="bottom_custom_area">
-                <?php foreach (page_functions::$bottom_custom_area AS $area) { ?>
+                <?php foreach (build_cms_page_builder_page_functions::$bottom_custom_area AS $area) { ?>
                     <div class="custom_area_container" id="custom_area_<?php echo $area["area"]; ?>">
-                        <?php $area["function"]->__invoke(add_pageModal::$page_id); ?>
+                        <?php $area["function"]->__invoke(build_cms_page_builder_add_page_pluginModal::$page_id); ?>
                     </div>
                 <?php } ?>
             </div>

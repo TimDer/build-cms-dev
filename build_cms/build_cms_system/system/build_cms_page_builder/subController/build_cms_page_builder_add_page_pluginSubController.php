@@ -1,6 +1,6 @@
 <?php
 
-class add_pageSubController extends controller {
+class build_cms_page_builder_add_page_pluginSubController extends controller {
     /* ============================== category ============================== */
     private static $get_category_return = "";
     public static function get_category() {
@@ -8,8 +8,8 @@ class add_pageSubController extends controller {
             user_session::check_session_permission("author", function () {
                 database::reset();
 
-                if (isset(add_page_loaderBack::$get_page_array_array["id"])) {
-                    $id = add_page_loaderBack::$get_page_array_array["id"];
+                if (isset(build_cms_page_builder_add_page_loaderBack::$get_page_array_array["id"])) {
+                    $id = build_cms_page_builder_add_page_loaderBack::$get_page_array_array["id"];
                 }
                 else {
                     $id = 0;
@@ -48,7 +48,7 @@ class add_pageSubController extends controller {
 
         foreach ($page_array[$setup_key] as $key => $value) {
             // select the post page
-            if (!empty(add_page_loaderBack::$get_page_array_array) AND add_page_loaderBack::$get_page_array_array['post_page'] === $value['id']) {
+            if (!empty(build_cms_page_builder_add_page_loaderBack::$get_page_array_array) AND build_cms_page_builder_add_page_loaderBack::$get_page_array_array['post_page'] === $value['id']) {
                 $post_page = 'checked="checked"';
             }
             else {
@@ -56,7 +56,7 @@ class add_pageSubController extends controller {
             }
 
             $return .= '<div class="category_container">';
-            if (!empty(add_page_loaderBack::$get_page_array_array["id"]) AND add_page_loaderBack::$get_page_array_array["id"] === $value["id"]) {
+            if (!empty(build_cms_page_builder_add_page_loaderBack::$get_page_array_array["id"]) AND build_cms_page_builder_add_page_loaderBack::$get_page_array_array["id"] === $value["id"]) {
                 $return .=      '<div class="category_placeholder"></div>';
             }
             else {
@@ -82,10 +82,10 @@ class add_pageSubController extends controller {
     public static function select_root_category() {
         user_session::check_session("user_id", function () {
             user_session::check_session_permission("author", function () {
-                if (empty(add_page_loaderBack::$get_page_array_array)) {
+                if (empty(build_cms_page_builder_add_page_loaderBack::$get_page_array_array)) {
                     self::$select_root_category_return = 'checked="checked"';
                 }
-                elseif (empty(add_page_loaderBack::$get_page_array_array['post_page'])) {
+                elseif (empty(build_cms_page_builder_add_page_loaderBack::$get_page_array_array['post_page'])) {
                     self::$select_root_category_return = 'checked="checked"';
                 }
             });

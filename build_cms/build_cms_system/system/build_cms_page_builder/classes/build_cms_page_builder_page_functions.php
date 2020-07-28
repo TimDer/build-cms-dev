@@ -1,6 +1,6 @@
 <?php
 
-class page_functions {
+class build_cms_page_builder_page_functions {
     public static $define_block = array();
     /*
     Example: insert_functions
@@ -42,9 +42,9 @@ class page_functions {
         "block_type" => function () {}
     );
     */
-    public static $delete_page_functions = array();
+    public static $delete_build_cms_page_builder_page_functions = array();
     /*
-    Example: delete_page_functions
+    Example: delete_build_cms_page_builder_page_functions
     array(
         "block_type" => function () {}
     );
@@ -78,8 +78,8 @@ class page_functions {
         }
     }
     public static function set_delete_page($area_name, $function) {
-        if (!isset(self::$delete_page_functions[$area_name])) {
-            self::$delete_page_functions[$area_name] = $function;
+        if (!isset(self::$delete_build_cms_page_builder_page_functions[$area_name])) {
+            self::$delete_build_cms_page_builder_page_functions[$area_name] = $function;
         }
     }
     /* ============================== /save delete and add ============================== */
