@@ -1,6 +1,17 @@
 <?php
 
 class config_dir {
+    private static function check_path($dir) {
+        if (DIRECTORY_SEPARATOR === "/") {
+            // Unix based systems
+            return preg_replace("/\\\\/", "/", $dir);
+        }
+        else {
+            // Windows
+            return preg_replace("/\//", "\\", $dir);
+        }
+    }
+
     // delete directories
     public static function deleteDirectory($dir) {
         if (!is_callable("rmDirectory")) {
@@ -33,16 +44,16 @@ class config_dir {
 
     // directories
     public static function BASE($dir = "") {
-        return realpath($GLOBALS["dir_to_build_cms"]) . $dir;
+        return realpath($GLOBALS["dir_to_build_cms"]) . self::check_path($dir);
     }
     public static function BUILD_CMS_SYSTEM($dir = "") {
         return self::BASE(DIRECTORY_SEPARATOR . "build_cms_system" . $dir);
     }
     public static function ROUTES($dir = "") {
-        return self::BUILD_CMS_SYSTEM(DIRECTORY_SEPARATOR . "routes") . $dir;
+        return self::BUILD_CMS_SYSTEM(DIRECTORY_SEPARATOR . "routes" . $dir);
     }
     public static function ROOT_DIR($dir = "") {
-        return realpath($GLOBALS["index_root_dir"]) . $dir;
+        return realpath($GLOBALS["index_root_dir"]) . self::check_path($dir);
     }
 
     private static function escape_dir($dir) {
@@ -57,8 +68,8 @@ class config_dir {
         $location_array = explode(DIRECTORY_SEPARATOR, $location);
 
         // plugin folder check
-        if (preg_match("/^" . self::escape_dir($SYS_plugin_dir) . "/", $location)) {
-            $instalation_dir = "build_cms_system/system";
+        if (preg_match("/^" . self::escape_dir(self::check_path($SYS_plugin_dir)) . "/", $location)) {
+            $instalation_dir = self::check_path("build_cms_system/system");
             $plugins_dir = count( explode(DIRECTORY_SEPARATOR, $SYS_plugin_dir) );
         }
         else {
@@ -76,10 +87,10 @@ class config_dir {
 
         // return dir
         if ($type === "fullPath") {
-            return self::BASE(DIRECTORY_SEPARATOR . $instalation_dir . DIRECTORY_SEPARATOR . $return . $dir);
+            return self::BASE(DIRECTORY_SEPARATOR . $instalation_dir . DIRECTORY_SEPARATOR . $return . self::check_path($dir));
         }
         elseif ($type === "ltrim") {
-            return DIRECTORY_SEPARATOR . $instalation_dir . DIRECTORY_SEPARATOR . $return . $dir;
+            return DIRECTORY_SEPARATOR . $instalation_dir . DIRECTORY_SEPARATOR . $return . self::check_path($dir);
         }
     }
 
