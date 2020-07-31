@@ -7,7 +7,7 @@ CREATE TABLE `media` (
   `the_file_name` varchar(255) NOT NULL,
   `media_type` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ALTER TABLE `media` ADD PRIMARY KEY (`id`);
 
 -- page
