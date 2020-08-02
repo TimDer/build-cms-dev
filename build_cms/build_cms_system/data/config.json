@@ -1,12 +1,12 @@
 {
     "useHttps": false,
-    "domainDir": "\/build-cms-dev",
+    "domainDir": "",
     "displayUntrustedDomain": true,
     "TrustedDomains": [
         "localhost",
         "10.1.1.1"
     ],
-    "DB_servername": "localhost",
+    "DB_servername": "build_cms_database",
     "DB_username": "root",
     "DB_password": "root",
     "DB_dbname": "build-cms",
