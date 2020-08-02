@@ -9,11 +9,38 @@ class config {
     }
 
     public static function reload_config() {
-        self::set_config(true);
+        if (getenv("build_cms_config_override") === false) {
+            self::set_config(true);
+        }
     }
 
     private static function set_config($reload = false) {
-        if (empty(self::$json_config) || $reload) {
+        if (getenv()["build_cms_config_override"] !== "false") {
+            $return_array = array();
+            foreach (getenv() AS $config_key => $config_value) {
+                $allowlist = array(
+                    "build_cms_config_override",
+                    "useHttps",
+                    "displayUntrustedDomain",
+                    "call_plugin_definer",
+                    "call_plugin_routes",
+                    "dev_mode_on",
+                    "TrustedDomains",
+                    "DB_servername",
+                    "DB_username",
+                    "DB_password",
+                    "DB_dbname",
+                    "domainDir",
+                    "cms_version"
+                );
+
+                if (in_array($config_key, $allowlist)) {
+                    $return_array[$config_key] = self::env_to_config($config_key, $config_value);
+                }
+            }
+            self::$json_config = $return_array;
+        }
+        elseif (empty(self::$json_config) || $reload) {
             self::$json_config = self::string_to_int(
                 json_decode(
                     file_get_contents(
@@ -22,6 +49,42 @@ class config {
                     true
                 )
             );
+
+            self::$json_config["build_cms_config_override"] = false;
+        }
+    }
+
+    private static function env_to_config($config_key, $config_value) {
+        $false_or_true_list = array(
+            "useHttps",
+            "displayUntrustedDomain",
+            "call_plugin_definer",
+            "call_plugin_routes",
+            "dev_mode_on",
+            "build_cms_config_override"
+        );
+
+        if (in_array($config_key, $false_or_true_list)) {
+            if ($config_value === "true") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        elseif ($config_key === "TrustedDomains") {
+            if ($config_value === "false") {
+                return false;
+            }
+            else {
+                return explode(",", $config_value);
+            }
+        }
+        elseif ($config_value === "false") {
+            return "";
+        }
+        else {
+            return $config_value;
         }
     }
 
