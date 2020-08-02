@@ -33,6 +33,5 @@ if  (
         "password" => "root",
         "dbname" => "build-cms"
     ));*/
-    $export_database->export_to_file("../../../build-cms-dev-database/build-cms_" . date("Y-m-d-H"));
     $export_database->export_to_file("build-cms");
 }
