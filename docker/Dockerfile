@@ -15,7 +15,7 @@ RUN rm input.txt
 RUN apt-get install php7.4 -y
 RUN apt-get install libapache2-mod-php7.4 -y
 RUN apt-get install php7.4-mysql -y
-RUN apt-get install php7.4-cli
+RUN apt-get install php7.4-cli -y
 
 # Install apache2
 RUN apt-get install -y apache2
