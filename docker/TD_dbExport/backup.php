@@ -3,7 +3,7 @@
 require "/TD_dbExport/library/TD_dbExport.php";
 
 while (true) {
-    sleep(3);
+    sleep(10);
     $export_database = new TD_dbExport(array(
         "servername" => "build_cms_database",
         "username" => "root",
