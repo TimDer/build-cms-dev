@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+    build_cms_1.0:
+        build: ./docker
+        image: ubuntu_server-20.04:apache_php
+        container_name: build_cms_1.0
+        restart: unless-stopped
+        volumes:
+            - ./app:/var/www/html
+            - ./docker/build_cms_1.0/apache.conf:/etc/apache2/sites-available/000-default.conf
+            - ./docker/build_cms_1.0/php.ini:/etc/php/7.4/apache2/php.ini
+        ports: 
+            - 80:80
+        depends_on: 
+            - build_cms_database
+        environment:
+            DB_servername: build_cms_database
+            DB_username: root
+            DB_password: root
+            DB_dbname: build-cms
+            displayUntrustedDomain: 'true'
+            TrustedDomains: localhost,10.1.1.1
+            dev_mode_on: 'true'
+    build_cms_database:
+        image: mysql:8.0
+        container_name: build_cms_database
+        restart: unless-stopped
+        volumes: 
+            - ./docker/build_cms_database:/var/lib/mysql
+        ports:
+            - 3306:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+    phpmyadmin:
+        build: ./docker
+        image: ubuntu_server-20.04:apache_php
+        container_name: phpmyadmin
+        restart: unless-stopped
+        volumes: 
+            - ./phpmyadmin:/var/www/html
+        ports:
+            - 81:80
+        depends_on: 
+            - build_cms_database
