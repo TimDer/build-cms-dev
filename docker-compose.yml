@@ -38,8 +38,19 @@ services:
         container_name: phpmyadmin
         restart: unless-stopped
         volumes: 
-            - ./phpmyadmin:/var/www/html
+            - ./docker/phpmyadmin:/var/www/html
         ports:
             - 81:80
+        depends_on: 
+            - build_cms_database
+    TD_dbExport:
+        build: 
+            context: ./docker
+            dockerfile: Dockerfile-dbExport
+        image: build_cms_db_export:TD_dbExport
+        container_name: TD_dbExport
+        restart: unless-stopped
+        volumes: 
+            - ./docker/TD_dbExport:/TD_dbExport
         depends_on: 
             - build_cms_database
