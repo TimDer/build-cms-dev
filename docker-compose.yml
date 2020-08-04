@@ -1,14 +1,21 @@
 version: '3.8'
 
 services:
-    build_cms_1.0:
+    build_cms:
         build: ./docker
         image: ubuntu_server-20.04:apache_php
-        container_name: build_cms_1.0
+        container_name: build_cms
         restart: unless-stopped
         volumes:
-            - ./app:/var/www/html
+            # The CMS
+            - ./app/.htaccess:/var/www/html/.htaccess
+            - ./app/index.php:/var/www/html/index.php
+            - ./app/build_cms:/build_cms
+            # build_cms dev terminal to command
+            - ./build_cms_dev_command.sh:/usr/bin/dev
+            # Apache .conf file
             - ./docker/build_cms_1.0/apache.conf:/etc/apache2/sites-available/000-default.conf
+            # PHP.ini file
             - ./docker/build_cms_1.0/php.ini:/etc/php/7.4/apache2/php.ini
         ports: 
             - 80:80

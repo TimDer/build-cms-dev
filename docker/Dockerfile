@@ -20,6 +20,7 @@ RUN apt-get install php7.4-cli -y
 # Install apache2
 RUN apt-get install -y apache2
 RUN a2enmod rewrite
+RUN rm /var/www/html/index.html
 
 # build_cms
 ENV build_cms_config_override=true
