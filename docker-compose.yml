@@ -40,12 +40,13 @@ services:
         environment:
             MYSQL_ROOT_PASSWORD: root
     phpmyadmin:
-        build: ./docker
-        image: ubuntu_server-20.04:apache_php
+        image: phpmyadmin/phpmyadmin:5.0.2
         container_name: phpmyadmin
         restart: unless-stopped
-        volumes: 
-            - ./docker/phpmyadmin:/var/www/html
+        environment: 
+            PMA_HOST: build_cms_database
+            PMA_USER: root
+            PMA_PASSWORD: root
         ports:
             - 81:80
         depends_on: 
