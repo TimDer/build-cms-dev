@@ -17,7 +17,7 @@ CREATE TABLE `menu_content` (
   `the_url` varchar(6000) NOT NULL,
   `the_order` bigint NOT NULL,
   `parent_id` bigint NOT NULL,
-  `menu_name` bigint NOT NULL,
+  `menu_name_id` bigint NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 ALTER TABLE `menu_content` ADD PRIMARY KEY (`id`);
