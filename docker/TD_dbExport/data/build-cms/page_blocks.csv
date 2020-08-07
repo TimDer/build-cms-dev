@@ -1,0 +1,8 @@
+id,page_id,block_type,block_id,building_blocks_area,the_order
+32,4,wysiwyg,1,content,1
+33,5,wysiwyg,1,content,1
+45,5,wysiwyg,2,category-info,1
+60,6,subcategories,4,content,2
+61,5,wysiwyg,6,sidebar,1
+62,6,wysiwyg,5,content,1
+64,5,subcategories,7,content,2
