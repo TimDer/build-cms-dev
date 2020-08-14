@@ -30,12 +30,12 @@ services:
             TrustedDomains: localhost,10.1.1.1
             dev_mode_on: 'true'
     build_cms_database:
-        image: mysql:8.0
+        image: mysql:8.0.21
         container_name: build_cms_database
         restart: unless-stopped
         volumes: 
-            - ./docker/build_cms_database:/var/lib/mysql
-        ports:
+            - ./docker/build_cms_database/databases:/var/lib/mysql
+        ports: 
             - 3306:3306
         environment:
             MYSQL_ROOT_PASSWORD: root
