@@ -1,5 +1,5 @@
-id,the_name,the_url,the_order,parent_id,menu_name_id
-1,"random name 1",random-url-1,1,0,1
-2,"random name 2",random-url-2,2,0,1
-3,"random sub name 1",random-sub-url-1,1,1,1
-4,"random sub name 2",rundom-sub-url-2,2,1,0
+id,the_name,the_url,type,the_order,parent_id,menu_name_id
+1,tim_home,http://www.tim-derksen.nl/home,custom,1,0,1
+2,TD-CMS,http://www.tim-derksen.nl/TD-CMS,custom,2,0,1
+3,"random sub name 1",5,page,1,1,1
+4,"random sub name 2",6,page,2,1,1
