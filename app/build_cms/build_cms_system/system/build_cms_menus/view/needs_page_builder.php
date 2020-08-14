@@ -1,0 +1,1 @@
+<h1>This plugin requires the "Build CMS page builder" to be installed</h1>
