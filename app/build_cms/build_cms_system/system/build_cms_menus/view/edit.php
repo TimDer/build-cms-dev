@@ -35,10 +35,12 @@
     <div class="main_edit_container">
         <!-- ============================== select a menu ============================== -->
         <select name="menu_name">
-            <option value="0" disabled selected>Select a menu</option>
-            <option value="1">Root</option>
-            <option value="2">Main</option>
-            <option value="3">Footer</option>
+            <option value="0" disabled<?php echo (isset(user_url::$get_var["editMenuId"])) ? "" : " selected"; ?>>Select a menu</option>
+            <?php foreach (build_cms_menus_pluginModal::$menus_names_array AS $name): ?>
+                <option value="<?php echo $name["id"]; ?>"<?php echo (isset(user_url::$get_var["editMenuId"]) AND user_url::$get_var["editMenuId"] === $name["id"]) ? " selected" : ""; ?>>
+                    <?php echo $name["menu_name"]; ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <!-- ============================== /select a menu ============================== -->
 
@@ -47,7 +49,9 @@
         <!-- ============================== /Menu name ============================== -->
 
         <!-- ============================== edit menu area ============================== -->
-        <div class="edit_menu_area"></div>
+        <div class="edit_menu_area">
+            <?php build_cms_menus_menus_pluginSubController::get_menu_items(build_cms_menus_pluginModal::$menus_data_array, 0); ?>
+        </div>
         <!-- ============================== /edit menu area ============================== -->
     </div>
 </div>
