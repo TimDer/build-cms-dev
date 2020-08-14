@@ -16,6 +16,7 @@ RUN apt-get install php7.4 -y
 RUN apt-get install libapache2-mod-php7.4 -y
 RUN apt-get install php7.4-mysql -y
 RUN apt-get install php7.4-cli -y
+RUN apt-get install php7.4-zip -y
 
 # Install apache2
 RUN apt-get install -y apache2
