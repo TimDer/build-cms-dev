@@ -3,7 +3,7 @@ version: '3.8'
 services:
     build_cms:
         build: ./docker
-        image: ubuntu_server-20.04:apache_php
+        image: build_cms:x86
         container_name: build_cms
         restart: unless-stopped
         volumes:
@@ -17,6 +17,9 @@ services:
             - ./docker/build_cms_1.0/apache.conf:/etc/apache2/sites-available/000-default.conf
             # PHP.ini file
             - ./docker/build_cms_1.0/php.ini:/etc/php/7.4/apache2/php.ini
+            # backup reset
+            - ./docker/TD_dbExport/library:/var/www/html/TD_dbExport
+            - ./docker/TD_dbExport/data:/var/www/html/TD_dbExport/data
         ports: 
             - 80:80
         depends_on: 
@@ -27,7 +30,7 @@ services:
             DB_password: root
             DB_dbname: build-cms
             displayUntrustedDomain: 'true'
-            TrustedDomains: localhost,10.1.1.1
+            TrustedDomains: localhost,10.1.1.3
             dev_mode_on: 'true'
     build_cms_database:
         image: mysql:8.0.21
