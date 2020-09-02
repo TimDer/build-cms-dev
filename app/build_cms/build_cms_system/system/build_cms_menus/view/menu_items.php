@@ -15,12 +15,13 @@
             Name: <input type="text" name="">
             Url: <input type="text" name="">
         <?php endif; ?>
+        <div class="menus_area_container">
+            <?php
+                build_cms_menus_menus_pluginSubController::get_menu_items(
+                    build_cms_menus_subPluginModal::$the_array,
+                    build_cms_menus_subPluginModal::$the_array_key
+                );
+            ?>
+        </div>
     </div>
-
-    <?php
-        build_cms_menus_menus_pluginSubController::get_menu_items(
-            build_cms_menus_subPluginModal::$the_array,
-            build_cms_menus_subPluginModal::$the_array_key
-        );
-    ?>
 </div>
