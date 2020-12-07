@@ -28,7 +28,10 @@ new Promise((res, rej) => {
     return fs.mkdirSync(dir.installerDumpDir + "/sys")
 }).then(result => {
     console.log("Coping the cms to the \"sys\" directory")
-    return fse.copy(dir.sysDir, dir.installerDumpDir + "/sys")
+    return fse.copy(dir.sysDir + "/build_cms", dir.installerDumpDir + "/sys/build_cms")
+}).then(result => {
+    console.log("Coping the htaccess to the \"sys\" directory")
+    return fse.copy(dir.sysDir + "/.htaccess", dir.installerDumpDir + "/sys/.htaccess")
 }).then(result => {
     console.log("Copying install.php")
     return fse.copy(dir.installerFile, dir.installerDumpDir + "/index.php")
