@@ -15,9 +15,10 @@ class config {
     }
 
     private static function set_config($reload = false) {
-        if (getenv()["build_cms_config_override"] !== "false") {
+        $env_array = getenv();
+        if (isset($env_array["build_cms_config_override"]) AND $env_array["build_cms_config_override"] !== "false") {
             $return_array = array();
-            foreach (getenv() AS $config_key => $config_value) {
+            foreach ($env_array AS $config_key => $config_value) {
                 $allowlist = array(
                     "build_cms_config_override",
                     "useHttps",
