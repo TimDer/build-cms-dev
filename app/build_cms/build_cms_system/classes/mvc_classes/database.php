@@ -6,6 +6,15 @@ class database {
     public static $query;
     public static $fetch = array();
 
+    private static function connError($error) {
+        if (php_sapi_name() === "cli") {
+            echo $error . "*** Check your sql connection ***\n";
+        }
+        else {
+            die($error);
+        }
+    }
+
     // connect to the database
     public static function connect() {
         // connect to the sql server
@@ -14,7 +23,7 @@ class database {
             config::get_config()["DB_username"],
             config::get_config()["DB_password"],
             config::get_config()["DB_dbname"]
-        ) or die("\n*** Database Connection failed: " . mysqli_connect_error() . " ***\n\n");
+        ) or self::connError("\n*** Database Connection failed: " . mysqli_connect_error() . " ***\n\n");
     }
 
     // escape string
