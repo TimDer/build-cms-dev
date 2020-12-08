@@ -14,7 +14,7 @@ database::query("CREATE TABLE `page` (
     `post_page` varchar(6000) NOT NULL,
     `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;");
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
 database::query("CREATE TABLE `page_blocks` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -24,7 +24,7 @@ database::query("CREATE TABLE `page_blocks` (
     `building_blocks_area` varchar(6000) NOT NULL,
     `the_order` bigint NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;");
 
 database::query("CREATE TABLE `page_cc_block` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -66,7 +66,7 @@ database::query("CREATE TABLE `page_sub_cat` (
     `the_limit` bigint NOT NULL,
     `sort` varchar(10) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;");
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
 
 database::query("CREATE TABLE `page_wysiwyg` (
     `id` bigint NOT NULL AUTO_INCREMENT,
@@ -75,4 +75,4 @@ database::query("CREATE TABLE `page_wysiwyg` (
     `block_id` bigint NOT NULL,
     `data` longtext NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;");
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;");
