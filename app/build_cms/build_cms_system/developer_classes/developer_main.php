@@ -155,7 +155,10 @@ class developer_main {
                 $delete_from_dir = (in_array("-s", $GLOBALS["commandToArgv"])) ? "build_cms_system" . DIRECTORY_SEPARATOR . "system" : "plugins";
 
                 if (is_dir(config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]))) {
-                    require config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
+                    $deleteFile = config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
+                    if (file_exists($deleteFile)) {
+                        require $deleteFile;
+                    }
                     config_dir::deleteDirectory("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]);
                     if (in_array("-s", $GLOBALS["commandToArgv"])) {
                         $config = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json")), true);
