@@ -155,7 +155,7 @@ class files {
             if (is_numeric($key)) {
                 if (isset($array[$item])) {
                     // loop through the dir
-                    mkdir($destination . "/" . $item, 775);
+                    mkdir($destination . "/" . $item, 0775);
                     if (is_array($array[$item])) {
                         self::copy_dir_contents($dir . "/" . $item, $destination . "/" . $item, $array[$item]);
                     }

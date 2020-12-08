@@ -79,7 +79,7 @@ class developer_main {
 
             // Create unzip dir
             $unzip_dir = config_dir::BUILD_CMS_SYSTEM("/data/plugin_unzip");
-            mkdir( $unzip_dir, 775 );
+            mkdir( $unzip_dir, 0775 );
             $unzip = files::unzip(
                 new ZipArchive(),
                 $bcpi_file,
@@ -91,7 +91,7 @@ class developer_main {
                 $get_json = json_decode( file_get_contents($unzip_dir . "/plugin_data.json"), true );
 
                 if (!is_dir( config_dir::BUILD_CMS_SYSTEM("/system/" . $get_json["directory_name"]) ) && !is_dir(config_dir::BASE("/plugins/" . $get_json["directory_name"]))) {
-                    mkdir( config_dir::BASE("/" . $install_dir . "/" . $get_json["directory_name"]), 775 );
+                    mkdir( config_dir::BASE("/" . $install_dir . "/" . $get_json["directory_name"]), 0775 );
                     files::copy_dir_contents(
                         $unzip_dir,
                         config_dir::BASE("/" . $install_dir . "/" . $get_json["directory_name"]),
