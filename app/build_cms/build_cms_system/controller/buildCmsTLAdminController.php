@@ -55,10 +55,10 @@ class buildCmsTLAdminController extends controller {
 
     public static function upload_template() {
         if (!is_dir(config_dir::BUILD_CMS_SYSTEM("/data"))) {
-            mkdir(config_dir::BUILD_CMS_SYSTEM("/data"), 775);
+            mkdir(config_dir::BUILD_CMS_SYSTEM("/data"), 0775);
         }
         if (!is_dir(config_dir::BUILD_CMS_SYSTEM("/data/install_template"))) {
-            mkdir(config_dir::BUILD_CMS_SYSTEM("/data/install_template"), 775);
+            mkdir(config_dir::BUILD_CMS_SYSTEM("/data/install_template"), 0775);
         }
         $zip_template = files::upload_to_dir(
             config_dir::BUILD_CMS_SYSTEM("/data/install_template"),
@@ -71,7 +71,7 @@ class buildCmsTLAdminController extends controller {
         $zip_name = implode(".", $zip_name_array);
 
         if (is_string($zip_template)) {
-            mkdir(config_dir::BUILD_CMS_SYSTEM("/data/install_template/unzip"), 775);
+            mkdir(config_dir::BUILD_CMS_SYSTEM("/data/install_template/unzip"), 0775);
             // unzip the file
             $unziped = files::unzip(
                 new ZipArchive(),
@@ -93,7 +93,7 @@ class buildCmsTLAdminController extends controller {
                         $folder_name = $folder_name . "_" . $randomString;
                     }
                 }
-                mkdir(config_dir::BASE("/templates/" . $folder_name), 775);
+                mkdir(config_dir::BASE("/templates/" . $folder_name), 0775);
                 files::copy_dir_contents(
                     config_dir::BUILD_CMS_SYSTEM("/data/install_template/unzip"),
                     config_dir::BASE("/templates/" . $folder_name),
@@ -132,10 +132,10 @@ class buildCmsTLAdminController extends controller {
     public static function download_template_zip() {
         if ( extension_loaded("zip") ) {
             if (!is_dir(config_dir::BUILD_CMS_SYSTEM("/data"))) {
-                mkdir(config_dir::BUILD_CMS_SYSTEM("/data"), 775);
+                mkdir(config_dir::BUILD_CMS_SYSTEM("/data"), 0775);
             }
             if (!is_dir(config_dir::BUILD_CMS_SYSTEM("/data/download_zip"))) {
-                mkdir(config_dir::BUILD_CMS_SYSTEM("/data/download_zip"), 775);
+                mkdir(config_dir::BUILD_CMS_SYSTEM("/data/download_zip"), 0775);
             }
 
             $zipName        = user_url::$new_uri[1];
@@ -178,9 +178,9 @@ class buildCmsTLAdminController extends controller {
         ), JSON_PRETTY_PRINT);
 
         // create template folder
-        mkdir(config_dir::BASE("/templates/" . $template_dir), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir), 0775);
         // create info folder
-        mkdir(config_dir::BASE("/templates/" . $template_dir . "/template_info"), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir . "/template_info"), 0775);
 
         // create general.json
         file_put_contents(config_dir::BASE("/templates/" . $template_dir . "/template_info/general.json"), $json_array);
@@ -203,7 +203,7 @@ class buildCmsTLAdminController extends controller {
         files::create_file(config_dir::BASE("/templates/" . $template_dir . "/functions.php"));
 
         // create www-root dir
-        mkdir(config_dir::BASE("/templates/" . $template_dir . "/www-root"), 775);
+        mkdir(config_dir::BASE("/templates/" . $template_dir . "/www-root"), 0775);
 
         // Activate template
         if (isset($post["activate"])) {

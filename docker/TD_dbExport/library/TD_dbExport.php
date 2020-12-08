@@ -135,7 +135,7 @@ class TD_dbExport {
             // open file
             if ($data_result !== false) {
                 if (!is_dir($this->database_dir . "/" . $dbName)) {
-                    mkdir($this->database_dir . "/" . $dbName, 775);
+                    mkdir($this->database_dir . "/" . $dbName, 0775);
                 }
 
                 $csv_file_path = $this->database_dir . "/" . $dbName . "/" . $value . ".csv";
