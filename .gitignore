@@ -2,3 +2,4 @@ node_modules
 installer-dump
 compiler-config.json
 developer_history.json
+config.json
