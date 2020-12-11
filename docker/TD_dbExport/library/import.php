@@ -10,9 +10,12 @@ else {
 if (is_dir($dir)) {
     $files = scandir($dir);
     foreach ($files AS $key => $value) {
-        if ($value === "." OR $value === ".." OR is_file($dir . "/" . $value)) {
+        if ($value === "." OR $value === ".." OR is_dir($dir . "/" . $value)) {
             unset($files[$key]);
             continue;
+        }
+        else {
+            $files[$key] = preg_replace("/.json/", "", $files[$key]);
         }
     }
 }
