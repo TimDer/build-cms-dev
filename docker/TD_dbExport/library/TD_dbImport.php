@@ -50,20 +50,7 @@ class TD_dbImport {
         }
     }
 
-    private function array_query($query_array) {
-        $return_array = array();
-        foreach ($query_array AS $query) {
-            // continue if not a query
-            if ($query === "") {
-                continue;
-            }
-            // query
-            $return_array[] = mysqli_query($this->conn, $query);
-        }
-        return $return_array;
-    }
-
-    private function clear_database($dir, $dbName) {
+    private function clear_database() {
         $tables_array = $this->get_all_tables("SHOW TABLES");
 
         if ($tables_array) {
@@ -73,80 +60,56 @@ class TD_dbImport {
         }
     }
 
-    private function import_sql($dir, $dbName) {
-        $query_array = explode(";", file_get_contents($dir . "/" . $dbName . ".sql"));
-        
-        $this->array_query($query_array);
-    }
-
-    private function csv_to_array($csv_file) {
-        $array = array();
-        while ($data = fgetcsv($csv_file)) {
-            $array[] = $data;
-        }
-        return $array;
-    }
-
-    private function import_csv_file($dir, $dbName, $file) {
-        // get table name
-        $file_to_table_array = explode(".", $file);
-        array_pop($file_to_table_array);
-        $file_to_table = implode(".", $file_to_table_array);
-
-        // open csv file
-        $open_csv_file = fopen($dir . "/" . $dbName . "/" . $file, "r");
-        $open_csv_array = $this->csv_to_array($open_csv_file);
-        fclose($open_csv_file);
-
-        // header and data
-        $csv_header = $open_csv_array[0];
-        unset($open_csv_array[0]);
-        $open_csv_array = array_values($open_csv_array);
-
-        // setup query string
-        //                         Headers                            data                      data
-        // INSERT INTO table_name (column1, column2, column3) VALUES (value1, value2, value3), (value1, value2, value3);
-        $query = "INSERT INTO " . "`" . $file_to_table . "` (";
-        // headers
-        foreach ($csv_header AS $column_key => $column_name) {
-            if ((count($csv_header) - 1) === $column_key) {
-                $query .= $column_name . ") VALUES ";
-            }
-            else {
-                $query .= $column_name . ", ";
-            }
-        }
-        // data
-        foreach ($open_csv_array AS $data_array_key => $data_array) {
-            $query .= "(";
-            foreach ($data_array AS $key_data => $data) {
-                if ((count($data_array) - 1) === $key_data) {
-                    $query .= "'$data'";
-                }
-                else {
-                    $query .= "'$data', ";
-                }
-            }
-            if ((count($open_csv_array) - 1) === $data_array_key) {
-                $query .= ")";
-            }
-            else {
-                $query .= "), ";
-            }
-        }
-
-        // query data
-        mysqli_query($this->conn, $query);
-    }
-
-    private function import_csv_scanDir($dir, $dbName) {
-        $db_data_files = scandir($dir . "/" . $dbName);
-
-        foreach ($db_data_files AS $file) {
-            if ($file === "." OR $file === "..") {
+    private function import_sql(array $data) {
+        foreach ($data AS $query) {
+            if ($query === "") {
                 continue;
             }
-            $this->import_csv_file($dir, $dbName, $file);
+            mysqli_query($this->conn, $query);
+        }
+    }
+
+    private function import_data(array $data) {
+        foreach ($data AS $table_key => $table_value) {
+            if ($table_value["data"] !== false) {
+                // create begin of the query
+                $query = "INSERT INTO `$table_key` (";
+                
+                // create header query
+                foreach ($table_value["keyNames"] AS $header_key => $header_value) {
+                    if ((count($table_value["keyNames"]) - 1) === $header_key) {
+                        $query .= "`$header_value`";
+                    }
+                    else {
+                        $query .= "`$header_value`,";
+                    }
+                }
+                $query .= ") VALUES ";
+
+                // create data query (loop through data array)
+                foreach ($table_value["data"] AS $table_data_key => $table_data_value) {
+                    // loop through the row
+                    foreach ($table_data_value AS $row_key => $row_data) {
+                        if (end($table_value["keyNames"]) === $row_key) {
+                            if ( (count($table_value["data"]) - 1) ===  $table_data_key) {
+                                $query .= ",'$row_data')";
+                            }
+                            else {
+                                $query .= ",'$row_data'),";
+                            }
+                        }
+                        elseif ($table_value["keyNames"][0] === $row_key) {
+                            $query .= "('$row_data'";
+                        }
+                        else {
+                            $query .= ",'$row_data'";
+                        }
+                    }
+                }
+                
+                // query data
+                mysqli_query($this->conn, $query);
+            }
         }
     }
 
@@ -156,9 +119,11 @@ class TD_dbImport {
         $dir    = $GET_var["dir"];
         
         if (is_object($this->conn)) {
-            $this->clear_database($dir, $dbName);
-            $this->import_sql($dir, $dbName);
-            $this->import_csv_scanDir($dir, $dbName);
+            $array = json_decode(file_get_contents($dir . "/" . $dbName . ".json"), true);
+
+            $this->clear_database();
+            $this->import_sql($array["tablesSql"]);
+            $this->import_data($array["tablesData"]);
         }
     }
 }

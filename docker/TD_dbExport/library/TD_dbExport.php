@@ -70,102 +70,79 @@ class TD_dbExport {
         return $return_array;
     }
 
-    private function deleteDirectory($dir) {
-        if (!file_exists($dir)) {
-            return true;
-        }
-    
-        if (!is_dir($dir)) {
-            return unlink($dir);
-        }
-    
-        foreach (scandir($dir) as $item) {
-            if ($item == '.' || $item == '..') {
-                continue;
-            }
-    
-            if (!$this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item)) {
-                return false;
-            }
-    
-        }
-    
-        return rmdir($dir);
-    }
-
-    private function clear_dir($dbName) {
-        if (file_exists($this->database_dir . "/" . $dbName . ".sql")) {
-            unlink($this->database_dir . "/" . $dbName . ".sql");
-        }
-        if (is_dir($this->database_dir . "/" . $dbName)) {
-            $this->deleteDirectory($this->database_dir . "/" . $dbName);
+    private function clear($dbName) {
+        if (file_exists($this->database_dir . "/" . $dbName . ".json")) {
+            unlink($this->database_dir . "/" . $dbName . ".json");
         }
     }
 
-    private function create_sql_file($dbName, $tables_array) {
-        // alter table array
-        $alter_table_array = array();
+    private function remove_spaces(string $string) {
+        $new_string = preg_replace("/  /", " ", $string);
 
-        // open the sql file
-        $sql_file_path = $this->database_dir . "/" . $dbName . ".sql";
-        $open_sql_file = fopen($sql_file_path, "w");
-        fwrite($open_sql_file, "-- table dump with TD_dbExport by Tim Derksen\n");
-        fwrite($open_sql_file, "-- Download url: https://www.github.com/TimDer/TD_dbExport");
+        if ($string === $new_string) {
+            return $new_string;
+        }
+        else {
+            return $this->remove_spaces($new_string);
+        }
+    }
+
+    private function create_sql_array($dbName, $tables_array) {
+        $return_array = array();
 
         // create sql file
         foreach ($tables_array AS $value) {
-            $sql_code_table     = $this->select("SHOW CREATE TABLE `$value`")[0];
-            $sql_primary_key    = $this->select("SHOW INDEX FROM `$value` WHERE Key_name = 'PRIMARY'")[0]["Column_name"];
-
-            fwrite($open_sql_file, "\n\n-- " . $sql_code_table["Table"] . "\n");
-            fwrite($open_sql_file, $sql_code_table["Create Table"] . ";\n");
-            if ($sql_primary_key) {
-                fwrite($open_sql_file, "ALTER TABLE `$value` ADD PRIMARY KEY (`$sql_primary_key`);");
-            }
+            $sql_code_table         = $this->select("SHOW CREATE TABLE `$value`")[0];
+            $return_array[$value]   = $this->remove_spaces(preg_replace("/\\n/", "", $sql_code_table["Create Table"]));
         }
+
+        return $return_array;
     }
 
-    private function create_csv_files($dbName, $tables_array) {
-        // create data.csv files
+    private function create_tables_data($dbName, $tables_array) {
+        $return_array = array();
+
+        // create the data array
         foreach ($tables_array AS $value) {
             // get the data from the database
             $data_header = $this->get_all_columns("SHOW COLUMNS FROM `$value`");
             $data_result = $this->select("SELECT * FROM `$value`");
 
-            // open file
-            if ($data_result !== false) {
-                if (!is_dir($this->database_dir . "/" . $dbName)) {
-                    mkdir($this->database_dir . "/" . $dbName, 0775);
-                }
-
-                $csv_file_path = $this->database_dir . "/" . $dbName . "/" . $value . ".csv";
-                $open_csv_file = fopen($csv_file_path, "w");
-
-                // store in file
-                fputcsv($open_csv_file, $data_header);
-                foreach ($data_result AS $data_value) {
-                    fputcsv($open_csv_file, $data_value);
-                }
-
-                // close file
-                fclose($open_csv_file);
-            }
+            $return_array[$value]["keyNames"]   = $data_header;
+            $return_array[$value]["data"]       = $data_result;
         }
+
+        return $return_array;
     }
 
     // main function
     public function export_to_file($dbName) {
-        // all tables in the database (array)
-        $tables_array = $this->get_all_tables("SHOW TABLES");
-        // clear data dir
-        $this->clear_dir($dbName);
+        // create json array
+        $array = array();
 
-        if ($tables_array) {
+        // info about the exported file
+        $array["_comment"] = array(
+            "Author" => "Table dump with TD_dbExport by Tim Derksen",
+            "Download-url" => "https://www.github.com/TimDer/TD_dbExport"
+        );
+
+        // all tables in the database (array)
+        $array["tableNames"] = $this->get_all_tables("SHOW TABLES");
+        // clear data dir
+        //$this->clear($dbName);
+
+        if ($array["tableNames"]) {
             // create sql file
-            $this->create_sql_file($dbName, $tables_array);
+            $array["tablesSql"] = $this->create_sql_array($dbName, $array["tableNames"]);
 
             // create data.csv files
-            $this->create_csv_files($dbName, $tables_array);
+            $array["tablesData"] = $this->create_tables_data($dbName, $array["tableNames"]);
+
+            // turn the array into json
+            $json = json_encode($array, JSON_PRETTY_PRINT);
+
+            // json to file
+            file_put_contents($this->database_dir . "/" . $dbName . ".json", $json);
         }
     }
 }
