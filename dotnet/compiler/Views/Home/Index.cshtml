@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1>Compile Build-CMS</h1>
+</div>
+
+<br />
+
+<form asp-controller="Home" asp-action="IndexPost" method="post">
+    <p>Zip file name</p>
+    <input type="text" name="fileName" class="form-control" />
+
+
+
+    <input type="submit" value="Compile and download an installer" class="btn btn-primary btn-block" />
+</form>
