@@ -37,9 +37,9 @@ RUN rm -fr /build_cms/sys/plugins && \
     rm -f /build_cms/sys/build_cms_system/data/load_system_plugins.json
 
 # copy the plugins
-COPY ./build_cms/app/build_cms/plugins /build_cms/sys/plugins
+COPY ./build_cms/app/build_cms/plugins /build_cms/plugins
 
 # copy the system plugins
-COPY ./build_cms/app/build_cms/build_cms_system/system /build_cms/sys/build_cms_system/system
+COPY ./build_cms/app/build_cms/build_cms_system/system /build_cms/system-plugins
 
 ENTRYPOINT ["dotnet", "/compiler.dll"]
