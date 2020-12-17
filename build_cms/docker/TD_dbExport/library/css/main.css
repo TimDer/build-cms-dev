@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 1200px;
+    margin: 0px auto;
+    margin-top: 200px;
+    text-align: center;
+}
+
+form.container {
+    width: 900px;
+}
+
+form.container *:first-child {
+    margin: 20px auto;
+}
+
+form.container *[type="submit"] {
+    background-color: gray;
+    border: 1px solid gray;
+}
+
+form.container * {
+    display: block;
+    margin: 5px auto;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+}
+
+.warning {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 50px;
+    color: red;
+}
+
+.database_credentials {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.database_credentials > p {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.database_credentials_heading {
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-top: 20px !important;
+}

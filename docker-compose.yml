@@ -1,67 +1,10 @@
 version: '3.7'
 
 services:
-    build_cms:
-        build: ./docker
-        image: build_cms:x86
-        container_name: build_cms
-        restart: unless-stopped
-        volumes:
-            # The CMS
-            - ./app/.htaccess:/var/www/html/.htaccess
-            - ./app/index.php:/var/www/html/index.php
-            - ./app/build_cms:/build_cms
-            # build_cms dev terminal to command
-            - ./build_cms_dev_command.sh:/usr/bin/dev
-            # Apache .conf file
-            - ./docker/build_cms_1.0/apache.conf:/etc/apache2/sites-available/000-default.conf
-            # PHP.ini file
-            - ./docker/build_cms_1.0/php.ini:/etc/php/7.4/apache2/php.ini
-            # backup reset
-            - ./docker/TD_dbExport/library:/var/www/html/TD_dbExport
-            - ./docker/TD_dbExport/data:/var/www/html/TD_dbExport/data
-        ports: 
-            - 80:80
-        depends_on: 
-            - build_cms_database
-        environment:
-            DB_servername: build_cms_database
-            DB_username: root
-            DB_password: root
-            DB_dbname: build-cms
-            displayUntrustedDomain: 'true'
-            TrustedDomains: localhost,10.1.1.2
-            dev_mode_on: 'true'
-    build_cms_database:
-        image: mysql:8.0.21
-        container_name: build_cms_database
-        restart: unless-stopped
-        volumes: 
-            - ./docker/build_cms_database/databases:/var/lib/mysql
-        ports: 
-            - 3306:3306
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-    phpmyadmin:
-        image: phpmyadmin/phpmyadmin:5.0.2
-        container_name: phpmyadmin
-        restart: unless-stopped
-        environment: 
-            PMA_HOST: build_cms_database
-            PMA_USER: root
-            PMA_PASSWORD: root
-        ports:
-            - 81:80
-        depends_on: 
-            - build_cms_database
-    TD_dbExport:
-        build: 
-            context: ./docker
-            dockerfile: Dockerfile-dbExport
-        image: build_cms_db_export:TD_dbExport
-        container_name: TD_dbExport
-        restart: unless-stopped
-        volumes: 
-            - ./docker/TD_dbExport:/TD_dbExport
-        depends_on: 
-            - build_cms_database
+  build_cms_compiler:
+    build: ./
+    image: build_cms_compiler
+    container_name: build_cms_compiler
+    restart: unless-stopped
+    ports:
+      - 808:80

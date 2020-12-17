@@ -1,0 +1,11 @@
+.page_builder_root_container > .page_builder_page_loader > .loader_container {
+    background-color: gray;
+    padding: 10px;
+    margin: 50px 10% 0px 10%;
+    border-radius: 5px;
+}
+
+.page_builder_root_container > .page_builder_page_loader > .loader_container > h1 {
+    margin-bottom: 10px;
+    text-align: center;
+}
