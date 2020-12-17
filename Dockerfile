@@ -26,22 +26,20 @@ RUN mkdir /build_cms/sys
 COPY ./build_cms/app/build_cms /build_cms/sys
 COPY ./build_cms/app/.htaccess /build_cms/.htaccess
 COPY ./build_cms/app/index.php /build_cms/index.php
-COPY ./build_cms/app/db.json /build_cms/db.json
+COPY ./build_cms/docker/TD_dbExport/data/build-cms.json /build_cms/db.json
 
 # copy the installer
-COPY ./app/php_installer/install.php /build_cms/installer/index.php
+COPY ./build_cms/php_installer/install.php /build_cms/installer/index.php
 
 # remove the plugins from the system
 RUN rm -fr /build_cms/sys/plugins && \
     rm -fr /build_cms/sys/build_cms_system/system && \
-    mkdir /build_cms/sys/plugins && \
-    mkdir /build_cms/sys/build_cms_system/system && \
     rm -f /build_cms/sys/build_cms_system/data/load_system_plugins.json
 
 # copy the plugins
-COPY ./app/build_cms/plugins /build_cms/sys/plugins
+COPY ./build_cms/app/build_cms/plugins /build_cms/sys/plugins
 
 # copy the system plugins
-COPY ./app/build_cms/build_cms_system/system /build_cms/sys/build_cms_system/system
+COPY ./build_cms/app/build_cms/build_cms_system/system /build_cms/sys/build_cms_system/system
 
 ENTRYPOINT ["dotnet", "/compiler.dll"]
