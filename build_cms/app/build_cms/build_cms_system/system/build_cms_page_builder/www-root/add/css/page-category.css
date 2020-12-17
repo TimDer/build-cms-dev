@@ -1,0 +1,40 @@
+.page-category {
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 10px;
+    background-color: white;
+}
+
+.page-category > .header {
+    padding: 10px;
+    border-bottom: 1px solid black;
+}
+
+.page-category > .content {
+    padding: 10px;
+}
+
+
+/* ============================== category ============================== */
+
+    .page-category > .content .category_container {
+        margin-top: 5px;
+    }
+
+    .page-category > .content .category_container input[type="radio"] {
+        margin: 0;
+        margin-right: 3px;
+    }
+
+    .page-category > .content .category_container .page_category {
+        margin-left: 20px;
+    }
+    
+    .page-category > .content .category_container .category_placeholder {
+        display: inline-block;
+        height: 13px;
+        width: 13px;
+        margin-right: 3px;
+    }
+
+/* ============================== /category ============================== */

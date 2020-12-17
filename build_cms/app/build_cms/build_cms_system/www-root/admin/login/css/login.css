@@ -1,0 +1,104 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    background-color: gray;
+    margin: 0;
+}
+
+.login-container {
+    background-color: white;
+    width: 430px;
+    margin-top: 60px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+@media (max-width: 450px) {
+    .login-container {
+        width: calc(100% - 10px - 10px);
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
+
+/* ============================== img ============================== */
+    .img-container img {
+        height: 100px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 100%;
+    }
+    .img-container {
+        margin-bottom: 20px;
+    }
+/* ============================== /img ============================== */
+
+/* ============================== form ============================== */
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 0px;
+        background-color: #CECECE;
+        margin-bottom: 20px;
+        border-radius: 2px;
+    }
+
+    input[type="submit"] {
+        background-color: #6891A2;
+    }
+
+    /* hover */
+        input[type="submit"]:hover {
+            background-color: #0C6121;
+        }
+        input:hover {
+            background-color: #ADADAD;
+        }
+    /* /hover */
+
+/* ============================== /form ============================== */
+
+/* ============================== link go back to the home page ============================== */
+
+    .go-back {
+        display: block;
+        width: 100%;
+        background-color: #6891A2;
+        padding: 10px;
+        color: black;
+        text-decoration: none;
+        max-height: 35px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .go-back:last-child {
+        margin-bottom: 0px;
+    }
+
+    .go-back:hover {
+        background-color: #0C6121;
+    }
+
+/* ============================== /link go back to the home page ============================== */
+
+/* ============================== error p tag ============================== */
+
+    .login-container p:last-child {
+        margin-bottom: 0px;
+        margin-top: 0px;
+        text-align: center;
+        background-color: red;
+        padding: 10px;
+    }
+    .login-container p:last-child:hover {
+        background-color: #FF4949;
+    }
+
+/* ============================== /error p tag ============================== */

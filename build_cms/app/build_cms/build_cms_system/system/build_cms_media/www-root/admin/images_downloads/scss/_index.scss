@@ -1,0 +1,35 @@
+.bootstrap {
+    @import "_bootstrap(v4.5.0).scss";
+    @import "_custom_bootstrap";
+}
+@import "_load_outside_bootstrap_class";
+
+
+.root_container {
+    .loader_root_container {
+        @import "_page_loader";
+    }
+
+    .content_root_container {
+        .main_header {
+            background-color: #BABABA;
+            h1 {
+                margin: 0;
+                padding: 21px 5px;
+            }
+        }
+        
+        .main_container {
+            > *:first-child {
+                margin-top: 0px;
+            }
+            > *:last-child {
+                margin-bottom: 0px;
+            }
+            @import "_upload_form";
+            @import "_data_container";
+        }
+    }
+}
+
+@import "_data_modal";

@@ -1,0 +1,87 @@
+/* ======================================== edit ======================================== */
+
+    /* ========== saved container ========== */
+
+        .edit_saved_container {
+            padding: 15px;
+            color: white;
+            font-size: 20px;
+            box-sizing: border-box;
+            background-color: green;
+            border-radius: 5px;
+        }
+
+    /* ========== /saved container ========== */
+
+    /* ========== basics ========== */
+        .edit_grid {
+            display: flex;
+        }
+        .edit_grid {
+            box-sizing: border-box;
+        }
+
+        .edit_grid > div {
+            padding: 10px;
+        }
+        .edit_grid > div:first-child {
+            padding-left: 0px;
+        }
+        .edit_grid > div:last-child {
+            padding-right: 0px;
+        }
+        .edit_grid > .edit_sidebar {
+            flex: 1.5;
+        }
+        .edit_grid > .main_edit_container {
+            flex: 4;
+        }
+        .edit_grid > .main_edit_container > * {
+            margin-bottom: 20px;
+        }
+
+        .edit_sidebar > div {
+            margin-bottom: 20px;
+        }
+
+        select, input {
+            padding: 10px;
+            width: 100%;
+            border: 1px solid black;
+        }
+        input {
+            box-sizing: border-box;
+        }
+        input[type="text"] {
+            background-color: #CECECE;
+        }
+    /* ========== /basics ========== */
+
+    /* ========== main menu area ========== */
+        .edit_menu_area {
+            background-color: gray;
+            min-height: 300px;
+            width: 100%;
+        }
+    /* ========== /main menu area ========== */
+
+    /* ========== box sidebar ========== */
+        .edit_sidebar > .box {
+            border: 1px solid black;
+        }
+        .edit_sidebar > .box > .header, .add_page_area > .main {
+            border-bottom: 1px solid black;
+        }
+        .edit_sidebar > .box > .footer, .add_page_area > .header, .add_page_area > .main {
+            padding: 10px;
+        }
+    /* ========== /box sidebar ========== */
+
+
+/* ======================================== /edit ======================================== */
+
+
+/* ======================================== add ======================================== */
+
+
+/* ======================================== /add ======================================== */

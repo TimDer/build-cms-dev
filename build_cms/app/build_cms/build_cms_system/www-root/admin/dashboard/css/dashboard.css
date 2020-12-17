@@ -1,0 +1,126 @@
+/* ============================== basics ============================== */
+
+    img {
+        width: 100%;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    input {
+        padding: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .red_btn {
+        background-color: red !important;
+    }
+
+/* ============================== /basics ============================== */
+
+
+/* ============================== the main header ============================== */
+    .main_header {
+        background-color: #BABABA;
+    }
+    .main_header > h1 {
+        margin: 0;
+        padding: 21px 10px;
+    }
+/* ============================== /the main header ============================== */
+
+
+/* ============================== main flex area ============================== */
+    .main_container {
+        display: flex;
+        height: calc(100% - 79px);
+    }
+
+    .main_container > div {
+        padding: 10px;
+    }
+
+    .main_container > .sidebar {
+        flex: 1;
+    }
+    .main_container > .sidebar > img{
+        border-radius: 20px;
+    }
+
+    .main_container > .main_content {
+        flex: 3;
+    }
+/* ============================== /main flex area ============================== */
+
+
+
+/* ============================== the main sidebar ============================== */
+
+    .main_container > .sidebar > .user_icon_btn {
+        margin-top: 20px;
+        padding: 20px 30px;
+        border-radius: 5px;
+        border: 0;
+        background-color: green;
+        color: white;
+    }
+
+    .main_container > .sidebar {
+        background-color: #D3D3D3;
+    }
+
+    .main_container > .sidebar > form {
+        display: none;
+    }
+
+/* ============================== the main sidebar ============================== */
+
+
+/* ============================== the main content ============================== */
+    /* ========== form ========== */
+        .main_container > .main_content > .user_credentials_form_container > .save-btn {
+            padding: 10px;
+            border-radius: 5px;
+            border: 0;
+            box-sizing: border-box;
+            width: 100%;
+            background-color: green;
+            margin-top: 20px;
+            color: white;
+            font-size: 20px;
+        }
+        .main_container > .main_content > .user_credentials_form_container > .save-btn:hover {
+            background-color: red;
+        }
+
+        .main_container > .main_content > .user_credentials_form_container {
+            border: 1px solid black;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+
+        .main_container > .main_content > .user_credentials_form_container > form > h1 {
+            margin-top: 0;
+        }
+
+        .main_container > .main_content > .user_credentials_form_container > form > input[type="submit"] {
+            display: none;
+        }
+    /* ========== /form ========== */
+
+    /* ========== plugin area ========== */
+        .main_container > .main_content > .main_plugin_widget {
+            border: 1px solid black;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+    /* ========== /plugin area ========== */
+
+/* ============================== /the main content ============================== */

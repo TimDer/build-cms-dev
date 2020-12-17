@@ -1,0 +1,25 @@
+.templates_header {
+    background-color: #BABABA;
+}
+.templates_header h1 {
+    margin: 0;
+    padding: 21px 5px;
+}
+
+.main_area {
+    padding: #{$padding};
+}
+
+.hide {
+    display: none;
+}
+
+hr {
+    border: 1px solid black;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.padding-top {
+    margin-top: #{$margin};
+}

@@ -1,0 +1,2 @@
+<script src="<?php echo config_url::BASE("/admin_files/plugin/media/js/page_builder.js"); ?>"></script>
+<script src="<?php echo config_url::BASE("/admin_files/plugin/media/js/image-modal.js"); ?>"></script>
