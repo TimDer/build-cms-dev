@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace compiler.Controllers
 {
-    public class Error : Controller
+    public class ErrorController : Controller
     {
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Index()
