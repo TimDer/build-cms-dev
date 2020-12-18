@@ -7,11 +7,7 @@
 echo "Build the docker image"
 sudo docker-compose up -d
 
-# remove the required files form the docker build context
-echo ""
-echo "Deleting the required files from the docker build context"
-sudo rm -fr ./app
-
+# Run done the message
 echo ""
 echo "============================================================================="
 echo "=                                                                           ="
