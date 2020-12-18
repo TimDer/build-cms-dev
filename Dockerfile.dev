@@ -29,7 +29,7 @@ RUN mkdir /compiler
 WORKDIR /compiler
 
 # update
-RUN apt-get update && apt-get update -y
+RUN apt-get update && apt-get upgrade -y
 
 # install wget
 RUN apt-get install wget -y
