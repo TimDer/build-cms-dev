@@ -49,9 +49,4 @@ RUN apt-get update && \
 # Required inside Docker, otherwise file-change events may not trigger
 ENV DOTNET_USE_POLLING_FILE_WATCHER=true
 
-# restore dotnet
-#RUN dotnet restore
-
-#ENTRYPOINT [ "dotnet", "restore" ]
-
 CMD [ "dotnet", "watch", "run", "--no-restore", "--urls", "http://0.0.0.0:5000" ]
