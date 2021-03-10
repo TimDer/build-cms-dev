@@ -6,14 +6,27 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using compiler.Models.pluginsDir;
+using compiler.ViewModels.pluginDir;
 
 namespace compiler.Controllers
 {
     public class HomeController : Controller
     {
+        public IPluginsDirRepo PluginsDir { get; set; }
+        public HomeController(IPluginsDirRepo pluginDir)
+        {
+            PluginsDir = pluginDir;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            PluginDirViewModel pluginDirData = new PluginDirViewModel
+            {
+                PluginDirs = PluginsDir.GetPluginDir()
+            };
+
+            return View(pluginDirData);
         }
 
         [HttpPost]
