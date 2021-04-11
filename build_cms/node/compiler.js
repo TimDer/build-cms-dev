@@ -12,8 +12,7 @@ module.exports = (async () => {
         installerFile: path.resolve(__dirname + "/../php_installer/install.php"),
         dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json"),
         pluginDir: path.resolve(__dirname + "/../plugins/user"),
-        pluginSystemDir: path.resolve(__dirname + "/../plugins/system"),
-        dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json")
+        pluginSystemDir: path.resolve(__dirname + "/../plugins/system")
     }
     
     
