@@ -10,7 +10,9 @@ module.exports = (async () => {
         installer: path.resolve(__dirname + "/../php_installer/install.php"),
         installerDumpDir: path.resolve(__dirname + "/../installer-dump"),
         installerFile: path.resolve(__dirname + "/../php_installer/install.php"),
-        dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json")
+        dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json"),
+        pluginDir: path.resolve(__dirname + "/../plugins/user"),
+        pluginSystemDir: path.resolve(__dirname + "/../plugins/system")
     }
     
     
@@ -30,6 +32,14 @@ module.exports = (async () => {
     // copy the cms to the sys dir
     console.log("Coping the cms to the \"sys\" directory")
     await fse.copy(dir.sysDir + "/build_cms", dir.installerDumpDir + "/sys/build_cms")
+
+    // copy the user plugins to the sys dir
+    console.log("Coping the user plugins to the plugins directory")
+    await fse.copy(dir.pluginDir, dir.installerDumpDir + "/sys/build_cms/plugins")
+
+    // copy the system plugins to the sys dir
+    console.log("Coping the system plugins to the build_cms_system/system directory")
+    await fse.copy(dir.pluginSystemDir, dir.installerDumpDir + "/sys/build_cms/build_cms_system/system")
     
     // copy the ".htaccess" file to the sys dir
     console.log("Coping the htaccess to the \"sys\" directory")
