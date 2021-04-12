@@ -1,3 +1,5 @@
 const compiler = require("./compiler");
 
-compiler();
+compiler()
+
+process.exit()

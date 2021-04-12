@@ -1,4 +1,4 @@
-module.exports = async () => {
+module.exports = () => {
     const fs = require("fs")
     const fse = require("fs-extra")
     const path = require("path")
@@ -15,7 +15,7 @@ module.exports = async () => {
         pluginSystemDir: path.resolve(__dirname + "/../plugins/system")
     }
     
-    
+    console.log("------------------------------------------------------------------")
     // delete dir if it already exists
     if (fs.existsSync(dir.installerDumpDir)) {
         console.log("Deleting existing directory")
@@ -43,29 +43,28 @@ module.exports = async () => {
     
     // copy the cms to the sys dir
     console.log("Coping the cms to the \"sys\" directory")
-    await fse.copy(dir.sysDir + "/build_cms", dir.installerDumpDir + "/sys/build_cms")
+    fse.copySync(dir.sysDir + "/build_cms", dir.installerDumpDir + "/sys/build_cms")
 
     // copy the user plugins to the sys dir
     if (fs.existsSync(dir.pluginDir)) {
         console.log("Coping the user plugins to the plugins directory")
-        await fse.copy(dir.pluginDir, dir.installerDumpDir + "/sys/build_cms/plugins")
+        fse.copySync(dir.pluginDir, dir.installerDumpDir + "/sys/build_cms/plugins")
     }
 
     // copy the system plugins to the sys dir
     if (fs.existsSync(dir.pluginSystemDir)) {
         console.log("Coping the system plugins to the build_cms_system/system directory")
-        await fse.copy(dir.pluginSystemDir, dir.installerDumpDir + "/sys/build_cms/build_cms_system/system")
+        fse.copySync(dir.pluginSystemDir, dir.installerDumpDir + "/sys/build_cms/build_cms_system/system")
     }
     
     // copy the ".htaccess" file to the sys dir
     console.log("Coping the htaccess to the \"sys\" directory")
-    await fse.copy(dir.sysDir + "/.htaccess", dir.installerDumpDir + "/sys/.htaccess")
+    fse.copySync(dir.sysDir + "/.htaccess", dir.installerDumpDir + "/sys/.htaccess")
     
     // create the installer html
     console.log("Copying install.php")
-    await fse.copy(dir.installerFile, dir.installerDumpDir + "/index.php")
+    fse.copySync(dir.installerFile, dir.installerDumpDir + "/index.php")
 
     // the compiler is done
     console.log("Done")
-    process.exit()
 };

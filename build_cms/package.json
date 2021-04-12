@@ -5,6 +5,7 @@
   "main": "main.js",
   "scripts": {
     "compiler": "node ./node/run-compiler.js",
+    "devcompiler": "node ./node/dev-compiler.js",
     "install-compiler": "npm install --save",
     "uninstall-compiler": "rm -fr ./node_modules",
     "dev": "cd ./app/build_cms && php ./dev",
