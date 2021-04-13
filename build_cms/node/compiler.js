@@ -13,7 +13,7 @@ module.exports = () => {
         dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json"),
         pluginDir: path.resolve(__dirname + "/../plugins/user"),
         pluginSystemDir: path.resolve(__dirname + "/../plugins/system"),
-        adminTemplateDir: path.resolve(__dirname + "/../admin_basics")
+        adminTemplateDir: path.resolve(__dirname + "/../backend-template")
     }
     
     console.log("------------------------------------------------------------------")

@@ -31,9 +31,9 @@ const watcherPhpInstaller = chokidar.watch(
 
 watcherPhpInstaller.on("all", compiler)
 
-// admin_basics
-const watcherAdminBasics = chokidar.watch(
-    path.resolve(`${__dirname}/../admin_basics`),
+// backend-template
+const watcherBackendTemplate = chokidar.watch(
+    path.resolve(`${__dirname}/../backend-template`),
     chokidarWatchObject)
 
-watcherAdminBasics.on("all", compiler)
+watcherBackendTemplate.on("all", compiler)
