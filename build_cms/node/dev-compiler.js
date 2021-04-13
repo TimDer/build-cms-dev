@@ -30,3 +30,10 @@ const watcherPhpInstaller = chokidar.watch(
     chokidarWatchObject)
 
 watcherPhpInstaller.on("all", compiler)
+
+// admin_basics
+const watcherAdminBasics = chokidar.watch(
+    path.resolve(`${__dirname}/../admin_basics`),
+    chokidarWatchObject)
+
+watcherAdminBasics.on("all", compiler)

@@ -12,7 +12,8 @@ module.exports = () => {
         installerFile: path.resolve(__dirname + "/../php_installer/install.php"),
         dbFile: path.resolve(__dirname + "/../docker/TD_dbExport/data/build-cms.json"),
         pluginDir: path.resolve(__dirname + "/../plugins/user"),
-        pluginSystemDir: path.resolve(__dirname + "/../plugins/system")
+        pluginSystemDir: path.resolve(__dirname + "/../plugins/system"),
+        adminTemplateDir: path.resolve(__dirname + "/../admin_basics")
     }
     
     console.log("------------------------------------------------------------------")
@@ -44,6 +45,11 @@ module.exports = () => {
     // copy the cms to the sys dir
     console.log("Coping the cms to the \"sys\" directory")
     fse.copySync(dir.sysDir + "/build_cms", dir.installerDumpDir + "/sys/build_cms")
+
+    // copy the cms backend template the the sys dir
+    console.log("Coping the backend template to the \"sys\" dir")
+    fse.copySync(dir.adminTemplateDir + "/view", dir.installerDumpDir + "/sys/build_cms/build_cms_system/view/admin/admin_basics")
+    fse.copySync(dir.adminTemplateDir + "/www-root", dir.installerDumpDir + "/sys/build_cms/build_cms_system/www-root/admin/admin_basics")
 
     // copy the user plugins to the sys dir
     if (fs.existsSync(dir.pluginDir)) {
