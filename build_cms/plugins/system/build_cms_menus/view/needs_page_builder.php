@@ -1,1 +1,1 @@
-<h1>This plugin requires the "Build CMS page builder" to be installed</h1>
+<h1>This plugin requires the "Build CMS page builder" plugin to be installed</h1>
