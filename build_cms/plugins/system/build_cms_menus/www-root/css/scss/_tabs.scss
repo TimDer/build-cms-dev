@@ -1,0 +1,40 @@
+// ============================== tab_links ==============================
+    .tab_links {
+        margin-top: 12px;
+        border-bottom: 2px solid black;
+        display: flex;
+
+
+        // ============================== tab ==============================
+            .tab {
+                padding: 12px;
+                border: 2px solid black;
+                border-bottom: 0;
+                margin-right: 12px;
+                border-top-left-radius: 5px;
+                border-top-right-radius: 5px;
+                cursor: pointer;
+                user-select: none;
+
+                &:hover {
+                    background-color: #DBDBDB;
+                }
+
+                &:active {
+                    background-color: green;
+                }
+            }
+        // ============================== /tab ==============================
+    }
+// ============================== /tab_links ==============================
+
+// ============================== menu hide / unhide ==============================
+    .menu_container {
+        margin-top: 12px;
+        display: none;
+    }
+
+    .active {
+        display: block !important;
+    }
+// ============================== /menu hide / unhide ==============================

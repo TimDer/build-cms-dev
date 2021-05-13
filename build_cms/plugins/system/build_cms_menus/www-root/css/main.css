@@ -1,24 +1,206 @@
 .header_text {
-    background-color: #CECECE;
+  background-color: #CECECE;
 }
+
 .header_text h1 {
-    margin: 0;
-    padding: 12px;
+  margin: 0;
+  padding: 12px;
 }
 
 .main_container {
-    margin: 12px;
+  margin: 12px;
 }
 
-.save_btn {
-    background-color: green;
-    border: 2px solid green;
-    box-sizing: border-box;
-    width: 100%;
-    padding: 10px;
-    color: white;
-}
-.save_btn:active {
-    border: 2px solid black !important;
+.main_container .save_btn {
+  background-color: green;
+  border: 2px solid green;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  color: white;
 }
 
+.main_container .save_btn:active {
+  border: 2px solid black !important;
+}
+
+.tab_links {
+  margin-top: 12px;
+  border-bottom: 2px solid black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.tab_links .tab {
+  padding: 12px;
+  border: 2px solid black;
+  border-bottom: 0;
+  margin-right: 12px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.tab_links .tab:hover {
+  background-color: #DBDBDB;
+}
+
+.tab_links .tab:active {
+  background-color: green;
+}
+
+.menu_container {
+  margin-top: 12px;
+  display: none;
+}
+
+.active {
+  display: block !important;
+}
+
+.edit_container .edit_saved_container {
+  padding: 15px;
+  color: white;
+  font-size: 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: green;
+  border-radius: 5px;
+}
+
+.edit_container .edit_grid {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.edit_container .edit_grid > div {
+  padding: 10px;
+}
+
+.edit_container .edit_grid > div:first-child {
+  padding-left: 0px;
+}
+
+.edit_container .edit_grid > div:last-child {
+  padding-right: 0px;
+}
+
+.edit_container .edit_grid > .edit_sidebar {
+  -webkit-box-flex: 1.5;
+      -ms-flex: 1.5;
+          flex: 1.5;
+}
+
+.edit_container .edit_grid > .main_edit_container {
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+}
+
+.edit_container .edit_grid > .main_edit_container > * {
+  margin-bottom: 20px;
+}
+
+.edit_container .edit_sidebar > div {
+  margin-bottom: 20px;
+}
+
+.edit_container .edit_sidebar > .add_page_area {
+  border: 1px solid black;
+}
+
+.edit_container .edit_sidebar > .add_page_area > .header,
+.edit_container .edit_sidebar > .add_page_area > .main {
+  border-bottom: 1px solid black;
+}
+
+.edit_container .edit_sidebar > .add_page_area > .footer,
+.edit_container .edit_sidebar > .add_page_area > .header,
+.edit_container .edit_sidebar > .add_page_area > .main {
+  padding: 10px;
+}
+
+.edit_container select, .edit_container input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid black;
+}
+
+.edit_container input {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.edit_container input[type="text"] {
+  background-color: #CECECE;
+}
+
+.edit_container .edit_menu_area {
+  background-color: gray;
+  min-height: 300px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.edit_container .edit_menu_area .menu_item {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  background-color: white;
+}
+
+.edit_container .edit_menu_area .menu_item .header {
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-bottom: 1px solid black;
+}
+
+.edit_container .edit_menu_area .menu_item .content {
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.edit_container .edit_menu_area .menu_item .content h3 {
+  margin-top: 9px;
+  margin-bottom: 0;
+}
+
+.edit_container .edit_menu_area .menu_item .content button {
+  background-color: green;
+  border: 0;
+  padding: 10px;
+  color: white;
+  font-size: 18px;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+}
+
+.edit_container .edit_menu_area .menu_item .content .menus_area_container {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  min-height: 100px;
+  padding: 10px;
+  margin-top: 10px;
+  background-color: gray;
+}
+
+.edit_container .edit_menu_area .menu_item:last-child {
+  margin-bottom: 0;
+}

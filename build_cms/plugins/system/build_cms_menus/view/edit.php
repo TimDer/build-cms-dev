@@ -5,7 +5,7 @@
 <div class="edit_grid">
     <div class="edit_sidebar">
         <!-- ============================== add page area ============================== -->
-        <div class="add_page_area box">
+        <div class="add_page_area">
             <div class="header">
                 Add page
             </div>
@@ -16,7 +16,7 @@
                 <input type="submit" name="add_pages" value="Add pages">
             </div>
         </div>
-        <div class="add_page_area box">
+        <div class="add_page_area">
             <div class="header">
                 Custom URL
             </div>

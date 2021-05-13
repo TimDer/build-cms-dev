@@ -12,8 +12,10 @@
     <div class="content">
         <button>Delete</button>
         <?php if (build_cms_menus_subPluginModal::$type === "custom"): ?>
-            Name: <input type="text" name="">
-            Url: <input type="text" name="">
+            <h3>Name:</h3>
+            <input type="text" name="">
+            <h3>Url:</h3>
+            <input type="text" name="">
         <?php endif; ?>
         <div class="menus_area_container">
             <?php

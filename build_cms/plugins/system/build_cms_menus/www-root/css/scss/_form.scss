@@ -1,0 +1,130 @@
+.edit_container {
+    .edit_saved_container {
+        padding: 15px;
+        color: white;
+        font-size: 20px;
+        box-sizing: border-box;
+        background-color: green;
+        border-radius: 5px;
+    }
+
+    .edit_grid {
+        display: flex;
+        box-sizing: border-box;
+
+        & > div {
+            padding: 10px;
+        }
+        & > div:first-child {
+            padding-left: 0px;
+        }
+        & > div:last-child {
+            padding-right: 0px;
+        }
+        & > .edit_sidebar {
+            flex: 1.5;
+        }
+        & > .main_edit_container {
+            flex: 4;
+
+            & > * {
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .edit_sidebar {
+        > div {
+            margin-bottom: 20px;
+        }
+        
+        & > .add_page_area {
+            border: 1px solid black;
+
+            & > .header,
+            & > .main {
+                border-bottom: 1px solid black;
+            }
+
+            & > .footer,
+            & > .header,
+            & > .main {
+                padding: 10px;
+            }
+        }
+    }
+
+    select, input {
+        padding: 10px;
+        width: 100%;
+        border: 1px solid black;
+    }
+    input {
+        box-sizing: border-box;
+    }
+    input[type="text"] {
+        background-color: #CECECE;
+    }
+
+    .edit_menu_area {
+        $edit_menu_area_background_color: gray;
+
+        background-color: $edit_menu_area_background_color;
+        min-height: 300px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        box-sizing: border-box;
+
+        .menu_item {
+            box-sizing: border-box;
+            border-radius: 5px;
+            border: 1px solid black;
+            margin-bottom: 10px;
+            background-color: white;
+
+            .header {
+                padding: 10px;
+                box-sizing: border-box;
+                border-bottom: 1px solid black;
+            }
+
+            .content {
+                padding: 10px;
+                box-sizing: border-box;
+
+                h3 {
+                    margin-top: 9px;
+                    margin-bottom: 0;
+                }
+
+                button {
+                    background-color: green;
+                    border: 0;
+                    padding: 10px;
+                    color: white;
+                    font-size: 18px;
+                    border-radius: 5px;
+                    width: 100%;
+                    cursor: pointer;
+                }
+
+                .menus_area_container {
+                    box-sizing: border-box;
+                    min-height: 100px;
+                    padding: 10px;
+                    margin-top: 10px;
+                    background-color: $edit_menu_area_background_color;
+                }
+            }
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+.add_container {
+    
+}

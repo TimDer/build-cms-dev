@@ -1,0 +1,23 @@
+.header_text {
+    background-color: #CECECE;
+}
+.header_text h1 {
+    margin: 0;
+    padding: 12px;
+}
+
+.main_container {
+    margin: 12px;
+
+    .save_btn {
+        background-color: green;
+        border: 2px solid green;
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px;
+        color: white;
+    }
+    .save_btn:active {
+        border: 2px solid black !important;
+    }
+}
