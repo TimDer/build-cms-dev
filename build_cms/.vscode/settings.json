@@ -14,7 +14,7 @@
         "docker/**",
         "installer-dump/**",
         "node/**",
-        "node_modules/**",
+        "**/node_modules/**",
         ".vscode/**"
     ]
 }
