@@ -1,23 +1,45 @@
 <div class="menu_item"<?php
         ?> the_name="<?php echo build_cms_menus_subPluginModal::$the_name; ?>"<?php
         ?> the_url="<?php echo build_cms_menus_subPluginModal::$the_url; ?>"<?php
-        ?> id="<?php echo build_cms_menus_subPluginModal::$the_id; ?>"<?php
+        ?> item_id="<?php echo build_cms_menus_subPluginModal::$the_id; ?>"<?php
         ?> parent_id="<?php echo build_cms_menus_subPluginModal::$parent_id; ?>"<?php
         ?> type="<?php echo build_cms_menus_subPluginModal::$type; ?>">
 
     <div class="header">
-        <?php echo build_cms_menus_subPluginModal::$the_name; ?>
+        <?php
+        if (isset( pluginClass_build_cms_menus_customItems::$custom_item[build_cms_menus_subPluginModal::$type]["function_name"] )) {
+            echo pluginClass_build_cms_menus_customItems::$custom_item[build_cms_menus_subPluginModal::$type]["function_name"]->__invoke(
+                build_cms_menus_subPluginModal::$the_id,
+                build_cms_menus_subPluginModal::$the_name,
+                build_cms_menus_subPluginModal::$the_url,
+                build_cms_menus_subPluginModal::$type,
+                build_cms_menus_subPluginModal::$parent_id
+            );
+        }
+        else {
+            echo build_cms_menus_subPluginModal::$the_name;
+        }
+        ?>
     </div>
 
-    <div class="content">
+    <div class="content" style="display: none;">
         <button>Delete</button>
-        <?php if (build_cms_menus_subPluginModal::$type === "custom"): ?>
-            <h3>Name:</h3>
-            <input type="text" name="">
-            <h3>Url:</h3>
-            <input type="text" name="">
-        <?php endif; ?>
-        <div class="menus_area_container">
+        <?php
+        if (isset(pluginClass_build_cms_menus_customItems::$custom_item[ build_cms_menus_subPluginModal::$type ]["function"])) {
+            ?>
+            <div class="item_content">
+                <?php pluginClass_build_cms_menus_customItems::$custom_item[build_cms_menus_subPluginModal::$type]["function"]->__invoke(
+                    build_cms_menus_subPluginModal::$the_id,
+                    build_cms_menus_subPluginModal::$the_name,
+                    build_cms_menus_subPluginModal::$the_url,
+                    build_cms_menus_subPluginModal::$type,
+                    build_cms_menus_subPluginModal::$parent_id
+                ); ?>
+            </div>
+            <?php
+        }
+        ?>
+        <div class="edit_menu_area menus_area_container">
             <?php
                 build_cms_menus_menus_pluginSubController::get_menu_items(
                     build_cms_menus_subPluginModal::$the_array,

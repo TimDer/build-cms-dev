@@ -3,6 +3,7 @@
 require config_dir::PLUGINDIR(__DIR__, "/scripts/menu.php");
 require config_dir::PLUGINDIR(__DIR__, "/scripts/blocks.php");
 require config_dir::PLUGINDIR(__DIR__, "/scripts/template_loader_head.php");
+require config_dir::PLUGINDIR(__DIR__, "/scripts/build_cms_menus.php");
 
 // set template (page builder)
 build_cms_page_builder_template_loader::set_template();

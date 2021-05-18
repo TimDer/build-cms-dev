@@ -3,7 +3,7 @@
 </div>
 
 <div class="main_container">
-    <input type="submit" value="Save" class="save_btn">
+    <input type="submit" value="Save" class="save_btn" id="saveTheMenuBtn">
 
     <div class="tab_links">
         <div class="tab" tab_toggle="#edit_menu">
