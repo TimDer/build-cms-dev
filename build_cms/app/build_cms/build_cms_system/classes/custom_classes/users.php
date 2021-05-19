@@ -15,7 +15,7 @@ class users {
     }
 
     public static function is_developer($function = false, $else = false) {
-        if (config::get_config()["dev_mode_on"] === true) {
+        if (isset(config::get_config()["dev_mode_on"]) && config::get_config()["dev_mode_on"] === true) {
             return (is_callable($function)) ? $function() : true;
         }
         else {
