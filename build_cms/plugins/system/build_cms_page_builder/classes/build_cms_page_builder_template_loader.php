@@ -21,18 +21,22 @@ class build_cms_page_builder_template_loader {
             $page_array = (isset($array_or_building_blocks_area["page_array"])) ? $array_or_building_blocks_area["page_array"] : "default";
             $building_blocks_area = (isset($array_or_building_blocks_area["area"])) ? $array_or_building_blocks_area["area"] : "";
             $error_404 = (isset($array_or_building_blocks_area["error_404"])) ? $array_or_building_blocks_area["error_404"] : "404 error";
+            $uri_to_page = (isset($array_or_building_blocks_area["page_uri"])) ? $array_or_building_blocks_area["page_uri"] : false;
         }
         else  {
             $page_id = "use_url";
             $page_array = "default";
             $building_blocks_area = $array_or_building_blocks_area;
             $error_404 = "404 error";
+            $uri_to_page = false;
         }
 
         build_cms_page_builder_page_functions::set_load_block_template_function("wysiwyg", function ($data) { self::load_wysiwyg($data); });
         build_cms_page_builder_page_functions::set_load_block_template_function("plain_text", function ($data) { self::load_plain_text($data); });
         build_cms_page_builder_page_functions::set_load_block_template_function("create_columns", function ($data, $error_404) { self::load_create_columns($data, $error_404); });
         build_cms_page_builder_page_functions::set_load_block_template_function("subcategories", function ($data, $error_404) { self::load_subcategories($data, $error_404); });
+
+        $select_column_names = "`id`, `url`, `status`, `post_page`, `home_page`, `choose_template`, `pagename`, `time_stamp`";
 
         if (is_array($page_array)) {
             if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"]) && isset($page_array["choose_template"])) {
@@ -44,7 +48,7 @@ class build_cms_page_builder_template_loader {
         }
         elseif (is_int($page_id)) {
             // get page using page id
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `id`='$page_id'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `id`='$page_id'")[0];
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
@@ -53,14 +57,28 @@ class build_cms_page_builder_template_loader {
                 echo $error_404;
             }
         }
-        elseif ((user_url::uri_string() !== "/" AND user_url::uri_string() !== "") AND $page_id === "use_url") {
+        elseif (
+            (
+                (user_url::uri_string() !== "/" AND user_url::uri_string() !== "") OR
+                ($uri_to_page !== false AND ( $uri_to_page !== "/" AND $uri_to_page !== "" ))
+            ) AND
+            $page_id === "use_url"
+        ) {
+            // prepair the uri array
+            if ($uri_to_page !== false) {
+                $uri_override = explode("/", trim($uri_to_page, "/"));
+            }
+            else {
+                $uri_override = user_url::uri();
+            }
+
             $prepare_sql_url = array();
-            foreach (user_url::uri() AS $uri) {
+            foreach ($uri_override AS $uri) {
                 $prepare_sql_url[] = "`url`='" . $uri . "'";
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE $where_string"), user_url::uri() );
+            $pages_sql = self::fix_page_array( database::select("SELECT $select_column_names FROM `page` WHERE $where_string"), $uri_override );
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
@@ -71,7 +89,7 @@ class build_cms_page_builder_template_loader {
         }
         else {
             // get home page
-            $pages_sql = database::select("SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `home_page`='true'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `home_page`='true'")[0];
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
