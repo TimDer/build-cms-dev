@@ -5,5 +5,9 @@ Dies ist der hallo welt pagina<br><br>
 <br><br><br><br>
 
 <div>
-    <?php build_cms_page_builder_template_loader::get_page("content"); ?>
+    <?php
+    if (class_exists("build_cms_page_builder_template_loader")) {
+        build_cms_page_builder_template_loader::get_page("content");
+    }
+    ?>
 </div>
