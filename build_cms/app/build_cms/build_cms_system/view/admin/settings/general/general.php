@@ -60,4 +60,6 @@
         
         <input type="submit" value="submit" class="submit">
     </form>
+
+    <h1>Build-CMS version: 1.0.0</h1>
 </div>

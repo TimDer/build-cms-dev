@@ -36,7 +36,7 @@ ENV TrustedDomains=false
 ENV call_plugin_definer=true
 ENV call_plugin_routes=true
 ENV dev_mode_on=false
-ENV cms_version=1.0
+ENV cms_version=1.0.0
 
 # run apache in the foreground
 CMD apachectl -D FOREGROUND
