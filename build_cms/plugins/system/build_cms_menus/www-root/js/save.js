@@ -3,8 +3,10 @@ $(document).ready(function () {
         var data_array = {
             "menu_name": $("#rename_menu_name").val(),
             "menu_id": $("#select_edit_menu").val(),
-            "data": save_the_menu( $(".edit_menu_area .menu_item") )
+            "data": save_the_menu( $(".edit_menu_area") )
         };
+
+        console.log(data_array);
 
         $.ajax({
             enctype: 'application/x-www-form-urlencoded',

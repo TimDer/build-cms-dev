@@ -36,12 +36,13 @@ class build_cms_menus_menus_pluginController extends controller {
             database::query("UPDATE `menu_name` SET `menu_name`='$menu_name' WHERE `id`='$menu_id'");
         }
 
-        foreach ($menu["data"] AS $menu_key => $menu_value) {
+        foreach ($menu["data"] AS $menu_value) {
 
             $id = $menu_value["id"];
             $parent_id = $menu_value["parent_id"];
+            $the_order = $menu_value["the_order"];
 
-            database::query("UPDATE `menu_content` SET `parent_id`='$parent_id' WHERE `id`='$id'");
+            database::query("UPDATE `menu_content` SET `parent_id`='$parent_id', `the_order`='$the_order' WHERE `id`='$id'");
             
             if (isset( pluginClass_build_cms_menus_customItems::$custom_item[$menu_value["type"]]["function_save"] )) {
                 pluginClass_build_cms_menus_customItems::$custom_item[$menu_value["type"]]["function_save"]->__invoke($menu_value);

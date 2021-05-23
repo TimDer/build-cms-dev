@@ -5,27 +5,32 @@ function save_the_menu(this_menu) {
 
     var num = 0;
     this_menu.each(function () {
-        var data;
-        if ($(this).attr("type") in save_menu_to_array_functions) {
-            data = save_menu_to_array_functions[$(this).attr("type")].save_function(
-                $(this).children(".content").children(".item_content"),
-                $(this).attr("item_id"),
-                $(this).attr("the_url"),
-                $(this).parent().attr("parent_id"),
-                $(this).attr("the_name"),
-            );
-        }
-        else {
-            data = null;
-        }
-
-        return_array[num] = {
-            id: $(this).attr("item_id"),
-            type: $(this).attr("type"),
-            parent_id: $(this).parent().attr("parent_id"),
-            data: data
-        };
-        num++;
+        var order = 1;
+        $(this).children(".menu_item").each(function () {
+            var data;
+            if ($(this).attr("type") in save_menu_to_array_functions) {
+                data = save_menu_to_array_functions[$(this).attr("type")].save_function(
+                    $(this).children(".content").children(".item_content"),
+                    $(this).attr("item_id"),
+                    $(this).attr("the_url"),
+                    $(this).parent().attr("parent_id"),
+                    $(this).attr("the_name"),
+                );
+            }
+            else {
+                data = null;
+            }
+    
+            return_array[num] = {
+                id: $(this).attr("item_id"),
+                type: $(this).attr("type"),
+                parent_id: $(this).parent().attr("parent_id"),
+                the_order: order,
+                data: data
+            };
+            num++;
+            order++;
+        });
     });
 
     return return_array;
