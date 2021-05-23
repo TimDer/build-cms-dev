@@ -1,22 +1,11 @@
-<div class="edit_saved_container">
+<div class="edit_saved_container" id="saved-container-message">
     Saved
 </div>
 
 <div class="edit_grid">
     <div class="edit_sidebar">
         <!-- ============================== add page area ============================== -->
-        <div class="add_page_area">
-            <div class="header">
-                Add page
-            </div>
-            <div class="main">
-                content
-            </div>
-            <div class="footer">
-                <input type="submit" name="add_pages" value="Add pages">
-            </div>
-        </div>
-        <div class="add_page_area">
+        <div class="add_item_area">
             <div class="header">
                 Custom URL
             </div>
@@ -30,11 +19,25 @@
                 <input type="submit" name="add_url" value="Add url">
             </div>
         </div>
+
+        <div class="custom-area">
+            <?php
+            if (is_array(pluginClass_build_cms_menus_customAreas::$custom_area) && !empty(pluginClass_build_cms_menus_customAreas::$custom_area)) {
+                foreach (pluginClass_build_cms_menus_customAreas::$custom_area AS $value) {
+                    ?>
+                    <div class="area-<?php echo $value["name"]; ?>">
+                        <?php $value["area"]->__invoke(); ?>
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
         <!-- ============================== /add page area ============================== -->
     </div>
     <div class="main_edit_container">
         <!-- ============================== select a menu ============================== -->
-        <select name="menu_name">
+        <select name="menu_name" id="select_edit_menu">
             <option value="0" disabled<?php echo (isset(user_url::$get_var["editMenuId"])) ? "" : " selected"; ?>>Select a menu</option>
             <?php foreach (build_cms_menus_pluginModal::$menus_names_array AS $name): ?>
                 <option value="<?php echo $name["id"]; ?>"<?php echo (isset(user_url::$get_var["editMenuId"]) AND user_url::$get_var["editMenuId"] === $name["id"]) ? " selected" : ""; ?>>
@@ -45,11 +48,11 @@
         <!-- ============================== /select a menu ============================== -->
 
         <!-- ============================== Menu name ============================== -->
-        <input type="text" name="rename_menu_name">
+        <input type="text" name="rename_menu_name" id="rename_menu_name">
         <!-- ============================== /Menu name ============================== -->
 
         <!-- ============================== edit menu area ============================== -->
-        <div class="edit_menu_area">
+        <div class="edit_menu_area" parent_id="0">
             <?php build_cms_menus_menus_pluginSubController::get_menu_items(build_cms_menus_pluginModal::$menus_data_array, 0); ?>
         </div>
         <!-- ============================== /edit menu area ============================== -->

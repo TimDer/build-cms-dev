@@ -1,0 +1,17 @@
+.area-page > .add_item_area > .main {
+    padding: 17px !important;
+}
+
+.area-page .page_builder-checkbox-area {
+    margin-bottom: 25px;
+}
+
+.area-page .page_builder-checkbox-area:last-child {
+    margin-bottom: 0;
+}
+
+.area-page .page_builder-add-page-checkbox {
+    width: auto;
+    transform: scale(3);
+    margin-right: 15px;
+}
