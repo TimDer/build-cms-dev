@@ -1,14 +1,34 @@
+select, input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid black;
+}
+input {
+    box-sizing: border-box;
+}
+input[type="text"] {
+    background-color: #CECECE;
+}
+
 .edit_container {
-    .edit_saved_container {
+    & > .edit_saved_container {
         padding: 15px;
         color: white;
         font-size: 20px;
         box-sizing: border-box;
         background-color: green;
         border-radius: 5px;
+        display: none;
     }
 
-    .edit_grid {
+    & > .saved_saved_container {
+        display: block;
+    }
+    & > .error_saved_container {
+        background-color: red;
+    }
+
+    & > .edit_grid {
         display: flex;
         box-sizing: border-box;
 
@@ -30,99 +50,100 @@
             & > * {
                 margin-bottom: 20px;
             }
-        }
-    }
 
-    .edit_sidebar {
-        > div {
-            margin-bottom: 20px;
-        }
+            .edit_menu_area {
+                $edit_menu_area_background_color: gray;
         
-        & > .add_page_area {
-            border: 1px solid black;
-
-            & > .header,
-            & > .main {
-                border-bottom: 1px solid black;
-            }
-
-            & > .footer,
-            & > .header,
-            & > .main {
+                background-color: $edit_menu_area_background_color;
+                min-height: 100px;
+                width: 100%;
                 padding: 10px;
+                border-radius: 5px;
+                box-sizing: border-box;
+        
+                .menu_item {
+                    box-sizing: border-box;
+                    border-radius: 5px;
+                    border: 1px solid black;
+                    margin-bottom: 10px;
+                    background-color: white;
+        
+                    .header {
+                        padding: 10px;
+                        box-sizing: border-box;
+                        cursor: pointer;
+                    }
+        
+                    .content {
+                        padding: 10px;
+                        box-sizing: border-box;
+                        border-top: 1px solid black;
+        
+                        h3 {
+                            margin-top: 9px;
+                            margin-bottom: 0;
+                        }
+        
+                        button {
+                            background-color: green;
+                            border: 0;
+                            padding: 10px;
+                            color: white;
+                            font-size: 18px;
+                            border-radius: 5px;
+                            width: 100%;
+                            cursor: pointer;
+                        }
+        
+                        .menus_area_container {
+                            margin-top: 10px;
+                            border-radius: 0;
+                        }
+                    }
+        
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
             }
         }
-    }
 
-    select, input {
-        padding: 10px;
-        width: 100%;
-        border: 1px solid black;
-    }
-    input {
-        box-sizing: border-box;
-    }
-    input[type="text"] {
-        background-color: #CECECE;
-    }
-
-    .edit_menu_area {
-        $edit_menu_area_background_color: gray;
-
-        background-color: $edit_menu_area_background_color;
-        min-height: 300px;
-        width: 100%;
-        padding: 10px;
-        border-radius: 5px;
-        box-sizing: border-box;
-
-        .menu_item {
-            box-sizing: border-box;
-            border-radius: 5px;
-            border: 1px solid black;
-            margin-bottom: 10px;
-            background-color: white;
-
-            .header {
-                padding: 10px;
-                box-sizing: border-box;
-                border-bottom: 1px solid black;
+        & > .edit_sidebar {
+            > div {
+                margin-bottom: 20px;
             }
+            
+            & .add_item_area {
+                border: 1px solid black;
 
-            .content {
-                padding: 10px;
-                box-sizing: border-box;
-
-                h3 {
-                    margin-top: 9px;
-                    margin-bottom: 0;
-                }
-
-                button {
-                    background-color: green;
-                    border: 0;
-                    padding: 10px;
-                    color: white;
-                    font-size: 18px;
-                    border-radius: 5px;
-                    width: 100%;
+                & > .header {
                     cursor: pointer;
                 }
-
-                .menus_area_container {
-                    box-sizing: border-box;
-                    min-height: 100px;
-                    padding: 10px;
-                    margin-top: 10px;
-                    background-color: $edit_menu_area_background_color;
+    
+                & > .header,
+                & > .main {
+                    border-bottom: 1px solid black;
                 }
-            }
+    
+                & > .footer,
+                & > .header,
+                & > .main {
+                    padding: 10px;
+                }
 
-            &:last-child {
-                margin-bottom: 0;
+                & > .main,
+                & > .footer {
+                    display: none;
+                }
             }
         }
     }
+
+    
+
+
+
+    
 }
 
 .add_container {

@@ -2,7 +2,6 @@
         ?> the_name="<?php echo build_cms_menus_subPluginModal::$the_name; ?>"<?php
         ?> the_url="<?php echo build_cms_menus_subPluginModal::$the_url; ?>"<?php
         ?> item_id="<?php echo build_cms_menus_subPluginModal::$the_id; ?>"<?php
-        ?> parent_id="<?php echo build_cms_menus_subPluginModal::$parent_id; ?>"<?php
         ?> type="<?php echo build_cms_menus_subPluginModal::$type; ?>">
 
     <div class="header">
@@ -39,7 +38,7 @@
             <?php
         }
         ?>
-        <div class="edit_menu_area menus_area_container">
+        <div class="edit_menu_area menus_area_container" parent_id="<?php echo build_cms_menus_subPluginModal::$the_id ?>">
             <?php
                 build_cms_menus_menus_pluginSubController::get_menu_items(
                     build_cms_menus_subPluginModal::$the_array,
