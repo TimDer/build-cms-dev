@@ -364,7 +364,7 @@
                     "membership": "0",
                     "new_user_default_role": "author",
                     "tamplateLoaderID": "0",
-                    "cms_version": "1.0"
+                    "cms_version": "1.0.0"
                 }
             ]
         },
