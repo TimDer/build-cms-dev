@@ -29,8 +29,8 @@ class build_cms_menus_menus_pluginController extends controller {
     }
 
     public static function save_menu($menu) {
-        $menu_name = $menu["menu_name"];
-        $menu_id = $menu["menu_id"];
+        $menu_name = (isset($menu["menu_name"])) ? $menu["menu_name"] : "";
+        $menu_id = (isset($menu["menu_id"])) ? $menu["menu_id"] : 0;
 
         if ($menu_name !== "") {
             database::query("UPDATE `menu_name` SET `menu_name`='$menu_name' WHERE `id`='$menu_id'");
