@@ -61,5 +61,5 @@
         <input type="submit" value="submit" class="submit">
     </form>
 
-    <h1>Build-CMS version: 1.0.0</h1>
+    <h1>Build-CMS version: <?php echo admin_basicsModal::$version; ?></h1>
 </div>
