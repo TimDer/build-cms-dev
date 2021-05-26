@@ -1,6 +1,6 @@
 /*
 
-TD-AJAX Version 1.1
+TD-AJAX Version 1.2
 
 Other required files:
   1. jQuery (tested with version: v3.3.1)
@@ -12,6 +12,28 @@ var successMessage  = "";
 var errorMessage    = "";
 var allowResponse   = true;
 var BASE_URL        = $("#build_cms_base_url").attr("base_url");
+
+// on success function
+on_success_functions = {};
+function set_on_success_function(name, on_success_function, display_response = true) {
+    if (!(name in on_success_functions)) {
+        on_success_functions[name] = {
+            function: on_success_function,
+            display_response: display_response
+        }
+    }
+};
+
+// on error function
+on_error_functions = {};
+function set_on_error_function(name, on_error_function, display_response = true) {
+    if (!(name in on_error_functions)) {
+        on_error_functions[name] = {
+            function: on_error_function,
+            display_response: display_response
+        }
+    }
+};
 
 // toggle checked on checkboxes
 $("form.td-ajax, body").find("[type='checkbox']").each(function () {
@@ -69,25 +91,57 @@ $("form.td-ajax").on("submit", function (e) {
         type: method,
         data: data,
         success: function (response) {
-            if (successMessage === "" && allowResponse === true) {
-                alert(response);
+            if (
+                (
+                    formTag.attr("td-ajax-on-success") !== undefined &&
+                    formTag.attr("td-ajax-on-success") in on_success_functions &&
+                    on_success_functions[formTag.attr("td-ajax-on-success")].display_response === true
+                ) ||
+                (
+                    formTag.attr("td-ajax-on-success") === undefined ||
+                    on_success_functions[formTag.attr("td-ajax-on-success")] === undefined
+                )
+            ) {
+                if (successMessage === "" && allowResponse === true) {
+                    alert(response);
+                }
+                else if (successMessage !== "" && allowResponse === true) {
+                    alert(successMessage + ": " + response);
+                }
+                else {
+                    alert(successMessage);
+                }
             }
-            else if (successMessage !== "" && allowResponse === true) {
-                alert(successMessage + ": " + response);
-            }
-            else {
-                alert(successMessage);
+            
+            if ( formTag.attr("td-ajax-on-success") !== undefined && formTag.attr("td-ajax-on-success") in on_success_functions ) {
+                on_success_functions[formTag.attr("td-ajax-on-success")].function(response);
             }
         },
         error: function (response) {
-            if (errorMessage === "" && allowResponse === true) {
-                alert(response);
+            if (
+                (
+                    formTag.attr("td-ajax-on-error") !== undefined &&
+                    formTag.attr("td-ajax-on-error") in on_error_functions &&
+                    on_error_function[formTag.attr("td-ajax-on-error")].display_response === true
+                ) ||
+                (
+                    formTag.attr("td-ajax-on-error") === undefined ||
+                    on_error_function[formTag.attr("td-ajax-on-error")] === undefined
+                )
+            ) {
+                if (errorMessage === "" && allowResponse === true) {
+                    alert(response);
+                }
+                else if (errorMessage !== "" && allowResponse === true) {
+                    alert(errorMessage + ": " + response);
+                }
+                else {
+                    alert(errorMessage);
+                }
             }
-            else if (errorMessage !== "" && allowResponse === true) {
-                alert(errorMessage + ": " + response);
-            }
-            else {
-                alert(errorMessage);
+
+            if ( formTag.attr("td-ajax-on-error") !== undefined && formTag.attr("td-ajax-on-error") in on_error_functions ) {
+                on_error_functions[formTag.attr("td-ajax-on-error")].function(response);
             }
         }
     });

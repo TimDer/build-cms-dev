@@ -228,3 +228,8 @@ input[type="text"] {
 .edit_container > .edit_grid > .edit_sidebar .add_item_area > .footer {
   display: none;
 }
+
+.manage_container input,
+.manage_container select {
+  margin-bottom: 10px;
+}

@@ -7,8 +7,8 @@
         <div class="tab" tab_toggle="#edit_menu">
             Edit menu
         </div>
-        <div class="tab" tab_toggle="#add_menu">
-            Add menu
+        <div class="tab" tab_toggle="#manage_menu">
+            Manage menus
         </div>
     </div>
 
@@ -16,7 +16,7 @@
         <div class="edit_container menu_container active" id="edit_menu">
             <?php controller::getView("/edit.php", __DIR__); ?>
         </div>
-        <div class="add_container menu_container" id="add_menu">
+        <div class="manage_container menu_container" id="manage_menu">
             <?php controller::getView("/add.php", __DIR__); ?>
         </div>
     </div>

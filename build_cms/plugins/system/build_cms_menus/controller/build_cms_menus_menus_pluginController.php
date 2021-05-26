@@ -62,9 +62,11 @@ class build_cms_menus_menus_pluginController extends controller {
                                                                     '$menu_id')");
                     $menu["data"][$menu_key]["id"] = database::$conn->insert_id;
                     $menu_value["id"] = database::$conn->insert_id;
+                    $menu_value["db_status"] = "new";
                 }
                 else {
                     database::query("UPDATE `menu_content` SET `parent_id`='$parent_id', `the_order`='$the_order' WHERE `id`='$id'");
+                    $menu_value["db_status"] = "update";
                 }
 
                 $return_data[$parent_id][$the_order] = $menu_value;
@@ -97,10 +99,60 @@ class build_cms_menus_menus_pluginController extends controller {
     }
 
     public static function save_menu_custom($array) {
-        $id     = $array["id"];
-        $name   = $array["data"]["name"];
-        $url    = $array["data"]["url"];
+        if ($array["db_status"] === "update") {
+            $id     = $array["id"];
+            $name   = $array["data"]["name"];
+            $url    = $array["data"]["url"];
+    
+            database::query("UPDATE `menu_content` SET `the_name`='$name', `the_url`='$url' WHERE `id`='$id'");
+        }
+    }
 
-        database::query("UPDATE `menu_content` SET `the_name`='$name', `the_url`='$url' WHERE `id`='$id'");
+    public static function add_menu($post) {
+        $name = $post["menu_name"];
+        $id = false;
+        $alert = "The menu has been added";
+
+        if ($name !== "") {
+            database::query("INSERT INTO `menu_name` (`menu_name`) VALUES ('$name')");
+
+            if (database::query_result()) {
+                $id = database::$conn->insert_id;
+            }
+            else {
+                $alert = "Something went wrong";
+            }
+        }
+        else {
+            $alert = "Something went wrong";
+        }
+
+        echo json_encode(array(
+            "alert" => $alert,
+            "id" => $id,
+            "name" => $name
+        ));
+    }
+
+    public static function delete_menu($post) {
+        $menu_id = $post["menu_id"];
+
+        database::query("DELETE FROM `menu_name` WHERE `id`='$menu_id'");
+
+        if (database::query_result()) {
+            database::reset();
+            database::query("DELETE FROM `menu_content` WHERE `menu_name_id`='$menu_id'");
+
+            if (database::query_result()) {
+                database::reset();
+                foreach (pluginClass_build_cms_menus_deleteMenu::$delete_menu AS $func) {
+                    if (is_callable($func["delete_menu"])) {
+                        $func["delete_menu"]->__invoke();
+                    }
+                }
+            }
+        }
+
+        header("Location: " . config_url::BASE("/admin/settings/menus"));
     }
 }
