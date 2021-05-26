@@ -22,7 +22,7 @@
     </div>
 
     <div class="content" style="display: none;">
-        <button>Delete</button>
+        <button class="delete_the_item_from_the_menu">Delete</button>
         <?php
         if (isset(pluginClass_build_cms_menus_customItems::$custom_item[ build_cms_menus_subPluginModal::$type ]["function"])) {
             ?>

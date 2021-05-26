@@ -36,23 +36,63 @@ class build_cms_menus_menus_pluginController extends controller {
             database::query("UPDATE `menu_name` SET `menu_name`='$menu_name' WHERE `id`='$menu_id'");
         }
 
-        foreach ($menu["data"] AS $menu_value) {
+        $return_data = array();
+        if (!empty($menu["data"])) {
+            foreach ($menu["data"] AS $menu_key => $menu_value) {
 
-            $id = $menu_value["id"];
-            $parent_id = $menu_value["parent_id"];
-            $the_order = $menu_value["the_order"];
+                $id = $menu_value["id"];
+                $parent_id = $menu_value["parent_id"];
+                $the_order = $menu_value["the_order"];
+                $type = $menu_value["type"];
+                $name = $menu_value["name"];
+                $url = $menu_value["url"];
+    
+                if ($id === "new") {
+                    database::query("INSERT INTO `menu_content` (`the_name`,
+                                                                    `the_url`,
+                                                                    `type`,
+                                                                    `the_order`,
+                                                                    `parent_id`,
+                                                                    `menu_name_id`)
+                                                            VALUES ('$name',
+                                                                    '$url',
+                                                                    '$type',
+                                                                    '$the_order',
+                                                                    '$parent_id',
+                                                                    '$menu_id')");
+                    $menu["data"][$menu_key]["id"] = database::$conn->insert_id;
+                    $menu_value["id"] = database::$conn->insert_id;
+                }
+                else {
+                    database::query("UPDATE `menu_content` SET `parent_id`='$parent_id', `the_order`='$the_order' WHERE `id`='$id'");
+                }
 
-            database::query("UPDATE `menu_content` SET `parent_id`='$parent_id', `the_order`='$the_order' WHERE `id`='$id'");
-            
-            if (isset( pluginClass_build_cms_menus_customItems::$custom_item[$menu_value["type"]]["function_save"] )) {
-                pluginClass_build_cms_menus_customItems::$custom_item[$menu_value["type"]]["function_save"]->__invoke($menu_value);
+                $return_data[$parent_id][$the_order] = $menu_value;
+                
+                if (isset( pluginClass_build_cms_menus_customItems::$custom_item[$type]["function_save"] )) {
+                    pluginClass_build_cms_menus_customItems::$custom_item[$menu_value["type"]]["function_save"]->__invoke($menu_value);
+                }
+            }
+        }
+
+        if (!empty($menu["remove"])) {
+            foreach ($menu["remove"] AS $menu_remove) {
+                $id = $menu_remove["id"];
+                $type = $menu_value["type"];
+
+                database::query("DELETE FROM `menu_content` WHERE `id`='$id' AND `menu_name_id`='$menu_id'");
+
+                if (isset( pluginClass_build_cms_menus_customItems::$custom_item[$type]["function_remove"] )) {
+                    pluginClass_build_cms_menus_customItems::$custom_item[$type]["function_remove"]->__invoke();
+                }
             }
         }
 
         echo json_encode(array(
             "status" => "ok",
             "menu_id" => $menu_id,
-            "menu_name" => ($menu_name !== "") ? $menu_name : false
+            "menu_name" => ($menu_name !== "") ? $menu_name : false,
+            "data" => $return_data
         ), JSON_PRETTY_PRINT);
     }
 
