@@ -126,6 +126,11 @@
                 padding: 10px;
             }
 
+            & > .main {
+                max-height: 200px;
+                overflow-y: scroll;
+            }
+
             & > .main,
             & > .footer {
                 display: none;

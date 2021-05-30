@@ -224,6 +224,11 @@ input[type="text"] {
   padding: 10px;
 }
 
+.edit_container > .edit_grid > .edit_sidebar .add_item_area > .main {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
 .edit_container > .edit_grid > .edit_sidebar .add_item_area > .main,
 .edit_container > .edit_grid > .edit_sidebar .add_item_area > .footer {
   display: none;
