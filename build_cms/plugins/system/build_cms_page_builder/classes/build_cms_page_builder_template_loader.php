@@ -36,10 +36,10 @@ class build_cms_page_builder_template_loader {
         build_cms_page_builder_page_functions::set_load_block_template_function("create_columns", function ($data, $error_404) { self::load_create_columns($data, $error_404); });
         build_cms_page_builder_page_functions::set_load_block_template_function("subcategories", function ($data, $error_404) { self::load_subcategories($data, $error_404); });
 
-        $select_column_names = "`id`, `url`, `status`, `post_page`, `home_page`, `choose_template`, `pagename`, `time_stamp`";
+        $select_column_names = "`id`, `url_name`, `status`, `post_page`, `home_page`, `choose_template`, `pagename`, `time_stamp`";
 
         if (is_array($page_array)) {
-            if (isset($page_array["id"]) && isset($page_array["url"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"]) && isset($page_array["choose_template"])) {
+            if (isset($page_array["id"]) && isset($page_array["url_name"]) && isset($page_array["status"]) && isset($page_array["post_page"]) && isset($page_array["home_page"]) && isset($page_array["choose_template"])) {
                 self::load_blocks($page_array, $building_blocks_area, $error_404);
             }
             else {
@@ -74,7 +74,7 @@ class build_cms_page_builder_template_loader {
 
             $prepare_sql_url = array();
             foreach ($uri_override AS $uri) {
-                $prepare_sql_url[] = "`url`='" . $uri . "'";
+                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
@@ -106,7 +106,7 @@ class build_cms_page_builder_template_loader {
         if ($array !== false && count($array) === count($user_url_uri)) {
             // key number to page url
             foreach ($array AS $sub_array) {
-                $new_array[$sub_array["url"]] = $sub_array;
+                $new_array[$sub_array["url_name"]] = $sub_array;
             }
     
             // set page array in the uri order
@@ -193,11 +193,11 @@ class build_cms_page_builder_template_loader {
         $the_limit = $subcategories_sql["the_limit"];
 
         if ($subcategories_sql["limit_type"] === "no-limit") {
-            $query = "SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort";
+            $query = "SELECT `id`, `url_name`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort";
             $page_array = database::select($query);
         }
         else {
-            $query = "SELECT `id`, `url`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort LIMIT $the_limit";
+            $query = "SELECT `id`, `url_name`, `status`, `post_page`, `home_page`, `choose_template` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort LIMIT $the_limit";
             $page_array = database::select($query);
         }
 
@@ -247,20 +247,20 @@ class build_cms_page_builder_template_loader {
 
         if (is_int($page)) {
             // get by id
-            $page_array = database::select("SELECT `id`, `url`, `post_page` FROM `page` WHERE `id`='$page' AND `status`='published'")[0];
+            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `id`='$page' AND `status`='published'")[0];
         }
         elseif ($page === "") {
-            $page_array = database::select("SELECT `id`, `url`, `post_page` FROM `page` WHERE `home_page`='true' AND `status`='published'")[0];
+            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `home_page`='true' AND `status`='published'")[0];
         }
         else {
             $prepare_sql_url = array();
             foreach ($page AS $uri) {
-                $prepare_sql_url[] = "`url`='" . $uri . "'";
+                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
             
-            $page_array = self::fix_page_array( database::select("SELECT `id`, `url`, `status`, `post_page` FROM `page` WHERE $where_string"), $page );
+            $page_array = self::fix_page_array( database::select("SELECT `id`, `url_name`, `status`, `post_page` FROM `page` WHERE $where_string"), $page );
         }
 
         $page_id = $page_array["id"];
@@ -381,11 +381,11 @@ class build_cms_page_builder_template_loader {
         if (user_url::uri_string() !== "/") {
             $prepare_sql_url = array();
             foreach (user_url::uri() AS $uri) {
-                $prepare_sql_url[] = "`url`='" . $uri . "'";
+                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
             }
     
             $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE $where_string"), user_url::uri() );
+            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url_name`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE $where_string"), user_url::uri() );
     
             if (empty($pages_sql["pagetitle"]) && empty($pages_sql['description'])) {
                 $select_query = "`sidetitle`, `sideslogan`";

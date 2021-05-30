@@ -52,6 +52,7 @@
                     <input type="text" name="pagename" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_name_imput; ?>">
                     <p>URL name</p>
                     <input type="text" name="url" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_url_imput; ?>">
+                    <input type="hidden" name="old-url" value="<?php echo build_cms_page_builder_add_page_pluginModal::$page_url_imput; ?>">
                     <p>Status</p>
                     <select name="status">
                         <option value="not-published"<?php echo build_cms_page_builder_add_page_pluginModal::$status_not_published; ?>>Not published</option>
@@ -103,6 +104,7 @@
                         </div>
                         <hr>
                         <?php echo build_cms_page_builder_add_page_pluginSubController::get_category(); ?>
+                        <input type="hidden" name="old-category" value="<?php echo build_cms_page_builder_add_page_pluginModal::$old_category; ?>">
                     </div>
                 </div>
                 <!-- ============================== /category ============================== -->

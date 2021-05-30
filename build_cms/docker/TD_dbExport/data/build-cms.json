@@ -20,15 +20,15 @@
     ],
     "tablesSql": {
         "media": "CREATE TABLE `media` ( `id` bigint NOT NULL AUTO_INCREMENT, `the_file_name` varchar(255) NOT NULL, `media_type` varchar(500) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1",
-        "menu_content": "CREATE TABLE `menu_content` ( `id` bigint NOT NULL AUTO_INCREMENT, `the_name` varchar(6000) NOT NULL, `the_url` varchar(6000) NOT NULL, `type` varchar(50) NOT NULL, `the_order` bigint NOT NULL, `parent_id` bigint NOT NULL, `menu_name_id` bigint NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1",
+        "menu_content": "CREATE TABLE `menu_content` ( `id` bigint NOT NULL AUTO_INCREMENT, `the_name` varchar(6000) NOT NULL, `the_url` varchar(6000) NOT NULL, `type` varchar(50) NOT NULL, `the_order` bigint NOT NULL, `parent_id` bigint NOT NULL, `menu_name_id` bigint NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1",
         "menu_name": "CREATE TABLE `menu_name` ( `id` bigint NOT NULL AUTO_INCREMENT, `menu_name` varchar(6000) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1",
-        "page": "CREATE TABLE `page` ( `id` bigint NOT NULL AUTO_INCREMENT, `pagename` varchar(100) NOT NULL, `status` varchar(50) NOT NULL, `home_page` varchar(10) NOT NULL, `choose_template` varchar(255) NOT NULL, `url` varchar(6000) NOT NULL, `pagetitle` varchar(6000) NOT NULL, `author` varchar(6000) NOT NULL, `keywords` varchar(6000) NOT NULL, `description` varchar(6000) NOT NULL, `post_page` varchar(6000) NOT NULL, `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1",
-        "page_blocks": "CREATE TABLE `page_blocks` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_id` bigint NOT NULL, `block_type` varchar(100) NOT NULL, `block_id` bigint NOT NULL, `building_blocks_area` varchar(6000) NOT NULL, `the_order` bigint NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
+        "page": "CREATE TABLE `page` ( `id` bigint NOT NULL AUTO_INCREMENT, `pagename` varchar(100) NOT NULL, `status` varchar(50) NOT NULL, `home_page` varchar(10) NOT NULL, `choose_template` varchar(255) NOT NULL, `url_name` varchar(6000) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, `url` varchar(6000) NOT NULL, `pagetitle` varchar(6000) NOT NULL, `author` varchar(6000) NOT NULL, `keywords` varchar(6000) NOT NULL, `description` varchar(6000) NOT NULL, `post_page` varchar(6000) NOT NULL, `time_stamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1",
+        "page_blocks": "CREATE TABLE `page_blocks` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_id` bigint NOT NULL, `block_type` varchar(100) NOT NULL, `block_id` bigint NOT NULL, `building_blocks_area` varchar(6000) NOT NULL, `the_order` bigint NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
         "page_cc_block": "CREATE TABLE `page_cc_block` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `column_id` int NOT NULL, `width` decimal(65,30) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
         "page_img_block": "CREATE TABLE `page_img_block` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` int NOT NULL, `page_id` int NOT NULL, `block_id` int NOT NULL, `image` varchar(256) NOT NULL, `img_size_mode` varchar(10) NOT NULL, `img_width` int NOT NULL, `img_height` int NOT NULL, `image_align` varchar(10) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1",
-        "page_plain_text": "CREATE TABLE `page_plain_text` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` bigint NOT NULL, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `data` longtext NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1",
+        "page_plain_text": "CREATE TABLE `page_plain_text` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` bigint NOT NULL, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `data` longtext NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1",
         "page_sub_cat": "CREATE TABLE `page_sub_cat` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` bigint NOT NULL, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `limit_type` varchar(10) NOT NULL, `the_limit` bigint NOT NULL, `sort` varchar(10) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1",
-        "page_wysiwyg": "CREATE TABLE `page_wysiwyg` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` bigint NOT NULL, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `data` longtext NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1",
+        "page_wysiwyg": "CREATE TABLE `page_wysiwyg` ( `id` bigint NOT NULL AUTO_INCREMENT, `page_blocks_id` bigint NOT NULL, `page_id` bigint NOT NULL, `block_id` bigint NOT NULL, `data` longtext NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1",
         "settings": "CREATE TABLE `settings` ( `id` bigint NOT NULL AUTO_INCREMENT, `sidetitle` varchar(6000) NOT NULL, `sideslogan` varchar(6000) NOT NULL, `membership` int NOT NULL, `new_user_default_role` varchar(20) NOT NULL, `tamplateLoaderID` varchar(20000) NOT NULL, `cms_version` varchar(100) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1",
         "templates": "CREATE TABLE `templates` ( `id` bigint NOT NULL AUTO_INCREMENT, `active_template` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1",
         "users": "CREATE TABLE `users` ( `id` bigint NOT NULL AUTO_INCREMENT, `user` varchar(6000) NOT NULL, `password` varchar(150) NOT NULL, `password_salt` varchar(10000) NOT NULL, `user_type` varchar(30) NOT NULL, `user_icon` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1"
@@ -88,6 +88,15 @@
                     "the_order": "2",
                     "parent_id": "1",
                     "menu_name_id": "1"
+                },
+                {
+                    "id": "18",
+                    "the_name": "Page 3",
+                    "the_url": "7",
+                    "type": "page",
+                    "the_order": "3",
+                    "parent_id": "1",
+                    "menu_name_id": "1"
                 }
             ]
         },
@@ -114,6 +123,7 @@
                 "status",
                 "home_page",
                 "choose_template",
+                "url_name",
                 "url",
                 "pagetitle",
                 "author",
@@ -129,13 +139,14 @@
                     "status": "published",
                     "home_page": "true",
                     "choose_template": "",
+                    "url_name": "home",
                     "url": "home",
                     "pagetitle": "My first home page",
                     "author": "Tim",
                     "keywords": "Home",
                     "description": "This is the home page",
                     "post_page": "",
-                    "time_stamp": "2020-12-10 19:29:47"
+                    "time_stamp": "2021-05-30 10:17:22"
                 },
                 {
                     "id": "5",
@@ -143,13 +154,14 @@
                     "status": "published",
                     "home_page": "false",
                     "choose_template": "",
-                    "url": "page-1",
+                    "url_name": "page-1",
+                    "url": "page-2\/page-1",
                     "pagetitle": "Page 1",
                     "author": "Tim",
                     "keywords": "Page 1",
                     "description": "This is page 1",
                     "post_page": "6",
-                    "time_stamp": "2020-12-10 19:29:47"
+                    "time_stamp": "2021-05-30 10:15:04"
                 },
                 {
                     "id": "6",
@@ -157,13 +169,44 @@
                     "status": "published",
                     "home_page": "false",
                     "choose_template": "td_website",
+                    "url_name": "page-2",
                     "url": "page-2",
                     "pagetitle": "page 2",
                     "author": "Tim",
                     "keywords": "Page 2",
                     "description": "This is page 2",
                     "post_page": "",
-                    "time_stamp": "2020-12-10 19:29:47"
+                    "time_stamp": "2021-05-30 10:29:15"
+                },
+                {
+                    "id": "7",
+                    "pagename": "Page 3",
+                    "status": "published",
+                    "home_page": "false",
+                    "choose_template": "",
+                    "url_name": "page-3",
+                    "url": "page-2\/page-1\/page-3",
+                    "pagetitle": "",
+                    "author": "",
+                    "keywords": "",
+                    "description": "",
+                    "post_page": "5",
+                    "time_stamp": "2021-05-30 10:29:24"
+                },
+                {
+                    "id": "10",
+                    "pagename": "page 4",
+                    "status": "not-published",
+                    "home_page": "false",
+                    "choose_template": "",
+                    "url_name": "page-4",
+                    "url": "page-2\/page-1\/page-3\/page-4",
+                    "pagetitle": "",
+                    "author": "",
+                    "keywords": "",
+                    "description": "",
+                    "post_page": "7",
+                    "time_stamp": "2021-05-30 15:19:06"
                 }
             ]
         },
@@ -232,6 +275,22 @@
                     "block_id": "7",
                     "building_blocks_area": "content",
                     "the_order": "2"
+                },
+                {
+                    "id": "65",
+                    "page_id": "7",
+                    "block_type": "plain_text",
+                    "block_id": "1",
+                    "building_blocks_area": "content",
+                    "the_order": "1"
+                },
+                {
+                    "id": "66",
+                    "page_id": "0",
+                    "block_type": "wysiwyg",
+                    "block_id": "1",
+                    "building_blocks_area": "content",
+                    "the_order": "1"
                 }
             ]
         },
@@ -267,7 +326,15 @@
                 "block_id",
                 "data"
             ],
-            "data": false
+            "data": [
+                {
+                    "id": "1",
+                    "page_blocks_id": "65",
+                    "page_id": "7",
+                    "block_id": "1",
+                    "data": "This a page"
+                }
+            ]
         },
         "page_sub_cat": {
             "keyNames": [
@@ -343,6 +410,13 @@
                     "page_id": "6",
                     "block_id": "5",
                     "data": "<p>This is page 2<\/p>"
+                },
+                {
+                    "id": "13",
+                    "page_blocks_id": "66",
+                    "page_id": "0",
+                    "block_id": "1",
+                    "data": "<p>Hello it is me<\/p>"
                 }
             ]
         },

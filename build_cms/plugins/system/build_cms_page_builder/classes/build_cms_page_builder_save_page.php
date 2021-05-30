@@ -78,6 +78,7 @@ class build_cms_page_builder_save_page {
                                                 `status`,
                                                 `home_page`,
                                                 `choose_template`,
+                                                `url_name`,
                                                 `url`,
                                                 `pagetitle`,
                                                 `author`,
@@ -89,6 +90,7 @@ class build_cms_page_builder_save_page {
                                                 '$general_homepage',
                                                 '$choose_template',
                                                 '$general_url',
+                                                '',
                                                 '$seo_pagetitle',
                                                 '$seo_author',
                                                 '$seo_keywords',
@@ -206,7 +208,7 @@ class build_cms_page_builder_save_page {
                                             `status`='$general_status',
                                             `home_page`='$general_homepage',
                                             `choose_template`='$choose_template',
-                                            `url`='$general_url',
+                                            `url_name`='$general_url',
                                             `pagetitle`='$seo_pagetitle',
                                             `author`='$seo_author',
                                             `keywords`='$seo_keywords',
@@ -301,6 +303,106 @@ class build_cms_page_builder_save_page {
         }
     }
     /* ============================== /save ============================== */
+
+    /* ============================== generate urls ============================== */
+
+    public static function generate_urls($data_array, $page_id) {
+        if ($data_array["general_page_id"] === "new") {
+            self::page_generate_url($page_id);
+        }
+        elseif ($data_array["page_category"] !== $data_array["page_category_old"]) {
+            $old_url = database::select("SELECT `url` FROM `page` WHERE `id`='$page_id'")[0]["url"];
+            $new_url = self::page_generate_url($page_id);
+            self::sub_pages_generate_url($old_url, $new_url, $page_id);
+        }
+        elseif ($data_array["general_url"] !== $data_array["general_url_old"]) {
+            self::update_url_name($data_array);
+        }
+    }
+
+    private static function page_generate_url($page_id) {
+        $id = (int)$page_id;
+        $url_array = array();
+        while ($id !== 0) {
+            $db_result = database::select("SELECT `url_name`, `post_page` FROM `page` WHERE `id`='$id'")[0];
+
+            $url_array[] = $db_result["url_name"];
+
+            if ($db_result["post_page"] === "") {
+                $id = 0;
+            }
+            else {
+                $id = (int)$db_result["post_page"];
+            }
+        }
+        $url_array = array_reverse($url_array);
+        $url_string = implode("/", $url_array);
+
+        database::query("UPDATE `page` SET `url`='$url_string' WHERE `id`='$page_id'");
+
+        return $url_string;
+    }
+
+    private static function sub_pages_generate_url($old_url, $new_url, $skip_id) {
+        $db_result = database::select("SELECT `id`, `url` FROM `page` WHERE `url` LIKE '$old_url%' AND `id`!='$skip_id'");
+
+        foreach ($db_result AS $page) {
+            $this_page_id = $page["id"];
+            $new_url_array = explode("/", $new_url);
+            $old_url_array = explode("/", $old_url);
+            $db_url = explode("/", $page["url"]);
+
+            // get child url
+            foreach ($db_url AS $url_name_key => $url_name_value) {
+                if ( (count($old_url_array) - 1) >= $url_name_key ) {
+                    unset($db_url[$url_name_key]);
+                }
+            }
+            $sub_page_url = implode("/", $db_url);
+            
+            // set update url
+            $update_url = $new_url . "/" . $sub_page_url;
+            
+            // update the url
+            database::query("UPDATE `page` SET `url`='$update_url' WHERE `id`='$this_page_id'");
+        }
+    }
+
+    private static function update_url_name($data_array) {
+        // get pages by ids
+        $id = $data_array["general_page_id"];
+        $fisrt_db_result = database::select("SELECT `url` FROM `page` WHERE `id`='$id'")[0];
+
+        // update the generated url
+        $url_old                  = $fisrt_db_result["url"];
+        $url_array                = explode("/", $url_old);
+        $url_location             = count($url_array) - 1;
+        $url_array[$url_location] = $data_array["general_url"];
+        $url_new                  = implode("/", $url_array);
+
+        // update the curent page
+        database::query("UPDATE `page` SET `url`='$url_new' WHERE `id`='$id'");
+
+        // get the sub pages by url
+        $second_db_result = database::select("SELECT `id`, `url` FROM `page` WHERE `url` LIKE '$url_old%'");
+
+        // loop through the result
+        if (!empty($second_db_result)) {
+            foreach ($second_db_result AS $page) {
+                // update the generated url
+                $url_old2                  = $page["url"];
+                $url_array2                = explode("/", $url_old2);
+                $url_array2[$url_location] = $data_array["general_url"];
+                $url_new2                  = implode("/", $url_array2);
+
+                // update the database
+                $sub_id = $page["id"];
+                database::query("UPDATE `page` SET `url`='$url_new2' WHERE `id`='$sub_id'");
+            }
+        }
+    }
+
+    /* ============================== /generate urls ============================== */
 
     /* ============================== del ============================== */
     public static function delete_blocks($blocks_array, $page_id) {

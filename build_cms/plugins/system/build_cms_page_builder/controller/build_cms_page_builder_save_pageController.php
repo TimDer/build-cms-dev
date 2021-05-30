@@ -5,6 +5,7 @@ class build_cms_page_builder_save_pageController extends controller {
     public static function build_cms_page_builder_save_pages() {
         // Save the basics and get the page id
         $page_id = build_cms_page_builder_save_page::basics(user_url::$post_var["system_area"]["basics"]["data"]);
+        build_cms_page_builder_save_page::generate_urls(user_url::$post_var["system_area"]["basics"]["data"], $page_id);
 
         // building-blocks
         if (isset(user_url::$post_var["system_area"]["page_builder"]["data"]["building-blocks"])) {

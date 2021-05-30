@@ -8,6 +8,7 @@ class build_cms_page_builder_add_page_pluginModal {
     // template
     public static $index_the_template   = array();
     public static $default_template     = " selected";
+    public static $old_category         = "";
 
     /* ==================== General ==================== */
     // edit: page name

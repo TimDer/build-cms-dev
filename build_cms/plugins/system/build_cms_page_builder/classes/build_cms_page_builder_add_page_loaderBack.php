@@ -31,7 +31,7 @@ class build_cms_page_builder_add_page_loaderBack {
             // page name input
             build_cms_page_builder_add_page_pluginModal::$page_name_imput = self::$get_page_array_array["pagename"];
             // url name
-            build_cms_page_builder_add_page_pluginModal::$page_url_imput = self::$get_page_array_array["url"];
+            build_cms_page_builder_add_page_pluginModal::$page_url_imput = self::$get_page_array_array["url_name"];
 
             // ==================== set status ====================
             if (self::$get_page_array_array["status"] === "not-published") {
@@ -56,6 +56,9 @@ class build_cms_page_builder_add_page_loaderBack {
             build_cms_page_builder_add_page_pluginModal::$seo_description = self::$get_page_array_array["description"];
             // time stamp
             build_cms_page_builder_add_page_pluginModal::$time_stamp      = self::$get_page_array_array["time_stamp"];
+
+            // Old category
+            build_cms_page_builder_add_page_pluginModal::$old_category    = self::$get_page_array_array["post_page"];
         }
     }
 

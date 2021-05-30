@@ -6,6 +6,7 @@ database::query("CREATE TABLE `page` (
     `status` varchar(50) NOT NULL,
     `home_page` varchar(10) NOT NULL,
     `choose_template` varchar(255) NOT NULL,
+    `url_name` varchar(6000) NOT NULL,
     `url` varchar(6000) NOT NULL,
     `pagetitle` varchar(6000) NOT NULL,
     `author` varchar(6000) NOT NULL,
