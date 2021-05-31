@@ -66,22 +66,16 @@ class build_cms_page_builder_template_loader {
         ) {
             // prepair the uri array
             if ($uri_to_page !== false) {
-                $uri_override = explode("/", trim($uri_to_page, "/"));
+                $where_string = trim($uri_to_page, "/");
             }
             else {
-                $uri_override = user_url::uri();
+                $where_string = trim(user_url::uri_string(), "/");
             }
 
-            $prepare_sql_url = array();
-            foreach ($uri_override AS $uri) {
-                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
-            }
-    
-            $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT $select_column_names FROM `page` WHERE $where_string"), $uri_override );
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `url`='$where_string'");
     
             if ($pages_sql) {
-                self::load_blocks($pages_sql, $building_blocks_area, $error_404);
+                self::load_blocks($pages_sql[0], $building_blocks_area, $error_404);
             }
             elseif ($error_404 !== false) {
                 echo $error_404;
@@ -97,54 +91,6 @@ class build_cms_page_builder_template_loader {
             elseif ($error_404 !== false) {
                 echo $error_404;
             }
-        }
-    }
-
-    private static function fix_page_array($array = array(), $user_url_uri) {
-        $new_array = array();
-
-        if ($array !== false && count($array) === count($user_url_uri)) {
-            // key number to page url
-            foreach ($array AS $sub_array) {
-                $new_array[$sub_array["url_name"]] = $sub_array;
-            }
-    
-            // set page array in the uri order
-            $return_array = array();
-            foreach ($user_url_uri AS $value) {
-                $return_array[$value] = $new_array[$value];
-            }
-
-            // 404 check
-            $last_page_key_name = array();
-            $is_404 = false;
-            foreach ($return_array AS $value) {
-                if ($value["status"] === "not-published") {
-                    $is_404 = true;
-                }
-
-                if (empty($last_page_key_name) && !$is_404) {
-                    $last_page_key_name = $value;
-                }
-                elseif (!$is_404) {
-                    if ($value["post_page"] === $last_page_key_name["id"]) {
-                        $last_page_key_name = $value;
-                    }
-                    else {
-                        $is_404 = true;
-                    }
-                }
-            }
-    
-            if ($is_404) {
-                return false;
-            }
-            else {
-                return end($return_array);
-            }
-        }
-        else {
-            return false;
         }
     }
 
@@ -242,60 +188,54 @@ class build_cms_page_builder_template_loader {
             $page = (int)$page["page_id"];
         }
         elseif (!is_int($page)) {
-            $page = (isset($page["page"]) AND !empty($page["page"])) ? explode("/", trim($page["page"], "/")) : "";
+            $page = (isset($page["page"]) AND !empty($page["page"])) ? trim($page["page"], "/") : "";
         }
 
         if (is_int($page)) {
             // get by id
-            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `id`='$page' AND `status`='published'")[0];
+            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `id`='$page' AND `status`='published'");
         }
         elseif ($page === "") {
-            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `home_page`='true' AND `status`='published'")[0];
+            $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `home_page`='true' AND `status`='published'");
         }
         else {
-            $prepare_sql_url = array();
-            foreach ($page AS $uri) {
-                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
+            $page_array = database::select("SELECT `id`, `url_name`, `status`, `post_page` FROM `page` WHERE `url`='$page'");
+        }
+
+        if ($page_array !== false) {
+            $page_id = $page_array[0]["id"];
+        
+            $building_blocks_areas = build_cms_page_builder_template_loader::$building_blocks_area;
+            if ($sub_pages) {
+                unset($building_blocks_areas["category-info"]);
+            }
+            else {
+                $category_info = $building_blocks_areas["category-info"];
+                foreach ($building_blocks_areas AS $delete_area_key => $delete_area) {
+                    unset($building_blocks_areas[$delete_area_key]);
+                }
+                $building_blocks_areas["category-info"] = $category_info;
             }
     
-            $where_string = implode(" OR ", $prepare_sql_url);
-            
-            $page_array = self::fix_page_array( database::select("SELECT `id`, `url_name`, `status`, `post_page` FROM `page` WHERE $where_string"), $page );
-        }
-
-        $page_id = $page_array["id"];
-        
-        $building_blocks_areas = build_cms_page_builder_template_loader::$building_blocks_area;
-        if ($sub_pages) {
-            unset($building_blocks_areas["category-info"]);
-        }
-        else {
-            $category_info = $building_blocks_areas["category-info"];
-            foreach ($building_blocks_areas AS $delete_area_key => $delete_area) {
-                unset($building_blocks_areas[$delete_area_key]);
+            // prepare building_blocks_areas for SQL
+            $prepare_sql_area = array();
+            foreach ($building_blocks_areas AS $key => $building_blocks_area) {
+                $prepare_sql_area[$key] = "`building_blocks_area`!='" . $building_blocks_area["name"] . "'";
             }
-            $building_blocks_areas["category-info"] = $category_info;
-        }
-
-        // prepare building_blocks_areas for SQL
-        $prepare_sql_area = array();
-        foreach ($building_blocks_areas AS $key => $building_blocks_area) {
-            $prepare_sql_area[$key] = "`building_blocks_area`!='" . $building_blocks_area["name"] . "'";
-        }
-        $prepare_sql_area = (!$sub_pages) ? implode(" OR ", $prepare_sql_area) : implode(" AND ", $prepare_sql_area);
-
-        // sql
-        $query = "SELECT `id`, `block_type`, `block_id`, `page_id`, `building_blocks_area` FROM `page_blocks` WHERE `page_id`='$page_id' AND $prepare_sql_area ORDER BY `the_order` ASC";
-        $css_query = database::select($query);
-
-        if (is_array($css_query)) {
-            foreach ($css_query AS $block) {
-                if (isset(build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]])) {
-                    build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]]->__invoke($block);
+            $prepare_sql_area = (!$sub_pages) ? implode(" OR ", $prepare_sql_area) : implode(" AND ", $prepare_sql_area);
+    
+            // sql
+            $query = "SELECT `id`, `block_type`, `block_id`, `page_id`, `building_blocks_area` FROM `page_blocks` WHERE `page_id`='$page_id' AND $prepare_sql_area ORDER BY `the_order` ASC";
+            $css_query = database::select($query);
+    
+            if (is_array($css_query)) {
+                foreach ($css_query AS $block) {
+                    if (isset(build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]])) {
+                        build_cms_page_builder_page_functions::$set_load_blocks_css_functions[$block["block_type"]]->__invoke($block);
+                    }
                 }
             }
         }
-
     }
 
     private static function load_wysiwyg_css($block_data) {
@@ -379,48 +319,47 @@ class build_cms_page_builder_template_loader {
 
     public static function get_seo() {
         if (user_url::uri_string() !== "/") {
-            $prepare_sql_url = array();
-            foreach (user_url::uri() AS $uri) {
-                $prepare_sql_url[] = "`url_name`='" . $uri . "'";
-            }
+            $where_string = trim(user_url::uri_string(), "/");
+            $pages_sql = database::select("SELECT `id`, `url_name`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE `url`='$where_string'");
+
+            if ($pages_sql !== false) {
+                $pages_sql = $pages_sql[0];
+
+                if (empty($pages_sql["pagetitle"]) && empty($pages_sql['description'])) {
+                    $select_query = "`sidetitle`, `sideslogan`";
+                }
+                elseif (empty($pages_sql["pagetitle"])) {
+                    $select_query = "`sidetitle`";
+                }
+                elseif (empty($pages_sql["description"])) {
+                    $select_query = "`sideslogan`";
+                }
+                else {
+                    $select_query = "";
+                }
+                $empty_sql = ($select_query === "") ? array() : database::select("SELECT $select_query FROM `settings`")[0];
     
-            $where_string = implode(" OR ", $prepare_sql_url);
-            $pages_sql = self::fix_page_array( database::select("SELECT `id`, `url_name`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE $where_string"), user_url::uri() );
+                if ( isset($empty_sql["sidetitle"]) ) {
+                    $empty_sql["sidetitle"] = (empty($empty_sql["sidetitle"])) ? "no page name" : $empty_sql["sidetitle"];
+                }
     
-            if (empty($pages_sql["pagetitle"]) && empty($pages_sql['description'])) {
-                $select_query = "`sidetitle`, `sideslogan`";
+                if ( isset($empty_sql["sideslogan"]) ) {
+                    $empty_sql["sideslogan"] = (empty($empty_sql["sideslogan"])) ? "no page description" : $empty_sql["sideslogan"];
+                }
+    
+                $return = "";
+                if (is_array($pages_sql)) {
+                    $return .= '<title>' . ( (empty($pages_sql["pagetitle"])) ? $empty_sql["sidetitle"] : $pages_sql["pagetitle"] ) . '</title>';
+                    $return .= (!empty($pages_sql['author'])) ? '<meta name="author" content="' . $pages_sql['author'] . '">' : "";
+                    $return .= (!empty($pages_sql['keywords'])) ? '<meta name="keywords" content="' . $pages_sql['keywords'] . '">' : "";
+                    $return .= '<meta name="description" content="' . ( (empty($pages_sql["description"])) ? $empty_sql["sideslogan"] : $pages_sql['description'] ) . '">';
+                }
+                else {
+                    $return .= '<title>' . $empty_sql["sidetitle"] . '</title>';
+                    $return .= '<meta name="description" content="' . $empty_sql["sideslogan"] . '">';
+                }
+                return $return;
             }
-            elseif (empty($pages_sql["pagetitle"])) {
-                $select_query = "`sidetitle`";
-            }
-            elseif (empty($pages_sql["description"])) {
-                $select_query = "`sideslogan`";
-            }
-            else {
-                $select_query = "";
-            }
-            $empty_sql = ($select_query === "") ? array() : database::select("SELECT $select_query FROM `settings`")[0];
-
-            if ( isset($empty_sql["sidetitle"]) ) {
-                $empty_sql["sidetitle"] = (empty($empty_sql["sidetitle"])) ? "no page name" : $empty_sql["sidetitle"];
-            }
-
-            if ( isset($empty_sql["sideslogan"]) ) {
-                $empty_sql["sideslogan"] = (empty($empty_sql["sideslogan"])) ? "no page description" : $empty_sql["sideslogan"];
-            }
-
-            $return = "";
-            if (is_array($pages_sql)) {
-                $return .= '<title>' . ( (empty($pages_sql["pagetitle"])) ? $empty_sql["sidetitle"] : $pages_sql["pagetitle"] ) . '</title>';
-                $return .= (!empty($pages_sql['author'])) ? '<meta name="author" content="' . $pages_sql['author'] . '">' : "";
-                $return .= (!empty($pages_sql['keywords'])) ? '<meta name="keywords" content="' . $pages_sql['keywords'] . '">' : "";
-                $return .= '<meta name="description" content="' . ( (empty($pages_sql["description"])) ? $empty_sql["sideslogan"] : $pages_sql['description'] ) . '">';
-            }
-            else {
-                $return .= '<title>' . $empty_sql["sidetitle"] . '</title>';
-                $return .= '<meta name="description" content="' . $empty_sql["sideslogan"] . '">';
-            }
-            return $return;
         }
     }
 
