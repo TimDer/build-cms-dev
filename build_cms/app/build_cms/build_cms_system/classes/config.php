@@ -2,6 +2,20 @@
 
 class config {
     private static $json_config = array();
+    private static $default_config = array(
+        "useHttps" => false,
+        "domainDir" => "",
+        "displayUntrustedDomain" => true,
+        "TrustedDomains" => [],
+        "DB_servername" => "localhost",
+        "DB_username" => "root",
+        "DB_password" => "",
+        "DB_dbname" => "build-cms",
+        "call_plugin_definer" => true,
+        "call_plugin_routes" => true,
+        "dev_mode_on" => true,
+        "cms_version" => "1.0.0"
+    );
 
     public static function get_config() {
         self::set_config();
@@ -17,7 +31,7 @@ class config {
     private static function set_config($reload = false) {
         $env_array = getenv();
         if (isset($env_array["build_cms_config_override"]) AND $env_array["build_cms_config_override"] !== "false") {
-            $return_array = array();
+            $return_array = self::$default_config;
             foreach ($env_array AS $config_key => $config_value) {
                 $allowlist = array(
                     "build_cms_config_override",
@@ -42,14 +56,19 @@ class config {
             self::$json_config = $return_array;
         }
         elseif (empty(self::$json_config) || $reload) {
-            self::$json_config = self::string_to_int(
-                json_decode(
-                    file_get_contents(
-                        config_dir::BUILD_CMS_SYSTEM("/data/config.json")
-                    ),
-                    true
-                )
-            );
+            if (file_exists(config_dir::BUILD_CMS_SYSTEM("/data/config.json"))) {
+                self::$json_config = self::string_to_int(
+                    json_decode(
+                        file_get_contents(
+                            config_dir::BUILD_CMS_SYSTEM("/data/config.json")
+                        ),
+                        true
+                    )
+                );
+            }
+            else {
+                self::$json_config = self::$default_config;
+            }
 
             self::$json_config["build_cms_config_override"] = false;
         }
