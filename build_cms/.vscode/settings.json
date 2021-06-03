@@ -16,5 +16,10 @@
         "node/**",
         "**/node_modules/**",
         ".vscode/**"
-    ]
+    ],
+
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/installer-dump": true
+    }
 }
