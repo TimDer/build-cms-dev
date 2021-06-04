@@ -29,8 +29,8 @@ class start_terminal {
             }
         }
 
-        if (in_array("-s", $argv_array)) {
-            return '"-s" Can only be used in cli mode';
+        if (in_array("-s", $argv_array) && !users::is_developer()) {
+            return 'enable developer mode';
         }
         elseif (in_array($argv_array[0], developer_main::$argv_accepted_array)) {
             $GLOBALS["commandToArgv"] = $argv_array;
