@@ -8,7 +8,7 @@ class config {
         "displayUntrustedDomain" => true,
         "TrustedDomains" => [],
         "DB_servername" => "localhost",
-        "DB_username" => "root",
+        "DB_username" => "",
         "DB_password" => "",
         "DB_dbname" => "build-cms",
         "call_plugin_definer" => true,
