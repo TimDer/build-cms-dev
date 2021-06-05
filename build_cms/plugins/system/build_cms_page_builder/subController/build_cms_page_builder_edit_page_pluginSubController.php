@@ -14,7 +14,13 @@ class build_cms_page_builder_edit_page_pluginSubController extends controller {
                     });
                 }
                 else {
-                    database::select("SELECT * FROM `page` ORDER BY id", function ($data) {
+                    $where = "WHERE `post_page`=''";
+                    if (isset( user_url::$get_var["page_id"] )) {
+                        $page_id = user_url::$get_var["page_id"];
+                        $where = "WHERE `post_page`='$page_id'";
+                    }
+
+                    database::select("SELECT * FROM `page` $where ORDER BY id", function ($data) {
                         self::$get_pages_table_return = self::setup_pages_table_html($data['fetch_all']);
                     });
                 }
@@ -41,6 +47,9 @@ class build_cms_page_builder_edit_page_pluginSubController extends controller {
             $return .=          ' / ';
             $return .=          'Delete: ';
             $return .=          '<a href="' . config_url::BASE('/admin_submit/page/delete_page/' . $value['id']) . '" class="delete_page">' . $value['pagename'] . '</a>';
+            $return .=          ' / ';
+            $return .=          'Subpages:';
+            $return .=          '<a href="' . config_url::BASE('/admin/pages/edit-pages?page_id=' . $value['id']) . '">' . $value['pagename'] . '</a>';
             $return .=      '</td>';
             $return .=      '<td class="table-data">' . $date . '</td>';
 
