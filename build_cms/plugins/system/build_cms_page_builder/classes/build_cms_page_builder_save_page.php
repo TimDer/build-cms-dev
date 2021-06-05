@@ -308,19 +308,20 @@ class build_cms_page_builder_save_page {
 
     public static function generate_urls($data_array, $page_id) {
         if ($data_array["general_page_id"] === "new") {
-            self::page_generate_url($page_id);
+            $time_stamp = database::select("SELECT `time_stamp` FROM `page` WHERE `id`='$page_id'")[0]["time_stamp"];
+            self::page_generate_url($page_id, $time_stamp);
         }
         elseif ($data_array["page_category"] !== $data_array["page_category_old"]) {
-            $old_url = database::select("SELECT `url` FROM `page` WHERE `id`='$page_id'")[0]["url"];
-            $new_url = self::page_generate_url($page_id);
-            self::sub_pages_generate_url($old_url, $new_url, $page_id);
+            $old_row = database::select("SELECT `url`, `time_stamp` FROM `page` WHERE `id`='$page_id'")[0];
+            $new_url = self::page_generate_url($page_id, $old_row["time_stamp"]);
+            self::sub_pages_generate_url($old_row["url"], $new_url, $page_id);
         }
         elseif ($data_array["general_url"] !== $data_array["general_url_old"]) {
             self::update_url_name($data_array);
         }
     }
 
-    private static function page_generate_url($page_id) {
+    private static function page_generate_url($page_id, $time_stamp) {
         $id = (int)$page_id;
         $url_array = array();
         while ($id !== 0) {
@@ -338,17 +339,17 @@ class build_cms_page_builder_save_page {
         $url_array = array_reverse($url_array);
         $url_string = implode("/", $url_array);
 
-        database::query("UPDATE `page` SET `url`='$url_string' WHERE `id`='$page_id'");
+        database::query("UPDATE `page` SET `url`='$url_string', `time_stamp`='$time_stamp' WHERE `id`='$page_id'");
 
         return $url_string;
     }
 
     private static function sub_pages_generate_url($old_url, $new_url, $skip_id) {
-        $db_result = database::select("SELECT `id`, `url` FROM `page` WHERE `url` LIKE '$old_url%' AND `id`!='$skip_id'");
+        $db_result = database::select("SELECT `id`, `url`, `time_stamp` FROM `page` WHERE `url` LIKE '$old_url%' AND `id`!='$skip_id'");
 
         foreach ($db_result AS $page) {
             $this_page_id = $page["id"];
-            $new_url_array = explode("/", $new_url);
+            $time_stamp = $page["time_stamp"];
             $old_url_array = explode("/", $old_url);
             $db_url = explode("/", $page["url"]);
 
@@ -364,14 +365,14 @@ class build_cms_page_builder_save_page {
             $update_url = $new_url . "/" . $sub_page_url;
             
             // update the url
-            database::query("UPDATE `page` SET `url`='$update_url' WHERE `id`='$this_page_id'");
+            database::query("UPDATE `page` SET `url`='$update_url', `time_stamp`='$time_stamp' WHERE `id`='$this_page_id'");
         }
     }
 
     private static function update_url_name($data_array) {
         // get pages by ids
         $id = $data_array["general_page_id"];
-        $fisrt_db_result = database::select("SELECT `url` FROM `page` WHERE `id`='$id'")[0];
+        $fisrt_db_result = database::select("SELECT `url`, `time_stamp` FROM `page` WHERE `id`='$id'")[0];
 
         // update the generated url
         $url_old                  = $fisrt_db_result["url"];
@@ -380,11 +381,14 @@ class build_cms_page_builder_save_page {
         $url_array[$url_location] = $data_array["general_url"];
         $url_new                  = implode("/", $url_array);
 
+        // set the time_stamp
+        $time_stamp = $fisrt_db_result["time_stamp"];
+
         // update the curent page
-        database::query("UPDATE `page` SET `url`='$url_new' WHERE `id`='$id'");
+        database::query("UPDATE `page` SET `url`='$url_new', `time_stamp`='$time_stamp' WHERE `id`='$id'");
 
         // get the sub pages by url
-        $second_db_result = database::select("SELECT `id`, `url` FROM `page` WHERE `url` LIKE '$url_old%'");
+        $second_db_result = database::select("SELECT `id`, `url`, `time_stamp` FROM `page` WHERE `url` LIKE '$url_old%'");
 
         // loop through the result
         if (!empty($second_db_result)) {
@@ -395,9 +399,12 @@ class build_cms_page_builder_save_page {
                 $url_array2[$url_location] = $data_array["general_url"];
                 $url_new2                  = implode("/", $url_array2);
 
+                // set the time_stamp
+                $time_stamp2 = $fisrt_db_result["time_stamp"];
+
                 // update the database
                 $sub_id = $page["id"];
-                database::query("UPDATE `page` SET `url`='$url_new2' WHERE `id`='$sub_id'");
+                database::query("UPDATE `page` SET `url`='$url_new2', `time_stamp`='$time_stamp2' WHERE `id`='$sub_id'");
             }
         }
     }
