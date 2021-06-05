@@ -4,6 +4,7 @@
         "Download-url": "https:\/\/www.github.com\/TimDer\/TD_dbExport"
     },
     "tableNames": [
+        "installer_migrations",
         "media",
         "menu_content",
         "menu_name",
@@ -19,6 +20,7 @@
         "users"
     ],
     "tablesSql": {
+        "installer_migrations": "CREATE TABLE `installer_migrations` ( `id` bigint NOT NULL AUTO_INCREMENT, `name` varchar(255) NOT NULL, `version` int NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci",
         "media": "CREATE TABLE `media` ( `id` bigint NOT NULL AUTO_INCREMENT, `the_file_name` varchar(255) NOT NULL, `media_type` varchar(500) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1",
         "menu_content": "CREATE TABLE `menu_content` ( `id` bigint NOT NULL AUTO_INCREMENT, `the_name` varchar(6000) NOT NULL, `the_url` varchar(6000) NOT NULL, `type` varchar(50) NOT NULL, `the_order` bigint NOT NULL, `parent_id` bigint NOT NULL, `menu_name_id` bigint NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1",
         "menu_name": "CREATE TABLE `menu_name` ( `id` bigint NOT NULL AUTO_INCREMENT, `menu_name` varchar(6000) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1",
@@ -34,6 +36,14 @@
         "users": "CREATE TABLE `users` ( `id` bigint NOT NULL AUTO_INCREMENT, `user` varchar(6000) NOT NULL, `password` varchar(150) NOT NULL, `password_salt` varchar(10000) NOT NULL, `user_type` varchar(30) NOT NULL, `user_icon` varchar(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1"
     },
     "tablesData": {
+        "installer_migrations": {
+            "keyNames": [
+                "id",
+                "name",
+                "version"
+            ],
+            "data": false
+        },
         "media": {
             "keyNames": [
                 "id",
