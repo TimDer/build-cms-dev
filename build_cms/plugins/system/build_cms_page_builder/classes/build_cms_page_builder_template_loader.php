@@ -48,7 +48,7 @@ class build_cms_page_builder_template_loader {
         }
         elseif (is_int($page_id)) {
             // get page using page id
-            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `id`='$page_id'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `id`='$page_id' AND `status`='published'")[0];
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
@@ -72,7 +72,7 @@ class build_cms_page_builder_template_loader {
                 $where_string = trim(user_url::uri_string(), "/");
             }
 
-            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `url`='$where_string'");
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `url`='$where_string' AND `status`='published'");
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql[0], $building_blocks_area, $error_404);
@@ -83,7 +83,7 @@ class build_cms_page_builder_template_loader {
         }
         else {
             // get home page
-            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `home_page`='true'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `home_page`='true' AND `status`='published'")[0];
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
@@ -199,7 +199,7 @@ class build_cms_page_builder_template_loader {
             $page_array = database::select("SELECT `id`, `url_name`, `post_page` FROM `page` WHERE `home_page`='true' AND `status`='published'");
         }
         else {
-            $page_array = database::select("SELECT `id`, `url_name`, `status`, `post_page` FROM `page` WHERE `url`='$page'");
+            $page_array = database::select("SELECT `id`, `url_name`, `status`, `post_page` FROM `page` WHERE `url`='$page' AND `status`='published'");
         }
 
         if ($page_array !== false) {
@@ -298,11 +298,11 @@ class build_cms_page_builder_template_loader {
         $the_limit = $subcategories_sql["the_limit"];
 
         if ($subcategories_sql["limit_type"] === "no-limit") {
-            $query = "SELECT `id` FROM `page` WHERE `post_page`='$page_id' ORDER BY `time_stamp` $sort";
+            $query = "SELECT `id` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort";
             $page_array = database::select($query);
         }
         else {
-            $query = "SELECT `id` FROM `page` WHERE `post_page`='$page_id' ORDER BY `time_stamp` $sort LIMIT $the_limit";
+            $query = "SELECT `id` FROM `page` WHERE `post_page`='$page_id' AND `status`='published' ORDER BY `time_stamp` $sort LIMIT $the_limit";
             $page_array = database::select($query);
         }
 
@@ -320,7 +320,7 @@ class build_cms_page_builder_template_loader {
     public static function get_seo() {
         if (user_url::uri_string() !== "/") {
             $where_string = trim(user_url::uri_string(), "/");
-            $pages_sql = database::select("SELECT `id`, `url_name`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE `url`='$where_string'");
+            $pages_sql = database::select("SELECT `id`, `url_name`, `post_page`, `status`, `pagetitle`, `author`, `keywords`, `description` FROM `page` WHERE `url`='$where_string' AND `status`='published'");
 
             if ($pages_sql !== false) {
                 $pages_sql = $pages_sql[0];
