@@ -20,7 +20,10 @@ class templateLoader {
 
     public static function set_template_base_dir() {
         if (empty(self::$template_dir)) {
-            $result = database::select("SELECT `active_template` FROM `templates`")[0]["active_template"];
+            $result = database::select("SELECT `active_template` FROM `templates`");
+
+            $result = ($result !== false) ? $result[0]["active_template"]: array();
+
             if (empty($result)) {
                 self::$template_dir = users::create_password_salt(300, 400);
             }

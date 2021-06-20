@@ -48,7 +48,9 @@ class build_cms_page_builder_template_loader {
         }
         elseif (is_int($page_id)) {
             // get page using page id
-            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `id`='$page_id' AND `status`='published'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `id`='$page_id' AND `status`='published'");
+
+            $pages_sql = ($pages_sql !== false) ?  $pages_sql[0]: false;
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);
@@ -83,7 +85,9 @@ class build_cms_page_builder_template_loader {
         }
         else {
             // get home page
-            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `home_page`='true' AND `status`='published'")[0];
+            $pages_sql = database::select("SELECT $select_column_names FROM `page` WHERE `home_page`='true' AND `status`='published'");
+
+            $pages_sql = ($pages_sql !== false) ?  $pages_sql[0]: false;
     
             if ($pages_sql) {
                 self::load_blocks($pages_sql, $building_blocks_area, $error_404);

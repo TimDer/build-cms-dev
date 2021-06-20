@@ -9,7 +9,10 @@ class template_loaderController extends controller {
     public static function get_template_view() {
         $get_template_loader = database::select(
             "SELECT `tamplateLoaderID` FROM `settings`"
-        )[0];
+        );
+
+        $get_template_loader = ($get_template_loader !== false) ?  $get_template_loader[0]: false;
+
         if (!empty($get_template_loader["tamplateLoaderID"])) {
             require config_dir::BASE($get_template_loader["tamplateLoaderID"]);
         }

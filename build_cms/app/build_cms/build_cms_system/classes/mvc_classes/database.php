@@ -6,7 +6,7 @@ class database {
     public static $query;
     public static $fetch = array();
 
-    private static function connError($error) {
+    private static function connError($error) { 
         if (php_sapi_name() === "cli") {
             echo $error . "*** Check your sql connection ***\n";
         }
@@ -55,7 +55,7 @@ class database {
 
     // construct a query
     public static function query($sql) {
-        if (!empty($sql)) {
+        if (!empty($sql) && self::$conn !== false) {
             self::$query = mysqli_query(self::$conn, $sql);
         }
     }
@@ -69,7 +69,10 @@ class database {
         self::query($query);
 
         // check for rows
-        if (self::query_result()->num_rows > 0) {
+        if (self::query_result() === false) {
+            return false;
+        }
+        elseif (isset(self::query_result()->num_rows) && self::query_result()->num_rows > 0) {
             self::fetch_all();
             $fetch_result = self::fetch_result();
             self::reset();
