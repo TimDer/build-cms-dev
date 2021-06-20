@@ -107,7 +107,9 @@ class developer_main {
                     );
 
                     // plugin installer
-                    developer_install::install_plugin($install_dir, $get_json);
+                    if (database::$conn !== false) {
+                        developer_install::install_plugin($install_dir, $get_json);
+                    }
 
                     config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
                     if ($mode === "cli") {
@@ -161,7 +163,7 @@ class developer_main {
 
                 if (is_dir(config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]))) {
                     $deleteFile = config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/scripts/delete.php");
-                    if (file_exists($deleteFile)) {
+                    if (file_exists($deleteFile) && database::$conn !== false) {
                         require $deleteFile;
                     }
                     $get_json = json_decode(
