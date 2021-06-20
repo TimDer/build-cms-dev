@@ -91,7 +91,11 @@ class files {
     }
     public static function findFiles_toSingleArray($dir_array) {
         self::loop_findFiles_toSingleArray($dir_array, $in_dir = "");
-        return self::$findFiles_toSingleArray_ARRAY;
+        $array = self::$findFiles_toSingleArray_ARRAY;
+        foreach (self::$findFiles_toSingleArray_ARRAY AS $del => $null) {
+            unset(self::$findFiles_toSingleArray_ARRAY[$del]);
+        }
+        return $array;
     }
     public static function findFiles($dir) {
         $return = array();
@@ -112,6 +116,25 @@ class files {
         }
 
         return $return;
+    }
+    public static function findFiles_getFileName($path_to_file) {
+        $remove_dir_array = explode(DIRECTORY_SEPARATOR, $path_to_file);
+        $remove_dir_string = $remove_dir_array[ count($remove_dir_array) - 1 ];
+
+        $get_ext = explode(".", $remove_dir_string);
+        $ext = "";
+        if (count($get_ext) > 1) {
+            $ext = $get_ext[ count($get_ext) - 1 ];
+            unset($get_ext[ count($get_ext) - 1 ]);
+        }
+
+        $name = implode(".", $get_ext);
+
+        return array(
+            "name" => $name,
+            "ext" => $ext,
+            "fullName" => $name . "." . $ext
+        );
     }
 
     private static function createZipFile_loop($zipLibrary, $dir, $array, $zip_dir = "") {
