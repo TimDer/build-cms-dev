@@ -10,7 +10,7 @@ class buildCmsTemplateLoaderController extends controller {
             require config_dir::BASE("/templates/" . templateLoader::$template_dir . "/" . templateLoader::$template_file);
         }
         else {
-            echo "nope";
+            self::getView("/fornt-end/select-template.php");
         }
     }
 }
