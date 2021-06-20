@@ -20,6 +20,22 @@ class install_build_cms_001 {
             PRIMARY KEY (`id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=latin1",
 
+        "INSERT INTO `settings` (`id`,
+                                `sidetitle`,
+                                `sideslogan`,
+                                `membership`,
+                                `new_user_default_role`,
+                                `tamplateLoaderID`,
+                                `cms_version`)
+        VALUES (1,
+                '',
+                '',
+                0,
+                'author',
+                '0',
+                '1.0.0'
+        );",
+
         "CREATE TABLE `templates` (
             `id` bigint NOT NULL AUTO_INCREMENT,
             `active_template` varchar(255) NOT NULL,

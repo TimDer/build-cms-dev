@@ -88,15 +88,20 @@ class build_cms_page_builder_add_page_loaderBack {
         return $return;
     }
     public static function set_template_array() {
-        $index_the_template = files::findFiles_toSingleArray(
-            self::loop_template_array(
-                files::findFiles(
-                    config_dir::BASE(
-                        "/templates/" . templateLoader::$template_dir
+        $base_template_dir = config_dir::BASE("/templates/" . templateLoader::$template_dir);
+
+        $index_the_template = array();
+        if (is_dir($base_template_dir)) {
+            $index_the_template = files::findFiles_toSingleArray(
+                self::loop_template_array(
+                    files::findFiles(
+                        config_dir::BASE(
+                            "/templates/" . templateLoader::$template_dir
+                        )
                     )
                 )
-            )
-        );
+            );
+        }
 
         $index_the_template_new = array();
         foreach ($index_the_template AS $template) {

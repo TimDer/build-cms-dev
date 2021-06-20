@@ -15,23 +15,33 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach (usersModal::$allUsers AS $user) { ?>
+            <?php if (is_array(usersModal::$allUsers)) { ?>
+                <?php foreach (usersModal::$allUsers AS $user) { ?>
+                    <tr>
+                        <td>
+                            <?php if ($user["user_icon"] === "") { ?>
+                                <img src="<?php echo config_url::BASE("/admin_files/dashboard/default_user_icon.png"); ?>" height="30">
+                            <?php } else { ?>
+                                <img src="<?php echo config_url::BASE("/admin_files/dashboard/user_icons/" . $user["user_icon"]); ?>" height="30">
+                            <?php } ?>
+                        </td>
+                        <td><?php echo $user["user"] ?></td>
+                        <td><?php echo $user["user_type"] ?></td>
+                        <td>
+                            <a href="<?php echo config_url::BASE('/admin/settings/users/edit/' . $user["id"]); ?>">Edit</a>, 
+                            <a href="<?php echo config_url::BASE('/admin_submit/settings/users/delete/' . $user["id"]); ?>" class="delete_link">Delete</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            <?php } else { ?>
                 <tr>
-                    <td>
-                        <?php if ($user["user_icon"] === "") { ?>
-                            <img src="<?php echo config_url::BASE("/admin_files/dashboard/default_user_icon.png"); ?>" height="30">
-                        <?php } else { ?>
-                            <img src="<?php echo config_url::BASE("/admin_files/dashboard/user_icons/" . $user["user_icon"]); ?>" height="30">
-                        <?php } ?>
-                    </td>
-                    <td><?php echo $user["user"] ?></td>
-                    <td><?php echo $user["user_type"] ?></td>
-                    <td>
-                        <a href="<?php echo config_url::BASE('/admin/settings/users/edit/' . $user["id"]); ?>">Edit</a>, 
-                        <a href="<?php echo config_url::BASE('/admin_submit/settings/users/delete/' . $user["id"]); ?>" class="delete_link">Delete</a>
-                    </td>
+                    <td>There is no user to display yet</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             <?php } ?>
+            
         </tbody>
     </table>
 </div>
