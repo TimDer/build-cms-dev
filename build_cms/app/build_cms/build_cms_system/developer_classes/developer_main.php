@@ -18,12 +18,12 @@ class developer_main {
         // history
         "reset-history",
 
-        // migrations
+        // system
         "add-user",
         "set-pass",
         "del-user",
 
-        // system
+        // migrations
         "run-migrations"
     );
 
