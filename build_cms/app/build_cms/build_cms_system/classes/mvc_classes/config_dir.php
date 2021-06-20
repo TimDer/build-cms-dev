@@ -53,7 +53,12 @@ class config_dir {
         return self::BUILD_CMS_SYSTEM(DIRECTORY_SEPARATOR . "routes" . $dir);
     }
     public static function ROOT_DIR($dir = "") {
-        return realpath($GLOBALS["index_root_dir"]) . self::check_path($dir);
+        $root_dir = $_SERVER["DOCUMENT_ROOT"];
+        if (isset($GLOBALS["index_root_dir"])) {
+            $root_dir = $GLOBALS["index_root_dir"];
+        }
+
+        return realpath($root_dir) . self::check_path($dir);
     }
 
     private static function escape_dir($dir) {
