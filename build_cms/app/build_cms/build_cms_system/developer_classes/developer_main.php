@@ -16,7 +16,15 @@ class developer_main {
         "re-config-sys",
 
         // history
-        "reset-history"
+        "reset-history",
+
+        // migrations
+        "add-user",
+        "set-pass",
+        "del-user",
+
+        // system
+        "run-migrations"
     );
 
     // ============================== plugin ==============================
@@ -99,10 +107,7 @@ class developer_main {
                     );
 
                     // plugin installer
-                    $install_file = realpath(config_dir::BASE("/" . $install_dir . "/" . $get_json["directory_name"] . "/scripts/install.php"));
-                    if (file_exists($install_file)) {
-                        require $install_file;
-                    }
+                    developer_install::install_plugin($install_dir, $get_json);
 
                     config_dir::deleteDirectory("/build_cms_system/data/plugin_unzip");
                     if ($mode === "cli") {
@@ -159,6 +164,13 @@ class developer_main {
                     if (file_exists($deleteFile)) {
                         require $deleteFile;
                     }
+                    $get_json = json_decode(
+                        file_get_contents(
+                            config_dir::BASE("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1] . "/plugin_data.json")
+                        ),
+                        true
+                    );
+                    database::query("DELETE FROM `installer_migrations` WHERE `name`='" . $get_json['directory_name'] . "'");
                     config_dir::deleteDirectory("/$delete_from_dir/" . $GLOBALS["commandToArgv"][1]);
                     if (in_array("-s", $GLOBALS["commandToArgv"])) {
                         $config = json_decode(file_get_contents(config_dir::BUILD_CMS_SYSTEM("/data/load_system_plugins.json")), true);
@@ -341,6 +353,160 @@ class developer_main {
     }
     // ============================== /plugin ==============================
 
+    // ============================== migrations ==============================
+
+    public static function run_migrations($mode = "cli") {
+        if (database::$conn !== false) {
+            // install the cms
+            developer_install::install_cms("build-cms-sys-core");
+
+            // plugin dirs
+            $plugin_dir_array = array(
+                "/plugins",
+                "/build_cms_system/system"
+            );
+
+            // install plugins
+            foreach ($plugin_dir_array AS $plugin_dir) {
+                $plugins = scandir(config_dir::BASE($plugin_dir));
+                foreach ($plugins AS $item) {
+                    if (
+                        $item !== "." &&
+                        $item !== ".." &&
+                        file_exists(config_dir::BASE( $plugin_dir . "/" . $item . "/plugin_data.json" )) &&
+                        is_dir(config_dir::BASE( $plugin_dir . "/" . $item . "/scripts/install" ))
+                    ) {
+                        developer_install::install_plugin(
+                            $plugin_dir,
+                            json_decode(file_get_contents(config_dir::BASE( $plugin_dir . "/" . $item . "/plugin_data.json" )), true)
+                        );
+                    }
+                }
+            }
+
+            echo "done";
+        }
+    }
+
+    public static function add_user($mode = "cli") {
+        $userTypeArray = array(
+            1 => "admin",
+            2 => "author",
+            3 => "user",
+            4 => "admin-only",
+            5 => "author-only",
+            6 => "user-only",
+        );
+
+        $setUserType = function ($userTypesArray = array()) {
+            $return = "";
+            while (!is_int($return)) {
+                $readline = readline("User Type: ");
+                if (is_numeric( $readline ) && ($readline > 6 || $readline <= 0)) {
+                    echo "User type only accepts numbers from 1 through 6" . PHP_EOL;
+                }
+                elseif (is_numeric( $readline )) {
+                    $return = (int)$readline;
+                }
+                else {
+                    echo "User type only accepts numbers" . PHP_EOL;
+                }
+            }
+            return $userTypesArray[$return];
+        };
+
+        $setUserName = function () {
+            $return_string = "";
+            while ($return_string === "") {
+                $readline = readline("Username: ");
+                if ($readline === "") {
+                    echo "You have to enter a user name";
+                }
+                else {
+                    $return_string = $readline;
+                }
+            }
+            return $return_string;
+        };
+
+        if (database::$conn !== false) {
+            if ($mode === "web") {
+                $userName = $GLOBALS["readline"]["userName"];
+                $password = $GLOBALS["readline"]["password"];
+                $UserType = (is_numeric($GLOBALS["readline"]["UserType"]) && ($GLOBALS["readline"]["UserType"] > 6 || $GLOBALS["readline"]["UserType"] <= 0)) ? $userTypeArray[(int)$GLOBALS["readline"]["UserType"]] : "user";
+            }
+            else {
+                $userName = $setUserName->__invoke();
+                $password = readline("Password: ");
+                echo PHP_EOL . "Usertypes:" . PHP_EOL;
+                echo "1: admin    4: admin-only" . PHP_EOL;
+                echo "2: author   5: author-only" . PHP_EOL;
+                echo "3: user     6: user-only" . PHP_EOL;
+                $UserType = $setUserType->__invoke($userTypeArray);
+            }
+
+            $user_check = database::select("SELECT `user` FROM `users` WHERE `user`='$userName'");
+
+            if ($user_check === false) {
+                database::query("INSERT INTO `users` (`user`, `password`, `password_salt`, `user_type`, `user_icon`) VALUES ('$userName', '', '', '$UserType', '')");
+
+                $GLOBALS["readline"]["password"] = $password;
+                $GLOBALS["readline"]["user"] = $userName;
+
+                self::set_pass("web");
+            }
+            else {
+                if ($mode === "web") {
+                    return "exists";
+                }
+                else {
+                    echo "The user you are trying to add already exists";
+                }
+            }
+        }
+    }
+
+    public static function set_pass($mode = "cli") {
+        if (database::$conn !== false) {
+            if ($mode === "web") {
+                $user       = $GLOBALS["readline"]["user"];
+                $password   = $GLOBALS["readline"]["password"];
+            }
+            else {
+                $user       = readline("Enter username: ");
+                $password   = readline("Enter password: ");
+            }
+
+            $salt = users::create_password_salt(1000, 10000);
+
+            $password_salt = hash("sha512", $password . $salt);
+
+            database::query("UPDATE `users` SET `password`='$password_salt', `password_salt`='$salt' WHERE `user`='$user'");
+
+            echo "Done";
+        }
+    }
+
+    public static function del_user($mode = "cli") {
+        if (database::$conn !== false) {
+            if ($mode === "web") {
+                $userName = $GLOBALS["readline"]["user"];
+                $are_you_sure = "yes";
+            }
+            else {
+                $userName = readline("User name: ");
+                $are_you_sure_message = "Are you sure you want to delete this user (Default no): ";
+                $are_you_sure = (in_array("-y", $GLOBALS["commandToArgv"])) ? "yes": readline($are_you_sure_message);
+            }
+
+            if ($are_you_sure === "yes") {
+                database::query("DELETE FROM `users` WHERE `user`='$userName'");
+            }
+        }
+    }
+
+    // ============================== /migrations ==============================
+
     // ============================== Other ==============================
     public static function re_config($mode = "cli") {
         if ($mode === "cli") {
@@ -488,6 +654,10 @@ class developer_main {
         echo "             <dev-mode>              <cms-version>\n";
         echo "   re-config-sys ------------------------> Reconfiguares system-plugins\n";
         echo "   reset-history ------------------------> Reset the command history of this terminal\n";
+        echo "   run-migrations -----------------------> This command runs all migrations (plugins and the core system)\n";
+        echo "   add-user -----------------------------> Create a user\n";
+        echo "   set-pass -----------------------------> Reset the password of a user\n";
+        echo "   del-user -----------------------------> Delete a user\n";
 
         // middel line
         echo "-----------------------------------------------------------------------------------------------------\n";

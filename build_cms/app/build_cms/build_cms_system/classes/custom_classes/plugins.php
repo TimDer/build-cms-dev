@@ -50,6 +50,8 @@ class plugins {
             mkdir($plugin_base_dir . "/www-root");
             // create scripts folder
             mkdir($plugin_base_dir . "/scripts");
+            // create installer folder
+            mkdir($plugin_base_dir . "/scripts/install");
             /* ============================== /create folders ============================== */
 
             /* ============================== create files ============================== */
@@ -66,7 +68,7 @@ class plugins {
             files::create_file($plugin_base_dir . "/www-root/.dirPlaceholder");
 
             // create installer and uninstaller
-            files::create_file($plugin_base_dir . "/scripts/install.php");
+            files::create_file($plugin_base_dir . "/scripts/install/001.php");
             files::create_file($plugin_base_dir . "/scripts/delete.php");
 
             // create routes.php
