@@ -8,9 +8,9 @@ services:
         restart: unless-stopped
         volumes:
             # The CMS
-            - ./installer-dump/sys/.htaccess:/var/www/html/.htaccess
+            - ./installer-dump/.htaccess:/var/www/html/.htaccess
             - ./app/index.php:/var/www/html/index.php
-            - ./installer-dump/sys/build_cms:/build_cms
+            - ./installer-dump/build_cms:/build_cms
             # build_cms dev terminal to command
             - ./build_cms_dev_command.sh:/usr/bin/dev
             # Apache .conf file
